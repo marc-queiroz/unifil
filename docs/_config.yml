@@ -28,6 +28,7 @@ github_username:  jekyll
 markdown: kramdown
 theme: plainwhite
 remote_theme: thelehhman/plainwhite-jekyll
+# remote_theme: thelehhman/plainwhite-jekyll
 plugins:
   - jekyll-feed
   - jekyll-remote-theme
