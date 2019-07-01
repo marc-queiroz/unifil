@@ -26,23 +26,21 @@ github_username:  jekyll
 
 # Build settings
 markdown: kramdown
-theme: minima
+theme: plainwhite
 plugins:
   - jekyll-feed
 
-remote_theme: thelehhman/plainwhite-jekyll
-
 plainwhite:
-  name: Adam Denisov
-  tagline: Developer. Designer
+  name: Marc Queiroz
+  tagline: Professor. Software Developer
   date_format: "%b %-d, %Y"
   sitemap: true # set to true to generate sitemap.xml content
 
   # generate social links in footer
   social_links:
-    twitter: thelehhman
-    github:  thelehhman
-    linkedIn: in/thelehhman
+    twitter: marc_antonio
+    github:  marc-queiroz
+    linkedIn: in/marc-queiroz
     rss: rss
     # dribbble: jekyll
     # facebook: jekyll
