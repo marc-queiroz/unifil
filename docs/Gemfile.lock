@@ -247,6 +247,8 @@ DEPENDENCIES
   github-pages
   jekyll (~> 3.8.5)
   jekyll-feed (~> 0.6)
+  jekyll-paginate
+  jekyll-remote-theme
   plainwhite
   tzinfo-data
 
