@@ -38,7 +38,8 @@ sass:
   sass_dir: _sass
 plainwhite:
   name: Marc Queiroz
-  tagline: Professor. Software Developer
+  tagline: Professor and <br/> 
+           Software Developer
   date_format: "%b %-d, %Y"
   sitemap: true # set to true to generate sitemap.xml content
 
