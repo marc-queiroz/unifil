@@ -25,8 +25,70 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+                    <h1>Contratos inteligentes no Blockchain</h1>
+                    https://marc-queiroz.github.io/unifil/
+                </section>
+				<section>
+					<h3>Sejam bem-vindos ao curso de férias da UniFil 2019</h3>
+                    https://marc-queiroz.github.io/unifil/
+                </section>
+				<section>
+					<p>
+                    Eu sou o Prof. Marc Queiroz, formado aqui em Londrina. Trabalhando a 6 anos como professor no <a href="https://www.unifil.br/portal/graduacao/exatas/ciencia-da-computacao">Departamento de Computação da UniFil</a>.
+					</p>
+                </section>
+				<section>
+                    <p>
+                    Engenheiro de software na <a href="https://www.linkedin.com/company/doiim/about/">Doiim</a>, trabalhando com desenvolvimento de software desde os anos 2000. E recentemente trabalhando com Blockchain.
+                    </p>
+                </section>
+				<section data-background="https://www.ivedix.com/wp-content/uploads/2017/12/blockchain.jpg" data-background-repeat="none" data-background-size="1076px">
+					<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+                        O que vamos aprender nesse curso?
+						<p class="fragment">Criar o nosso primeiro contrato inteligente</p>
+						<p class="fragment">Interagir com nosso contrato inteligente na WEB</p>
+                    </div>
+                </section>
+				<section data-background="https://www.gettingsmart.com/wp-content/uploads/2018/08/e8dbb6a4-8c46-4b0a-8f02-bfa776e06b6f_Screen20Shot202018-08-1220at205.31.1520AM-1021x580.png" data-background-size="1021px">
+					<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+                      <p>Como?</p>
+                      <p class="fragment">- Em duas partes:</p>
+                      <p class="fragment"> - Tutorial guiado.</p>
+                      <p class="fragment"> - Demonstração de uma aplicação.</p>
+                    </div>
+                </section>
+                <section>
+                  <p>Tecnologias:</p>
+                  <ul>
+                    <li><a href="https://metamask.io">Metamask</a>: dApps no browser</li>
+                    <li><a href="https://remix.ethereum.org">Remix</a>: browser IDE, solidity e viper</li>
+                    <li>web3.js</li>
+                    <li>javascript</li>
+                    <li>HTML</li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>Primeira parte:</h3>
+                  <p>Como criar um contrato no Blockchain</p>
+                  <p>Como interagir com o contrato utilizando um browser</p>
+                  <a href="https://github.com/marc-queiroz/client-interact-smartcontract">Repositório do tutorial</a>
+                </section>
+                <section>
+                  <h3>Segunda parte:</h3>
+                  <p>Como funciona o ambiente de desenvolvimento de um projeto para Blockchain</p>
+                  <p>Softwares utilizados para o desenvolvimento local:</p>
+                  <ul>
+                    <li>ganache-cli - Client RPC local para testes no Blockchain</li>
+                    <li>truffle - Ambiente de desenvolvimento</li>
+                    <li>solc - Compilador de contratos inteligentes</li>
+                  </ul>
+                  <a href="https://github.com/marc-queiroz/truffle-note-taker">Repositório do exemplo</a>
+                </section>
+                <section>
+                  <h2>Fim</h2>
+                  contato: <a href="#">marc.queiroz at unifil.br</a>
+                </section>
 			</div>
 		</div>
 
@@ -37,6 +99,12 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
