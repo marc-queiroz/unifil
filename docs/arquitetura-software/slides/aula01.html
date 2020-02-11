@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introdução ao Ethereum</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 3em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 01
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+## - O que é arquitetura de software?
+## - 
+---
+class: inverse, middle
+layout: false
+## - O que é arquitetura de software?
+## - Em que momento da vida do software acontece?
+---
+class: inverse, middle
+layout: false
+- Segundo a IEEE:
+
+"A arquitetura de software é a organização fundamental de um sistema incorporado em seus componentes, seus relacionamentos entre si e com o meio ambiente, e os princípios que orientam seu design e evolução".
+???
+---
+class: inverse, middle, center
+layout: false
+# Software Architecture
+## vs
+# Software Design
+---
+class: inverse, middle, center
+# Arquitetura de Software
+## vs
+# Padrão de Software
+---
+class: center, middle, inverse
+## Qual o objetivo da arquitetura de software?
+---
+layout: false
+class: inverse
+
+# Introdução ao Ethereum
+
+## - O que é Ethereum?
+
+## - Entendendo o cliente/nó Ethereum
+
+## - Como funciona o protocolo de consenso
+---
+layout: false
+class: inverse
+
+# Introdução ao Ethereum
+
+## - Contas, transações e mensagens
+## - A máquina virtual do Ethereum, EVM
+## - Aplicativos descentralizados dApps
+
+---
+class: inverse
+# Definição
+
+## Segundo os autores Andreas Antonopoulos e o Dr. Gavin Wood no livro Mastering Ethereum, temos as seguintes definições:
+
+- Computador Global
+---
+class: inverse
+# Ciência da Computação
+
+- É uma máquina de estado que roda uma única instância de sua máquina virtual. (Apenas uma thread).
+
+
+- Capaz de ser acessada globalmente.
+---
+class: inverse
+# Ponto de vista prático
+
+- É um computador que apresenta uma estrutura descentralizada, que executa programas chamados Contratos Inteligentes (Smart Contracts).
+
+- Utiliza o Blockchain para manter a sincronia do estado da máquina.
+
+- Inclui uma criptomoeda, chamada *ether*, para limitar o custo e tempo de operação.
+---
+class: inverse
+- Permite aos usuários criarem aplicações descentralizadas que já possuem funções econômicas embutidas.
+
+- Características da rede Ethereum:
+  - Alta disponibilidade
+  - Auditável
+  - Transparência
+  - Neutralidade
+  - Reduz ou elimina a censura
+---
+class: inverse
+# Ethereum como computador global
+Termos relacionados a rede Ethereum:
+
+- Computador global
+- Blockchain
+- Determinismo
+- Máquina de estado
+- Infraestrutura de computador descentralizada.
+- Contratos Inteligentes
+- dApps - Aplicativos descentralizados
+---
+class: center, middle, inverse
+# O que todos esses termos significam?
+---
+class: inverse, middle
+# Computador Global
+
+Computador disponível à todos, sem restrições geográficas.
+---
+class: inverse, middle
+
+# Blockchain
+
+Blocos de dados conectados, como se fosse uma corrente. Todas as informações da rede Ethereum estão salvas em seu Blockchain.
+---
+class: inverse, middle
+# Determinismo
+
+Não importa qual cliente da rede executa o resultado do programa executado é sempre o mesmo, entre todos os clientes.
+---
+class: inverse, middle
+# Estado
+
+Lembra as informações do programa e do sistema.
+---
+class: inverse, middle
+# Máquina de estado
+
+Máquina que roda o programa, lendo e atualizando o estado da máquina, mantendo o consenso.
+---
+class: inverse, middle
+# Infraestrutura
+
+Computadores descentralizados. Infraestrutura descentralizada onde cada cliente é igualmente privilegiado.
+---
+class: inverse, middle
+# Contratos Inteligentes
+
+Código executado em uma infraestrutura de computadores descentralizada.
+---
+class: inverse, middle
+# dApps
+
+Aplicativos que usam a rede descentralizada ou contratos inteligentes ou ambos;
+---
+class: inverse
+Projetos individuais, pequenos, médios e grandes em TI escolhem plataformas que oferecem segurança para executar as tarefas conforme o esperado. O Ethereum foi pensado para entregar essas características para seus desenvolvedores.
+
+Ethereum é tolerante a falhas, significando que se os nós ficarem indisponíveis o impacto quanto a segurança e capacidade de transações na rede serão baixos.
+---
+class: inverse, middle
+Ethereum permite aos desenvolvedores escrever e implantar códigos imutáveis ao Blockchain.
+
+Quando implementados esses programas rodam de maneira confiável independentes de eventos externos não ao Blockchain. Programas conhecidos como Contratos Inteligentes.
+---
+class:inverse
+# Moeda nativa e mais
+Ethereum diferente do Bitcoin, não é uma rede exclusivamente financeira, mas tem a capacidade de executar programas em geral.
+
+"Para executar ou realizar trabalho, a rede utiliza uma unidade para mitigar a possibilidade de de abuso da rede. Chamado gas." Autor: Micah Dameron, Beigepaper: An Ethereum Technical Specification. Section 1.1: Native Currency.
+---
+class:inverse
+Ao utilizar a rede Ethereum, para executar cóidgios que mudam o estado, gravando novas informações, é utilizado o **ether**, moeda nativa do Blockchain do Ethereum.
+
+Na rede Ethereum pra enviar valores de uma conta para outra conta, ou para implantar Contratos Inteligentes no Blockchain.
+---
+class:inverse
+Para pagar a taxa utilizamos **gas**, cada unidade de **gas** tem um custo estimado em **ether**.
+
+Prosseguindo para uma definição mais técnica das unidades de valor, utiliza-se a tabela:
+
+![Unidades de Valor](image01.png "Logo Title Text 1")
+---
+class:inverse, middle
+
+Uma transação básica utiliza 21000 gas.
+
+Se o valor de um gas é igual a 2 Gwei, então o custo será de 0.000042 **ether**.
+
+Fonte: [ETH GAS STATION](https://ethgasstation.info)
+---
+class:inverse
+# Aplicativos descentralizados (dApps)
+
+De maneira simplificada uma aplicação descentralizada é um contrato inteligente com interface. Uma aplicação descentralizada distribui sua lógica, dados e mensagens usando protocolos da rede Ethereum, ou protocolos **web3**.
+---
+class:inverse, middle
+- O **"web3"** é um termo coloquial para a web descentralizada.
+- O termo **"web2"** é utilizado para definir a internet no estado corrente. (Cliente/Servidor)
+---
+class:inverse
+## Possíveis aplicações de um dApp
+
+- DeX, Mercado de compra e venda de ativos digitais descentralizadas. 
+- Mercado de predição/geração
+- Base do conhecimento descentralizada.
+- Sistemas de identidade
+- Casinos
+- Jogos
+---
+class:inverse,middle
+
+Ranking the aplicações na rede Ethereum.
+
+[https://www.stateofthedapps.com](https://www.stateofthedapps.com)
+---
+class:inverse,center,middle
+
+FIM
+
+contato: marc.queiroz at gmail.com
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
