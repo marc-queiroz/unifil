@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Introdução ao Ethereum</title>
+    <title>Arquitetura de Software</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -135,6 +135,19 @@ class: center, middle, inverse
 ---
 layout: false
 class: inverse, middle
+# Programa
+* Introdução aos conceitos de arquitetura e padrões de software
+    - Definição de padrões de software
+    - Principios de projeto
+    - Arquitetura de aplicações corporativas
+        * Apresentação
+        * Domínio
+        * Acesso a Dados
+* Padrões de Projeto
+* Documentação
+---
+layout: false
+class: inverse, middle
 ## - O que é arquitetura de software?
 ## - 
 ---
@@ -149,6 +162,9 @@ layout: false
 
 "A arquitetura de software é a organização fundamental de um sistema incorporado em seus componentes, seus relacionamentos entre si e com o meio ambiente, e os princípios que orientam seu design e evolução".
 ???
+https://subscription.packtpub.com/book/application_development/9781786468529/1/ch01lvl1sec07/defining-software-architecture
+
+
 ---
 class: inverse, middle, center
 layout: false
@@ -159,15 +175,25 @@ layout: false
 class: inverse, middle, center
 # Arquitetura de Software
 ## vs
-# Padrão de Software
+# Projeto de Software
+???
+https://subscription.packtpub.com/book/application_development/9781786468529/1/ch01lvl1sec07/defining-software-architecture
+
+Desenho técnico - **Blueprint**
+
+A arquitetura está envolvida com o nível mais alto de estruturas de descrição e interações em um sistema. Ele se preocupa com as questões que envolvem a tomada de decisão sobre o esqueleto do sistema, envolvendo não apenas seus atributos funcionais, mas também organizacionais, técnicos, comerciais e de qualidade.
+
+O projeto trata da organização de partes ou componentes do sistema e dos subsistemas envolvidos na criação do sistema. Os problemas aqui geralmente estão mais próximos do código ou módulos em questão, como estes:
+
+A arquitetura de software trata do design de todo o sistema, enquanto o design do software trata principalmente dos detalhes, normalmente no nível de implementação dos vários subsistemas e componentes que compõem esses subsistemas.
 ---
 class: center, middle, inverse
 ## Qual o objetivo da arquitetura de software?
 ---
 layout: false
-class: inverse
+class: inverse, middle, center
 
-# Introdução
+# Ilustrando a Arquitetura de Software
 ---
 layout:false
 class: middle, center
@@ -191,172 +217,11 @@ layout:false
 class: middle, center
 ![](fosa_0106_1.png)
 ---
-layout: false
-class: inverse
-
-# Introdução ao Ethereum
-
-## - Contas, transações e mensagens
-## - A máquina virtual do Ethereum, EVM
-## - Aplicativos descentralizados dApps
-
----
-class: inverse
-# Definição
-
-## Segundo os autores Andreas Antonopoulos e o Dr. Gavin Wood no livro Mastering Ethereum, temos as seguintes definições:
-
-- Computador Global
----
-class: inverse
-# Ciência da Computação
-
-- É uma máquina de estado que roda uma única instância de sua máquina virtual. (Apenas uma thread).
-
-
-- Capaz de ser acessada globalmente.
----
-class: inverse
-# Ponto de vista prático
-
-- É um computador que apresenta uma estrutura descentralizada, que executa programas chamados Contratos Inteligentes (Smart Contracts).
-
-- Utiliza o Blockchain para manter a sincronia do estado da máquina.
-
-- Inclui uma criptomoeda, chamada *ether*, para limitar o custo e tempo de operação.
----
-class: inverse
-- Permite aos usuários criarem aplicações descentralizadas que já possuem funções econômicas embutidas.
-
-- Características da rede Ethereum:
-  - Alta disponibilidade
-  - Auditável
-  - Transparência
-  - Neutralidade
-  - Reduz ou elimina a censura
----
-class: inverse
-# Ethereum como computador global
-Termos relacionados a rede Ethereum:
-
-- Computador global
-- Blockchain
-- Determinismo
-- Máquina de estado
-- Infraestrutura de computador descentralizada.
-- Contratos Inteligentes
-- dApps - Aplicativos descentralizados
----
-class: center, middle, inverse
-# O que todos esses termos significam?
----
-class: inverse, middle
-# Computador Global
-
-Computador disponível à todos, sem restrições geográficas.
----
-class: inverse, middle
-
-# Blockchain
-
-Blocos de dados conectados, como se fosse uma corrente. Todas as informações da rede Ethereum estão salvas em seu Blockchain.
----
-class: inverse, middle
-# Determinismo
-
-Não importa qual cliente da rede executa o resultado do programa executado é sempre o mesmo, entre todos os clientes.
----
-class: inverse, middle
-# Estado
-
-Lembra as informações do programa e do sistema.
----
-class: inverse, middle
-# Máquina de estado
-
-Máquina que roda o programa, lendo e atualizando o estado da máquina, mantendo o consenso.
----
-class: inverse, middle
-# Infraestrutura
-
-Computadores descentralizados. Infraestrutura descentralizada onde cada cliente é igualmente privilegiado.
----
-class: inverse, middle
-# Contratos Inteligentes
-
-Código executado em uma infraestrutura de computadores descentralizada.
----
-class: inverse, middle
-# dApps
-
-Aplicativos que usam a rede descentralizada ou contratos inteligentes ou ambos;
----
-class: inverse
-Projetos individuais, pequenos, médios e grandes em TI escolhem plataformas que oferecem segurança para executar as tarefas conforme o esperado. O Ethereum foi pensado para entregar essas características para seus desenvolvedores.
-
-Ethereum é tolerante a falhas, significando que se os nós ficarem indisponíveis o impacto quanto a segurança e capacidade de transações na rede serão baixos.
----
-class: inverse, middle
-Ethereum permite aos desenvolvedores escrever e implantar códigos imutáveis ao Blockchain.
-
-Quando implementados esses programas rodam de maneira confiável independentes de eventos externos não ao Blockchain. Programas conhecidos como Contratos Inteligentes.
----
-class:inverse
-# Moeda nativa e mais
-Ethereum diferente do Bitcoin, não é uma rede exclusivamente financeira, mas tem a capacidade de executar programas em geral.
-
-"Para executar ou realizar trabalho, a rede utiliza uma unidade para mitigar a possibilidade de de abuso da rede. Chamado gas." Autor: Micah Dameron, Beigepaper: An Ethereum Technical Specification. Section 1.1: Native Currency.
----
-class:inverse
-Ao utilizar a rede Ethereum, para executar cóidgios que mudam o estado, gravando novas informações, é utilizado o **ether**, moeda nativa do Blockchain do Ethereum.
-
-Na rede Ethereum pra enviar valores de uma conta para outra conta, ou para implantar Contratos Inteligentes no Blockchain.
----
-class:inverse
-Para pagar a taxa utilizamos **gas**, cada unidade de **gas** tem um custo estimado em **ether**.
-
-Prosseguindo para uma definição mais técnica das unidades de valor, utiliza-se a tabela:
-
-![Unidades de Valor](image01.png "Logo Title Text 1")
----
-class:inverse, middle
-
-Uma transação básica utiliza 21000 gas.
-
-Se o valor de um gas é igual a 2 Gwei, então o custo será de 0.000042 **ether**.
-
-Fonte: [ETH GAS STATION](https://ethgasstation.info)
----
-class:inverse
-# Aplicativos descentralizados (dApps)
-
-De maneira simplificada uma aplicação descentralizada é um contrato inteligente com interface. Uma aplicação descentralizada distribui sua lógica, dados e mensagens usando protocolos da rede Ethereum, ou protocolos **web3**.
----
-class:inverse, middle
-- O **"web3"** é um termo coloquial para a web descentralizada.
-- O termo **"web2"** é utilizado para definir a internet no estado corrente. (Cliente/Servidor)
----
-class:inverse
-## Possíveis aplicações de um dApp
-
-- DeX, Mercado de compra e venda de ativos digitais descentralizadas. 
-- Mercado de predição/geração
-- Base do conhecimento descentralizada.
-- Sistemas de identidade
-- Casinos
-- Jogos
----
-class:inverse,middle
-
-Ranking the aplicações na rede Ethereum.
-
-[https://www.stateofthedapps.com](https://www.stateofthedapps.com)
----
 class:inverse,center,middle
 
 FIM
 
-contato: marc.queiroz at gmail.com
+contato: marc.queiroz at unifil.br
 
 
     </textarea>
