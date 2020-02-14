@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 3em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 02
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+## Software são construídos para atingir as metas de organizações comerciais.
+???
+Software Architecture in Practice. What is Software? Pg. 3 PDF
+---
+layout: false
+class: inverse, middle
+## A arquitetura de software é ponte entre as metas do negócio e o resultado final do sistema.
+???
+Software Architecture in Practice. What is Software? Pg. 3 PDF
+
+Independente da complexidade, um software pode ser projetado, analisado, documentado
+e implementado usando técnicas para atingir as metas do negócio.
+---
+layout: false
+class: inverse, middle
+## A arquitetura de software de um sistema é o conjunto de estruturas necessárias ao sistema, que compreende elementos de software, relações entre eles e propriedades de ambos.
+???
+Software Architecture in Practice. What is Software? Pg. 4 PDF
+
+No estagio inicial - A maior parte das decisões do projeto são tomadas no seu inícios.
+
+Uma das funções mais importantes sobre a arquitetura de software é escrever sobre as decisões relacionadas a arquitetura.
+---
+layout: false
+class: inverse
+## Arquitetura é um conjunto de estruturas de software. Existem 3 tipos de estruturas:
+- Estruturas definidas por módulos: grupo de responsabilidades computacionais.
+- Estruturas que definem relacionamentos: maneira como os elementos do projeto interagem entre si.
+- Estruturas que definem o Desenvolvimento, instalação e execução.
+???
+Software Architecture in Practice. 1.1 What software architecture is an what it isn't. Pag 5.
+
+- Módulos, pode definir times A, B, C. Banco de dados, regra de negócios, interface.
+
+Relacionamentos: Comportamento dinâmico. Component e Conectores (C & C)
+
+Estrura que mapeia as partes do software necessárias para o sistema. Módulos devem ser desenvolvidos por quais times de desenvolvedores, em que tipo de estrutura de arquivos, integração e teste.
+---
+layout: false
+class: inverse
+# Arquitetura é uma abstração
+
+Como a arquitetura consiste em estruturas e as estruturas consistem em elementos e relações, segue-se que uma arquitetura compreende elementos de software e como os elementos se relacionam.
+???
+Isso significa que a arquitetura omite especificamente determinadas informações sobre elementos que não são úteis sobre o sistema - em particular, omite informações que não têm ramificações fora de um único elemento. Assim, uma arquitetura é principalmente uma abstração de um sistema que seleciona certos detalhes e suprime outros.
+---
+layout: false
+class: inverse, middle
+# Todo sistema de software tem uma arquitetura
+???
+Sistemas que não tem arquitetura conhecida.
+---
+layout: false
+class: inverse, middle
+# Arquitetura inclui comportamento
+???
+Comportamento entre componentes e módulos.
+
+Olhando para diagramas, linhas e traços o leitor pode formar a ideia da funcionalidade que está sendo criada. Essa imagem se aproxima da arquitetura, mas está apenas na cabeça e confia apenas em informações que não estão presentes.
+
+Se o comportamento de uma funcionalidade do sistema for essencial, provavelmente ela deverá ser documentada e fará parte da arquitetura.
+---
+layout: false
+class: inverse, middle, center
+# Estrutura e Visão
+???
+Chap 1.2 - Software Architecture in Practice
+
+Relacionado a vocabulário.
+---
+layout:false
+class: middle, center
+![Esqueleto, Vascular e Raio X](image02.png)
+???
+Todos são a mesma visão sobre o corpo.
+---
+layout: false
+class: inverse
+- Uma visão é uma representação de um conjunto coerente de elementos arquitetônicos, conforme escrito e lido pelos participantes do sistema. Consiste na representação de um conjunto de elementos e nas relações entre eles.
+- Uma estrutura é o conjunto de elementos em si, como existem em software ou hardware.
+???
+Arquitetos projetam estruturas. Eles documentam visões sobre essa estrutura.
+---
+layout: false
+class: inverse
+# Três tipos de estruturas
+- Módulos estruturais
+- Componente e Conectores estruturais
+- Estruturas de Alocação
+---
+layout: false
+class: inverse
+Os módulos estruturais incorporam decisões sobre como o sistema deve ser estruturado como um conjunto de códigos ou unidades de dados que devem ser construídas ou adquiridas.
+---
+layout: false
+class: inverse
+
+## As estruturas dos módulos nos permitem responder perguntas como estas:
+
+- Qual é a principal responsabilidade funcional atribuída a cada módulo?
+- Quais outros elementos de software um módulo pode usar?
+- De que outro software ele realmente usa e depende?
+- Quais módulos estão relacionados a outros módulos por relacionamentos de generalização ou especialização (herança)?
+---
+layout: false
+class: inverse
+
+As estruturas de componentes e conectores incorporam decisões sobre como o sistema deve ser estruturado como um conjunto de elementos que possuem comportamento em tempo de execução (componentes) e interações (conectores).
+---
+layout: false
+class: inverse
+
+## As visualizações de componentes e conectores nos ajudam a responder a perguntas como estas:
+
+- Quais são os principais componentes de execução e como eles interagem no tempo de execução?
+- Quais são os principais armazenamentos de dados compartilhados?
+- Quais partes do sistema são replicadas?
+- Como os dados progridem no sistema?
+- Quais partes do sistema podem ser executadas em paralelo?
+- A estrutura do sistema pode mudar à medida que é executada e, em caso afirmativo, como?
+---
+layout: false
+class: inverse
+
+As estruturas de alocação incorporam decisões sobre como o sistema se relacionará com estruturas que não são de software em seu ambiente (como CPUs, sistemas de arquivos, redes, equipes de desenvolvimento etc.).
+---
+layout: false
+class: inverse
+
+## As visualizações de alocação nos ajudam a responder a perguntas como estas:
+
+- Em qual processador cada elemento de software é executado?
+- Em quais diretórios ou arquivos cada elemento é armazenado durante o desenvolvimento, teste e construção do sistema?
+- Qual é a atribuição de cada elemento de software às equipes de desenvolvimento?
+---
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

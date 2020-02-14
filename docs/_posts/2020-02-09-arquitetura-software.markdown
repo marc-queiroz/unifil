@@ -6,8 +6,9 @@ categories: aula arquitetura software unifil computação
 ---
 ## Sejam bem-vindos a disciplina **Arquitetura de Software**
 
-Para ter acesso a aula 1, clique em [Slides][presentation].
+Para ter acesso a aula 1, clique em [Slides][aula01].
 
-[presentation]: /unifil/arquitetura-software/slides/aula01.html
-[cryptokitties]: https://www.cryptokitties.co/
-[web3]: https://github.com/ethereum/web3.js/
+Para ter acesso a aula 2, clique em [Slides][aula02].
+
+[aula01]: /unifil/arquitetura-software/slides/aula01.html
+[aula02]: /unifil/arquitetura-software/slides/aula02.html
