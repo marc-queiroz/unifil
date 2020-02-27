@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 3em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 06
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+## Diagrama de implantação
+
+Os diagramas de implantação UML são usados ​​para visualizar os detalhes de implantação de um sistema de software. Os diagramas incluem mais do que apenas código, mas também bibliotecas separadas, um instalador, arquivos de configuração e muitas outras partes. Para que o software esteja pronto para execução, é necessário entender todos os arquivos e executáveis ​​envolvidos e os ambientes em que eles residem.
+---
+layout: false
+class: inverse, middle
+
+O ambiente de implantação, ou destino de implantação, pode ser muito específico e envolver dispositivos de hardware específicos. Também pode ser muito geral e envolver sistemas operacionais suportados. Os detalhes em um diagrama de implantação são alterados de acordo. Por exemplo, software desenvolvido para Linux, MacOS ou Windows pode ter diferenças entre si.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de implantação lidam com artefatos. Os artefatos são um resultado físico do processo de desenvolvimento. Os artefatos de um videogame podem incluir itens como um executável para executar o jogo, um instalador para instalar o jogo, bibliotecas de áudio para som e ativos de multimídia. Estes são criados como resultados da produção do sistema e são as peças finais a serem montadas.
+---
+layout: false
+class: inverse, middle
+
+## Existem dois tipos diferentes de diagramas de implantação:
+
+- diagramas em nível de especificação
+- diagramas de nível de instância
+---
+layout: false
+class: inverse, middle
+
+Um diagrama no nível da especificação fornece uma visão geral dos artefatos e destinos de implementação, sem fazer referência a detalhes específicos, como nomes de máquinas. Ele se concentra em uma visão geral da sua implantação, e não nas especificidades.
+---
+layout: false
+class: inverse, middle
+
+Um diagrama no nível da instância é uma abordagem mais específica que mapeia artefatos específicos para destinos de implementação específicos. Eles podem identificar máquinas e dispositivos de hardware específicos. Essa abordagem geralmente é usada para destacar as diferenças nas implantações entre compilações de desenvolvimento, preparo e lançamento.
+---
+layout: false
+class: inverse, middle
+
+Ao criar diagramas de implantação, é importante usar a notação correta para os vários elementos. Um dos aspectos mais importantes do diagrama de implantação é o nó. Nós são destinos de implementação que contêm artefatos disponíveis para execução. Em um diagrama de implantação, eles se parecem com caixas 3D.
+---
+layout: false
+class: inverse, middle
+
+Os dispositivos de hardware também são exibidos como caixas 3D, apenas eles têm uma etiqueta de "dispositivo" para diferenciá-los.
+
+Os relacionamentos podem ser representados de algumas maneiras diferentes nos diagramas de implantação. Uma linha sólida entre dois nós mostra um relacionamento entre os destinos de implementação. A linha mostra que os dois nós têm um caminho de comunicação entre eles. Esse relacionamento normalmente identifica um protocolo de comunicação específico.
+
+---
+layout:false
+class: middle, center
+![](image12.png)
+---
+layout: false
+class: inverse, middle
+
+Se um artefato for desenhado dentro de uma caixa de nó, isso mostra que um artefato é implementado em um nó. Isso também significa que o artefato não pode funcionar sem esse destino de implementação.
+
+---
+layout:false
+class: middle, center
+![](image13.png)
+---
+layout: false
+class: inverse, middle
+
+Manifestação é um relacionamento em que um artefato é uma realização física de um componente de software. Pode ser representado com um indicador de "manifestos", como abaixo.
+
+---
+layout:false
+class: middle, center
+![](image14.png)
+---
+layout: false
+class: inverse, middle
+
+Aqui, o Player.class manifesta o componente Player, que é a unidade encapsulada que contém todas as funcionalidades de um player.
+
+Abaixo está um diagrama de implantação no nível de especificação para um videogame simples. Este diagrama fornece uma idéia geral e concisa de como implantar o aplicativo sem fornecer muitos detalhes.
+
+---
+layout:false
+class: middle, center
+![](image15.png)
+---
+layout: false
+class: inverse, middle
+
+Em um diagrama de implantação, há uma hierarquia distinta de destinos de implantação. Essa hierarquia é muito importante. Você deve começar do nível mais alto de suas informações de implantação, do nome do aplicativo ao dispositivo e sistema operacional. Neste exemplo, o aplicativo, o dispositivo, o sistema operacional e o ambiente de execução estão todos listados. Quando você olha para cada um desses nós, fica claro que ambiente é necessário para executar o aplicativo.
+---
+layout: false
+class: inverse, middle
+
+Observe que apenas os artefatos mais importantes são representados neste diagrama para que sejam mantidos em um nível alto. Lembre-se de que os diagramas de implementação fornecem uma visão geral de alto nível de artefatos, bibliotecas, componentes principais, máquinas e dispositivos que seu aplicativo precisa executar.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de implantação ajudam a fornecer consistência e organização às implantações, o que ajuda a evitar falhas no sistema. Os diagramas também ajudam a acompanhar os arquivos e executáveis ​​necessários para implantar e executar o software. O diagrama pode estar em um nível de instância específico para as máquinas de implementação que você está usando, ou pode ser geral para vários ambientes de execução.
+
+---
+layout: false
+class: inverse, middle
+
+Um diagrama de atividades UML permite a representação do fluxo de controle de uma atividade para outra em um sistema de software. Ele captura o comportamento dinâmico do sistema e permite o mapeamento da ramificação para fluxos alternativos.
+
+Atividades são ações que promovem o fluxo de execução em um sistema. São ações que, quando concluídas, fazem com que outra ação seja executada. Por exemplo, uma ação pode alterar ou criar novos objetos. Essas alterações ou ações podem levar seu aplicativo adiante.
+---
+layout: false
+class: inverse, middle
+
+## Para criar um diagrama de atividades, você deve:
+
+1. Identificar as atividades.
+2. Identificar as respectivas condições das atividades do sistema.
+---
+layout: false
+class: inverse, middle
+
+Depois de determinadas atividades e respectivas condições, o diagrama de atividades pode ser criado. Existem algumas partes principais em um diagrama de atividades.
+
+Há notas de início e de final que parecem círculos rotulados. Esses círculos são onde o diagrama deve começar. Eles mostram a atividade inicial que inicializa o fluxo de controle do aplicativo. O nó final mostra a atividade final do diagrama. As atividades intermediárias têm o formato oval e descrevem todas as atividades que alteram o estado do jogo antes do final do jogo.
+
+---
+layout:false
+class: middle, center
+![](image16.png)
+---
+layout: false
+class: inverse, middle
+
+Além disso, os diagramas de atividades podem incluir nós de decisão. Estes são os diamantes que possuem uma atividade principal e existe a possibilidade de dois resultados alternativos como a próxima atividade. A escolha do resultado depende de como a condição no nó de decisão é avaliada. Um exemplo de nó de decisão pode ser visto abaixo.
+
+---
+layout:false
+class: middle, center
+![](image17.png)
+---
+layout: false
+class: inverse, middle
+
+Todas as atividades essenciais devem ser incluídas em um diagrama, bem como as condições.
+
+Abaixo está um exemplo de um diagrama de atividades que ilustra um videogame.
+
+---
+layout:false
+class: middle, center
+![](image18.png)
+---
+layout: false
+class: inverse, middle
+
+Neste exemplo, o diagrama de atividades começa jogando o jogo. O jogador então joga a atividade de nível. Quando o nível está completo, o jogador encontra a primeira condição. Se a pontuação for alta o suficiente, o jogador poderá passar para o nível de bônus. Se o jogador não puder jogar o nível de bônus, o jogo será encerrado, como indicado por um círculo.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de atividades permitem o mapeamento de atividades simultâneas que ocorrem em paralelo. Uma bifurcação se move para fluxos paralelos, para que as atividades possam acontecer ao mesmo tempo. Fluxos paralelos podem se unir em um único fluxo. Por exemplo, se um nível terminar em um videogame, o fluxo da trilha sonora terminará ao mesmo tempo que o fluxo de reprodução. Para denotar isso, os diagramas de atividades podem usar uma raia separada para cada fluxo.
+---
+layout: false
+class: inverse, middle
+
+As raias também podem dividir as atividades em diferentes categorias, como onde ocorre ou a função do usuário envolvida. Veja o exemplo abaixo para separar as atividades dos jogadores e as atividades de nível. Neste diagrama, há um rótulo para cada raia. As setas que cruzam cada pista mostram como as diferentes atividades de um sistema interagem entre categorias.
+---
+layout:false
+class: middle, center
+![](image19.png)
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de atividades permitem ver quais atividades e condições devem ser incluídas em um sistema. Além disso, nos diagramas, você vê a ordem em que os recursos são encontrados, além de permitir que fluxos alternativos sejam levados em consideração para o sistema.
+
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

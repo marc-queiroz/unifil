@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 3em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 05
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+# Diagramas UML
+- Diagrama de Componentes
+- Diagrama de Pacotes
+- Diagrama de Implantação
+- Diagrama de Atividade
+---
+layout: false
+class: inverse, middle
+## Diagramas de componentes
+
+Os diagramas de componentes UML estão relacionados aos componentes de um sistema. Componentes são unidades independentes e encapsuladas dentro de um sistema. Cada componente fornece uma interface para outros componentes interagirem com ele. Os diagramas de componentes são usados ​​para visualizar como as peças de um sistema interagem e quais relacionamentos eles têm entre elas.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes são diferentes da maioria dos outros diagramas, pois mostram estrutura de alto nível e não detalhes como atributos e métodos. Eles são puramente focados em componentes e suas interações entre si.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes são uma visão estática do sistema de software e representam o design do sistema em um ponto específico de seu desenvolvimento e evolução. A base dos diagramas de componentes enfoca os componentes e seus relacionamentos. Cada componente em um diagrama tem um relacionamento muito específico com os outros componentes através da interface que ele fornece.
+
+---
+layout:false
+class: middle, center
+![Interface de bola Figura Providade.](image01.png)
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes possuem conectores esféricos, que representam uma interface fornecida. Uma interface fornecida mostra que um componente oferece uma interface para outras pessoas interagirem com ele. A interface fornecida significa que os componentes cliente e consumidor têm uma maneira de se comunicar com esse componente.
+
+---
+layout:false
+class: middle, center
+![Figura - Soquete - Interface Necessária.](image02.png)
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes também possuem conectores de soquete que exibem uma interface necessária. A interface necessária é essencial para o diagrama de componentes, para mostrar que um componente espera uma determinada interface. Essa interface necessária deve ser satisfeita ou fornecida por algum outro componente.
+
+---
+layout:false
+class: middle, center
+![Figura. Interface requerida. Interface fornecida por bola.](image03.png)
+---
+layout: false
+class: inverse, middle
+
+Finalmente, os diagramas de componentes podem ilustrar um relacionamento de montagem. Um relacionamento de montagem ocorre quando a interface fornecida por um componente corresponde à interface necessária de outro componente. A interface fornecida é representada por uma bola e a interface necessária é representada por um soquete.
+---
+layout: false
+class: inverse, middle
+
+Para criar um diagrama de componentes, primeiro, você deve identificar os principais objetos usados ​​no sistema. Em seguida, as bibliotecas relevantes para o sistema precisam ser identificadas. Finalmente, o relacionamento entre esses componentes precisaria ser identificado.
+
+---
+layout:false
+class: middle, center
+![Figura Diagrama de componentes para um sistema de videogames.](image04.png)
+---
+layout: false
+class: inverse, middle
+
+Quando as bibliotecas relevantes são identificadas, isso se estende às dependências de implementação de terceiros, que também devem ser integradas ao diagrama, quando relevante. Abaixo está um exemplo de um diagrama de componentes para um sistema de videogame.
+
+Os diagramas de componentes são especialmente úteis no início do processo de design, devido à sua ênfase de alto nível. Eles podem ser desenhados em diferentes níveis e permitem que você se concentre não apenas nos sistemas, mas também nos subsistemas.
+---
+layout: false
+class: inverse, middle
+
+## Diagramas de Pacotes
+
+As classes no software orientado a objetos estão relacionadas de alguma maneira.
+---
+layout: false
+class: inverse, middle
+
+Um pacote agrupa elementos de software relacionados. Os elementos podem ser relacionados com base em dados, classes ou tarefas do usuário. Um pacote também pode definir um "espaço para nome" para os elementos que ele contém, ou seja, um pacote é nomeado e pode organizar os elementos nomeados do software em um escopo separado. Um elemento pode ser identificado exclusivamente no sistema por um "nome qualificado" totalmente baseado em seu próprio nome e no nome do pacote em que o elemento está.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de pacotes mostram os pacotes e as dependências entre eles. Esses diagramas podem organizar um sistema completo em pacotes de elementos empacotáveis ​​relacionados, que podem incluir dados, classes ou mesmo outros pacotes. Os diagramas de pacotes ajudam a fornecer agrupamentos de alto nível de um sistema, para que seja fácil ver como um pacote contém elementos relacionados e como pacotes diferentes dependem um do outro.
+
+No proximo slide está um exemplo de um diagrama de pacotes para um videogame:
+
+---
+layout:false
+class: middle, center
+![Figura Diagrama de pacote para um videogame.](image05.png)
+---
+layout: false
+class: inverse, middle
+
+Os pacotes são representados por pastas com guias. Se não houver elementos a serem mostrados no pacote, o nome do pacote entrará no centro da pasta. Se forem necessários detalhes, há duas maneiras de isso ser expresso.
+
+Os elementos podem ser aninhados dentro da pasta, como abaixo:
+
+---
+layout:false
+class: middle, center
+![](image06.png)
+---
+layout: false
+class: inverse, middle
+
+Como alternativa, esta notação pode ser usada:
+
+---
+layout:false
+class: middle, center
+![](image07.png)
+---
+layout: false
+class: inverse, middle
+
+Aqui, um pacote de player contém a interface de movimento, mas é desenhada abaixo da pasta no diagrama. Esse relacionamento é uma composição, em que o pacote inteiro tem um elemento como parte. Elementos contidos também podem ser listados em um pacote por seus nomes. Esses nomes podem ser parcialmente qualificados, mas devem ser exclusivos dentro do pacote.
+
+---
+layout:false
+class: middle, center
+![](image08.png)
+---
+layout: false
+class: inverse, middle
+
+Observe no exemplo acima que sinais de mais (+) e de menos (-) foram usados ​​para indicar se os elementos são públicos ou privados. Os elementos públicos podem ser acessados ​​fora do pacote por seus nomes totalmente qualificados. Os relacionamentos são indicados por meio de setas de linhas pontilhadas.
+---
+layout: false
+class: inverse, middle
+
+Um pacote pode importar um elemento de outro pacote, como no exemplo abaixo, onde o pacote Level está importando o Local do pacote Player. Isso coloca o nome Location no namespace Level, especialmente para uso conveniente por elementos no Level. Como a tag de importação é pública, o nome fica visível para importação adicional através do pacote Level. Se uma tag fosse privada, o nome seria visível apenas por elementos dentro do namespace Level e não mais além.
+
+---
+layout:false
+class: middle, center
+![](image09.png)
+---
+layout: false
+class: inverse, middle
+
+Um pacote pode importar todo o conteúdo de outros pacotes, como no exemplo abaixo, onde o pacote da Interface do Usuário está fazendo uma importação pública do pacote Player, conforme indicado pela tag import, essencialmente fazendo importações públicas dos nomes visíveis dos elementos em Jogador. O pacote da interface do usuário está fazendo uma importação privada do pacote Buttons, conforme indicado pela tag de acesso, essencialmente fazendo importações privadas dos nomes visíveis dos elementos nos Buttons. Esses nomes não são divulgados fora do namespace da interface do usuário.
+
+---
+layout:false
+class: middle, center
+![](image10.png)
+---
+layout: false
+class: inverse, middle
+
+Os pacotes também podem ser mesclados, como no diagrama abaixo. A mesclagem geralmente ocorre quando dois pacotes ou conceitos precisam se unir em um. Este é um uso de generalização que permite que diferentes definições sejam fornecidas para o mesmo conceito.
+
+---
+layout:false
+class: middle, center
+![](image11.png)
+---
+layout: false
+class: inverse, middle
+
+O primeiro diagrama mostrado no início desta seção mostra um diagrama completo de pacotes para um sistema de videogame. Pacotes como jogador, nível, pontuação e análises sobre os hábitos do jogador estão incluídos. Esses pacotes interagem principalmente entre si, o que significa que eles podem se importar publicamente. Observe que o pacote analítico, no entanto, requer alguma comunicação com um servidor online para armazenar dados. Este pacote está disponível por importação privada.
+---
+layout: false
+class: inverse, middle
+
+O relacionamento de bônus também é especial porque possui um relacionamento de uso com um nível normal. A relação de usos implica que o nível de bônus requer um nível normal para sua implementação completa. Se não houver definição para o nível, não poderá haver uma definição para o nível de bônus.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de pacotes podem ser criados em qualquer estágio do desenvolvimento. Eles também podem se adaptar e mudar com a versão mais recente do software que está sendo trabalhada. Os diagramas de pacote são particularmente úteis para designers técnicos, pois permitem ver as dependências e as relações entre grupos de elementos relacionados.
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
