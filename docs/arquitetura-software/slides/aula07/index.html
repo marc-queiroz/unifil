@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 2.5em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 07
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+# Compreendendo os atributos da qualidade
+Muitos fatores determinam as qualidades que devem ser previstas na arquitetura de um sistema. Essas qualidades vão além da funcionalidade, que é a declaração básica dos recursos, serviços e comportamento do sistema. Embora a funcionalidade e outras qualidades estejam intimamente relacionadas, a funcionalidade geralmente ocupa o lugar da frente no esquema de desenvolvimento.
+---
+layout: false
+class: inverse, middle
+Os sistemas são freqüentemente reprojetados, não porque são funcionalmente deficientes - as substituições geralmente são idênticas em termos funcionais - mas porque são difíceis de manter, portar ou escalar; ou eles são muito lentos; ou eles foram comprometidos por hackers. A arquitetura era o primeiro lugar na criação de software no qual os requisitos de qualidade podiam ser abordados. É o mapeamento da funcionalidade de um sistema em estruturas de software que determina o suporte de qualidades da arquitetura. 
+---
+layout: false
+class: inverse, middle
+Um atributo de qualidade (QA) é uma propriedade mensurável ou testável de um sistema que é usado para indicar quão bem o sistema satisfaz as necessidades de seus stakeholders. Você pode pensar em um atributo de qualidade como uma medida da “bondade” de um produto ao longo de alguma dimensão de interesse de uma parte interessada.
+---
+layout: false
+class: inverse, middle
+Focamos em:
+- Como expressar as qualidades que queremos que nossa arquitetura forneça ao sistema ou sistemas que estamos construindo a partir dele
+- Como atingir essas qualidades
+- Como determinar as decisões de design com as quais podemos tomar respeito a essas qualidades
+---
+layout: false
+class: inverse, middle
+## Arquitetura e requisitos
+Os requisitos para um sistema são apresentados de várias formas: requisitos textuais, maquetes, sistemas existentes, casos de uso, histórias de usuários e muito mais. Os requisitos abrangem as seguintes categorias:
+---
+layout: false
+class: inverse, middle
+1. Requisitos funcionais. Esses requisitos indicam o que o sistema deve fazer e como deve se comportar ou reagir aos estímulos em tempo de execução.
+2) Requisitos de atributo de qualidade. Esses requisitos são qualificações dos requisitos funcionais ou do produto geral. A qualificação de um requisito funcional é um item, como a rapidez com que a função deve ser executada ou o quão resistente ela deve ser a entradas incorretas. Uma qualificação do produto geral é um item, como o tempo para implantar o produto ou uma limitação nos custos operacionais.
+---
+layout: false
+class: inverse, middle
+3) Restrições. Uma restrição é uma decisão de projeto com zero grau de liberdade. Ou seja, é uma decisão de design que já foi tomada. Os exemplos incluem o requisito de usar uma determinada linguagem de programação ou reutilizar um determinado módulo existente ou uma autorização de gerenciamento para orientar o serviço do sistema. Essas escolhas são discutíveis sob a alçada do arquiteto, mas fatores externos (como não ser capaz de treinar a equipe em um novo idioma, ter um contrato comercial com um fornecedor de software ou promover objetivos comerciais de interoperabilidade de serviço) levaram aqueles no poder de ditar esses resultados de projeto.
+---
+layout: false
+class: inverse, middle
+Qual é a "resposta" da arquitetura para cada um desses tipos de requisitos?
+1. Os requisitos funcionais são atendidos atribuindo uma sequência apropriada de responsabilidades ao longo do projeto. Como veremos mais adiante neste capítulo, atribuir responsabilidades a elementos arquitetônicos é uma decisão fundamental do projeto arquitetônico.
+2. Os requisitos de atributo de qualidade são satisfeitos pelas várias estruturas projetadas na arquitetura e pelos comportamentos e interações dos elementos que preenchem essas estruturas. 
+3. As restrições são satisfeitas ao aceitar a decisão de design e reconciliá-la com outras decisões de design afetadas.
+---
+layout: false
+class: inverse, middle
+## Funcionalidade
+Funcionalidade é a capacidade do sistema para executar o trabalho a que se destina. De todos os requisitos, a funcionalidade tem o relacionamento mais estranho com a arquitetura.
+Antes de tudo, a funcionalidade não determina a arquitetura. Ou seja, dado um conjunto de funcionalidades necessárias, não há fim para as arquiteturas que você pode criar para satisfazer essa funcionalidade. No mínimo, você pode dividir a funcionalidade de várias maneiras e atribuir as sub-partes a diferentes elementos arquitetônicos.
+---
+layout: false
+class: inverse, middle
+Se a funcionalidade fosse a única coisa que importa, não seria necessário dividir o sistema em partes; um único bloco monolítico sem estrutura interna funcionaria perfeitamente. Em vez disso, projetamos nossos sistemas como conjuntos estruturados de elementos arquitetônicos cooperativos - módulos, camadas, classes, serviços, bancos de dados, aplicativos, encadeamentos, pares, camadas e assim por diante - para torná-los compreensíveis e dar suporte a vários outros fins.
+---
+layout: false
+class: inverse, middle
+Embora a funcionalidade seja independente de qualquer estrutura específica, ela é obtida atribuindo responsabilidades aos elementos arquitetônicos, resultando em uma das estruturas arquitetônicas mais básicas.
+As responsabilidades podem ser alocadas arbitrariamente a qualquer módulo, a arquitetura de software restringe essa alocação quando outros atributos de qualidade são importantes. Por exemplo, os sistemas são frequentemente divididos para que várias pessoas possam construí-los cooperativamente. O interesse do arquiteto em funcionalidade está em como ele interage e restringe outras qualidades.
+---
+layout: false
+class: inverse, middle
+## Considerações sobre atributos de qualidade
+Assim como as funções de um sistema não se sustentam sozinhas sem a devida consideração de outros atributos de qualidade, nem os atributos de qualidade são independentes; eles pertencem às funções do sistema. Se um requisito funcional for "Quando o usuário pressionar o botão verde, a caixa de diálogo Opções será exibida", uma anotação de controle de qualidade pode descrever a rapidez com que a caixa de diálogo será exibida; uma anotação de controle de qualidade de disponibilidade pode descrever com que freqüência essa função falhará e com que rapidez será reparada; uma anotação de controle de qualidade de usabilidade pode descrever como é fácil aprender essa função.
+---
+layout: false
+class: inverse, middle
+Os atributos de qualidade interessam à comunidade de software desde os anos 70. Há uma variedade de taxonomias e definições publicadas, e muitas delas têm suas próprias comunidades de pesquisadores e profissionais. Da perspectiva de um arquiteto, há três problemas com discussões anteriores sobre atributos de qualidade do sistema:
+---
+layout: false
+class: inverse, middle
+- As definições fornecidas para um atributo não são testáveis. Não faz sentido dizer que um sistema será "modificável". Todo sistema pode ser modificável em relação a um conjunto de mudanças e não modificável em relação a outro. Os outros atributos de qualidade são semelhantes nesse aspecto: um sistema pode ser robusto em relação a algumas falhas e frágil em relação a outras. E assim por diante.
+---
+layout: false
+class: inverse, middle
+- A discussão geralmente se concentra em qual qualidade uma preocupação específica pertence. Uma falha no sistema devido a um ataque de negação de serviço é um aspecto da disponibilidade, um aspecto do desempenho, um aspecto da segurança ou um aspecto da usabilidade? Todas as quatro comunidades de atributos reivindicariam a propriedade de uma falha do sistema devido a um ataque de negação de serviço. Todos são, até certo ponto, corretos. Mas isso não nos ajuda, como arquitetos, a entender e criar soluções arquitetônicas para gerenciar os atributos de preocupação.
+---
+layout: false
+class: inverse, middle
+- Cada comunidade de atributos desenvolveu seu próprio vocabulário. A comunidade de desempenho tem "eventos" chegando a um sistema, a comunidade de segurança "ataques" que chegam a um sistema, a comunidade de disponibilidade tem "falhas" de um sistema e a comunidade de usabilidade tem "entrada do usuário". Todos eles podem realmente se referir à mesma ocorrência, mas são descritos usando termos diferentes.
+---
+layout: false
+class: inverse, middle
+Uma solução para os dois primeiros desses problemas (definições não testáveis ​​e preocupações sobrepostas) é usar cenários de atributos de qualidade como um meio de caracterizar os atributos. Uma solução para o terceiro problema é fornecer uma discussão sobre cada atributo - concentrando-se em suas preocupações subjacentes - para ilustrar os conceitos que são fundamentais para essa comunidade de atributos.
+Existem duas categorias de atributos de qualidade nos quais focamos. A primeira é a que descreve algumas propriedades do sistema em tempo de execução, como disponibilidade, desempenho ou usabilidade. O segundo são aqueles que descrevem alguma propriedade do desenvolvimento do sistema, como modificabilidade ou testabilidade.
+---
+layout: false
+class: inverse, middle
+Em sistemas complexos, os atributos de qualidade nunca podem ser alcançados isoladamente. A conquista de qualquer um terá um efeito, às vezes positivo e às vezes negativo, na conquista de outros. Por exemplo, quase todos os atributos de qualidade afetam negativamente o desempenho. Veja portabilidade. A principal técnica para obter software portátil é isolar as dependências do sistema, o que introduz sobrecarga na execução do sistema, normalmente como limites de processo ou procedimento, e isso prejudica o desempenho. Determinar o design que satisfaz todos os requisitos de atributos de qualidade é parcialmente uma questão de fazer as trocas apropriadas. 
+---
+layout: false
+class: inverse, middle
+Nosso objetivo aqui é fornecer o contexto para discutir cada atributo de qualidade. Em particular, nos concentramos em como os atributos de qualidade podem ser especificados, quais decisões arquiteturais permitirão a obtenção de determinados atributos de qualidade e quais perguntas sobre atributos de qualidade permitirão ao arquiteto tomar as decisões corretas de design.
+---
+layout: false
+class: inverse, middle
+## Especificando requisitos de atributo de qualidade
+Um requisito de atributo de qualidade deve ser inequívoco e testável. Utilizamos um formulário comum para especificar todos os requisitos de atributos de qualidade. Isso tem a vantagem de enfatizar os pontos em comum entre todos os atributos de qualidade. Tem a desvantagem de ocasionalmente ser um ajuste de força para alguns aspectos dos atributos de qualidade.
+Nossa forma comum de expressão de atributos de qualidade tem as seguintes partes:
+---
+layout: false
+class: inverse, middle
+- Estímulo. Usamos o termo “estímulo” para descrever um evento que chega ao sistema. O estímulo pode ser um evento para a comunidade de desempenho, uma operação do usuário para a comunidade de usabilidade ou um ataque à comunidade de segurança. Usamos o mesmo termo para descrever uma ação motivadora das qualidades do desenvolvimento. Assim, um estímulo à modificabilidade é um pedido de modificação; um estímulo à testabilidade é a conclusão de uma fase de desenvolvimento.
+---
+layout: false
+class: inverse, middle
+- fonte de estímulo. Um estímulo deve ter uma fonte - deve vir de algum lugar. A fonte do estímulo pode afetar a forma como é tratado pelo sistema. Uma solicitação de um usuário confiável não passará pelo mesmo escrutínio que uma solicitação de um usuário não confiável.
+- Resposta. Também deve ser especificado como o sistema deve responder ao estímulo. A resposta consiste nas responsabilidades que o sistema (pelas qualidades de tempo de execução) ou os desenvolvedores (pelas qualidades do tempo de desenvolvimento) devem executar em resposta ao estímulo. Por exemplo, em um cenário de desempenho, um evento chega (o estímulo) e o sistema deve processar esse evento e gerar uma resposta. Em um cenário de modificabilidade, chega um pedido de modificação (o estímulo) e os desenvolvedores devem implementar a modificação - sem efeitos colaterais - e depois testar e implantar a modificação.
+---
+layout: false
+class: inverse, middle
+- medir a resposta. Determinar se uma resposta é satisfatória - se o requisito é atendido - é ativado fornecendo uma medida de resposta. Para desempenho, isso pode ser uma medida de latência ou taxa de transferência; para modificabilidade, pode ser o tempo de trabalho necessário para fazer, testar e implantar a modificação.
+---
+layout: false
+class: inverse, middle
+Essas quatro características de um cenário são o coração de nossas especificações de atributos de qualidade. Mas há mais duas características importantes: ambiente e artefato.
+- meio ambiente. O ambiente de um requisito é o conjunto de circunstâncias em que o cenário ocorre. O ambiente atua como um qualificador do estímulo. Por exemplo, uma solicitação de modificação que chega após o código ter sido congelado para uma liberação pode ser tratada de maneira diferente daquela solicitada antes do congelamento. Uma falha que é a quinta falha sucessiva de um componente pode ser tratada de maneira diferente da primeira falha desse componente.
+---
+layout: false
+class: inverse, middle
+- Artefato. Finalmente, o artefato é a parte do sistema ao qual o requisito se aplica. Freqüentemente, esse é o sistema inteiro, mas ocasionalmente partes específicas do sistema podem ser chamadas. Uma falha em um armazenamento de dados pode ser tratada de maneira diferente de uma falha no armazenamento de metadados. Modificações na interface do usuário podem ter tempos de resposta mais rápidos do que modificações no middleware.
+---
+layout: false
+class: inverse, middle
+Para resumir como especificamos os requisitos de atributos de qualidade, capturamos formalmente como cenários de seis partes. Embora seja comum omitir uma ou mais dessas seis partes, particularmente nos estágios iniciais do pensamento sobre atributos de qualidade, saber que todas as partes estão presentes obriga o arquiteto a considerar se cada parte é relevante.
+Em resumo, aqui estão as seis partes:
+---
+layout: false
+class: inverse, middle
+1 Fonte de estimulo. Esta é uma entidade (um humano, um sistema de computador ou qualquer outro atuador) que gerou o estímulo.
+
+2 Estímulo. O estímulo é uma condição que requer uma resposta quando chega ao sistema.
+
+3 Meio Ambiente. O estímulo ocorre sob certas condições. O sistema pode estar em uma condição de sobrecarga ou em operação normal ou em algum outro estado relevante. Para muitos sistemas, a operação "normal" pode se referir a um dos vários modos. Para esses tipos de sistemas, o ambiente deve especificar em qual modo o sistema está executando.
+---
+layout: false
+class: inverse, middle
+4 Artefato. Algum artefato é estimulado. Pode ser uma coleção de sistemas, todo o sistema ou parte dele.
+
+5 Resposta. A resposta é a atividade realizada como resultado da chegada do estímulo.
+
+6 Medida de resposta. Quando a resposta ocorre, deve ser mensurável de alguma forma, para que o requisito possa ser testado.
+---
+layout: false
+class: inverse, middle
+Distinguimos cenários gerais de atributos de qualidade (que chamamos de "cenários gerais") - aqueles que são independentes do sistema e podem, potencialmente, pertencer a qualquer sistema - de cenários concretos de atributos de qualidade (cenários concretos) - aqueles que são específicos para o particular sistema em consideração.
+Podemos caracterizar atributos de qualidade como uma coleção de cenários gerais. Obviamente, para converter essas caracterizações genéricas de atributos em requisitos para um sistema específico, é necessário tornar os cenários gerais específicos do sistema. A Figura 4.1 mostra as partes de um cenário de atributo de qualidade que acabamos de discutir. A Figura 4.2 mostra um exemplo de cenário geral, neste caso para disponibilidade.
+---
+layout: false
+class: inverse, middle, center
+![Figura 41](image41.jpg)
+
+Figura 4.1. As partes de um cenário de atributo de qualidade
+---
+layout: false
+class: inverse, middle, center
+
+![Figura 42](image42.jpg)
+
+Figura 4.2. Um cenário geral para disponibilidade
+---
+layout: false
+class: inverse, middle
+## Obtenção de atributos de qualidade por meio de táticas
+Os requisitos de atributos de qualidade especificam as respostas do sistema que, com um pouco de sorte e uma dose de bom planejamento, atingem os objetivos da empresa. Agora, recorremos às técnicas que um arquiteto pode usar para obter os atributos de qualidade exigidos. Chamamos essas técnicas de táticas arquitetônicas. Uma tática é uma decisão de design que influencia a obtenção de uma resposta de atributo de qualidade - as táticas afetam diretamente a resposta do sistema a algum estímulo. As táticas conferem portabilidade a um design, alto desempenho a outro e integrabilidade a um terceiro.
+O foco de uma tática está em uma única resposta de atributo de qualidade. 
+---
+layout: false
+class: inverse, middle
+Dentro de uma tática, não há consideração de trocas. Os tradeoffs devem ser explicitamente considerados e controlados pelo designer. Nesse aspecto, as táticas diferem dos padrões arquiteturais, onde as compensações são incorporadas ao padrão. 
+Um design de sistema consiste em uma coleção de decisões. Algumas dessas decisões ajudam a controlar as respostas dos atributos de qualidade; outros garantem a conquista da funcionalidade do sistema. Representamos a relação entre estímulo, tática e resposta na Figura 4.3. As táticas, como padrões de design, são técnicas de design que os arquitetos usam há anos. Nossa contribuição é isolá-los, catalogá-los e descrevê-los. 
+---
+layout: false
+class: inverse, middle, center
+![](image43.png)
+
+Figura 4.3. As táticas destinam-se a controlar as respostas aos estímulos.
+---
+layout: false
+class: inverse, middle
+Porque fazemos isso? Há três razões:
+
+1 Os padrões de design são complexos; eles geralmente consistem em um conjunto de decisões de design. Mas os padrões costumam ser difíceis de aplicar como estão; arquitetos precisam modificá-los e adaptá-los. Ao entender o papel das táticas, um arquiteto pode mais avaliar com facilidade as opções para aumentar um padrão existente para atingir uma meta de atributo de qualidade.
+
+2 Se não existe um padrão para atingir a meta de projeto do arquiteto, as táticas permitem que o arquiteto construa um fragmento de design a partir dos "primeiros princípios". As táticas fornecem ao arquiteto informações sobre as propriedades do fragmento de design resultante.
+---
+layout: false
+class: inverse, middle
+3 Ao catalogar táticas, fornecemos uma maneira de tornar o design mais sistemático, dentro de algumas limitações. Nossa lista de táticas não fornece uma taxonomia. Nós fornecemos apenas uma categorização. As táticas se sobrepõem, e você freqüentemente terá uma escolha entre várias táticas para melhorar um atributo de qualidade específico. A escolha de qual tática usar depende de fatores como tradeoffs entre outros atributos de qualidade e o custo para implementar. Essas considerações transcendem a discussão de táticas para atributos de qualidade específicos. 
+---
+layout: false
+class: inverse, middle
+Considere o desempenho: agendar recursos é uma tática de desempenho comum. Mas essa tática precisa ser refinada em uma estratégia de agendamento específica, como trabalho mais curto primeiro, rodízio e assim por diante, para fins específicos. Usar um intermediário é uma tática de modificabilidade. Mas existem vários tipos de intermediários (camadas, corretores e proxies, para citar apenas alguns). Portanto, há aprimoramentos que um designer empregará para tornar cada tática concreta.
+
+Além disso, a aplicação de uma tática depende do contexto. Novamente, considerando o desempenho: o gerenciamento da taxa de amostragem é relevante em alguns sistemas em tempo real, mas não em todos os sistemas em tempo real e certamente não nos sistemas de banco de dados.
+---
+layout: false
+class: inverse, middle
+## Orientando as decisões de design de qualidade
+Lembre-se de que é possível visualizar uma arquitetura como resultado da aplicação de uma coleção de decisões de design. O que apresentamos aqui é uma categorização sistemática dessas decisões, para que um arquiteto possa focalizar a atenção nas dimensões do projeto que provavelmente serão as mais problemáticas.
+As sete categorias de decisões de design são
+1. Alocação de responsabilidades
+2. Modelo de coordenação
+3. Modelo de dados
+4. Gerenciamento de recursos
+5. Mapeamento entre elementos arquitetônicos
+6. Decisões vinculativas
+7. Escolha da tecnologia
+---
+layout: false
+class: inverse, middle
+Essas categorias não são a única maneira de classificar decisões de projeto arquitetônico, mas fornecem uma divisão racional de preocupações. Essas categorias podem se sobrepor, mas tudo bem se uma decisão específica existir em duas categorias diferentes, porque a preocupação do arquiteto é garantir que todas as decisões importantes sejam consideradas. Nossa categorização de decisões é parcialmente baseada em nossa definição de arquitetura de software, pois muitas de nossas categorias se relacionam com a definição de estruturas e as relações entre elas.
+---
+layout: false
+class: inverse, middle
+## Alocação de responsabilidades
+As decisões que envolvem a alocação de responsabilidades incluem o seguinte:
+- Identificar as responsabilidades importantes, incluindo funções básicas do sistema, infraestrutura arquitetônica e satisfação dos atributos de qualidade.
+---
+layout: false
+class: inverse, middle
+- Determinar como essas responsabilidades são alocadas a elementos que não são de tempo de execução e as que são tempo real de execução (ou seja, módulos, componentes e conectores).
+As estratégias para tomar essas decisões incluem decomposição funcional, modelagem de objetos do mundo real, agrupamento com base nos principais modos de operação do sistema ou agrupamento com base em requisitos de qualidade semelhantes: taxa de quadros de processamento, nível de segurança ou alterações esperadas.
+---
+layout: false
+class: inverse, middle
+## O Modelo de Coordenação
+Software trabalha com elementos que interagem entre si por meio de mecanismos projetados. Esses mecanismos são chamados coletivamente de modelo de coordenação. As decisões sobre o modelo de coordenação incluem:
+- Identificar os elementos do sistema que devem coordenar ou estão proibidos de coordenar.
+- Determinar as propriedades da coordenação, como pontualidade, moeda, integridade, correção e consistência.
+---
+layout: false
+class: inverse, middle
+- Escolha dos mecanismos de comunicação (entre sistemas, entre nosso sistema e entidades externas, entre elementos de nosso sistema) que realizam essas propriedades. As propriedades importantes dos mecanismos de comunicação incluem entrega com estado versus sem estado, síncrona versus assíncrona, entrega garantida versus não garantida e propriedades relacionadas ao desempenho, como taxa de transferência e latência.
+---
+layout: false
+class: inverse, middle
+## Modelo de dados
+Todo sistema deve representar artefatos de interesse geral do sistema - dados - de alguma maneira interna. A coleção dessas representações e como interpretá-las é chamada de modelo de dados. As decisões sobre o modelo de dados incluem o seguinte:
+- Escolhendo as principais abstrações de dados, suas operações e suas propriedades. Isso inclui determinar como os itens de dados são criados, inicializados, acessados, persistidos, manipulados, traduzidos e destruídos.
+- Compilar metadados necessários para uma interpretação consistente dos dados.
+---
+layout: false
+class: inverse, middle
+- Organizar os dados. Isso inclui determinar se os dados serão mantidos em um banco de dados relacional, em uma coleção de objetos ou em ambos. Se ambos, o mapeamento entre os dois locais diferentes dos dados deve ser determinado.
+---
+layout: false
+class: inverse, middle
+## Gerenciamento de recursos
+Um arquiteto pode precisar arbitrar o uso de recursos compartilhados na arquitetura. Isso inclui recursos físicos (por exemplo, CPU, memória, bateria, buffers de hardware, relógio do sistema, portas de E / S) e recursos programáveis ​​(por exemplo, bloqueios do sistema, buffers de software, conjuntos de encadeamentos e códigos que não são seguros para encadeamentos).
+---
+layout: false
+class: inverse, middle
+As decisões para o gerenciamento de recursos incluem o seguinte:
+- Identificar os recursos que devem ser gerenciados e determinar os limites de cada um.
+- Determinar quais elementos do sistema gerenciam cada recurso.
+- Determinar como os recursos são compartilhados e as estratégias de arbitragem empregadas quando houver contenção.
+- Determinar o impacto da saturação em diferentes recursos. Por exemplo, à medida que uma CPU fica mais carregada, o desempenho geralmente diminui de maneira bastante constante. Por outro lado, quando você começa a ficar sem memória, em algum momento você começa a paginar / trocar intensivamente e seu desempenho repentinamente pára.
+---
+layout: false
+class: inverse, middle
+## Mapeamento entre elementos arquitetônicos
+Uma arquitetura deve fornecer dois tipos de mapeamentos. Primeiro, há mapeamento entre elementos em diferentes tipos de estruturas de arquitetura - por exemplo, mapeamento de unidades de desenvolvimento (módulos) para unidades de execução (encadeamentos ou processos). A seguir, há um mapeamento entre os elementos de software e os elementos do ambiente - por exemplo, mapeando de processos para as CPUs específicas em que esses processos serão executados.
+---
+layout: false
+class: inverse, middle
+Os mapeamentos úteis incluem:
+- O mapeamento de módulos e elementos de tempo de execução entre si - ou seja, os elementos de tempo de execução criados a partir de cada módulo; os módulos que contêm o código para cada elemento de tempo de execução.
+- A atribuição de elementos de tempo de execução aos processadores.
+- A atribuição de itens no modelo de dados para armazenamentos de dados.
+- O mapeamento de módulos e elementos de tempo de execução para unidades de entrega.
+---
+layout: false
+class: inverse, middle
+## Decisões de tempo vinculativo
+As decisões de tempo vinculativo apresentam faixas de variação permitidas. Essa variação pode ser vinculada em diferentes momentos do ciclo de vida do software por diferentes entidades - desde o tempo de design por um desenvolvedor até o tempo de execução por um usuário final. Uma decisão de tempo vinculativo estabelece o escopo, o ponto no ciclo de vida e o mecanismo para alcançar a variação.
+---
+layout: false
+class: inverse, middle
+As decisões nas outras seis categorias têm uma decisão de tempo vinculativo associada. Exemplos de tais decisões de tempo vinculativo incluem o seguinte:
+- Para alocação de responsabilidades, é possível selecionar os módulos no tempo de construção por meio de um makefile parametrizado.
+---
+layout: false
+class: inverse, middle
+- Para escolha do modelo de coordenação, é possível projetar a negociação de protocolos em tempo de execução.
+- Para gerenciamento de recursos, você pode projetar um sistema para aceitar novos dispositivos periféricos conectados em tempo de execução, após o que o sistema os reconhece, baixa e instala os drivers corretos automaticamente.
+- Para a escolha da tecnologia, você pode criar uma loja de aplicativos para um smartphone que faça o download automático da versão apropriada para o telefone do cliente que o comprou.
+---
+layout: false
+class: inverse, middle
+Ao tomar decisões vinculativas, considere os custos para implementá-la e os custos para fazer uma modificação após a implementação da decisão. Por exemplo, se você estiver pensando em mudar de plataforma em algum momento após o tempo do código, poderá se isolar dos efeitos causados ​​pela portabilidade do seu sistema para outra plataforma a algum custo. A tomada dessa decisão depende dos custos incorridos pela modificação de uma ligação antecipada em comparação com os custos incorridos pela implementação dos mecanismos envolvidos na ligação tardia.
+---
+layout: false
+class: inverse, middle
+## Escolha da tecnologia
+Toda decisão de arquitetura deve eventualmente ser realizada usando uma tecnologia específica. Às vezes, a seleção da tecnologia é feita por outras pessoas, antes do início do processo de design da arquitetura intencional. Nesse caso, a tecnologia escolhida se torna uma restrição nas decisões em cada uma das sete categorias. Em outros casos, o arquiteto deve escolher uma tecnologia adequada para tomar uma decisão em cada uma das categorias.
+---
+layout: false
+class: inverse, middle
+A escolha das decisões de tecnologia envolve o seguinte:
+- Decidir quais tecnologias estão disponíveis para realizar as decisões tomadas nas outras categorias.
+- Determinar se as ferramentas disponíveis para dar suporte a essa opção de tecnologia (IDEs, simuladores, ferramentas de teste etc.) são adequadas para o desenvolvimento.
+---
+layout: false
+class: inverse, middle
+- Determinar a extensão da familiaridade interna, bem como o grau de suporte externo disponível para a tecnologia (como cursos, tutoriais, exemplos e disponibilidade de prestadores de serviços que possam fornecer experiência em uma crise) e decidir se isso é adequado para prosseguir.
+- Determinar os efeitos colaterais da escolha de uma tecnologia, como um modelo de coordenação necessário ou oportunidades restritas de gerenciamento de recursos.
+- Determinar se uma nova tecnologia é compatível com a pilha de tecnologias existente. Por exemplo, a nova tecnologia pode ser executada em cima ou ao lado da pilha de tecnologia existente? Ele pode se comunicar com a pilha de tecnologia existente? A nova tecnologia pode ser monitorada e gerenciada?
+---
+layout: false
+class: inverse, middle
+# Resumo
+Os requisitos para um sistema são apresentados em três categorias:
+
+1) Funcional. Esses requisitos são satisfeitos ao incluir um conjunto apropriado de responsabilidades no projeto.
+
+2) Atributo de qualidade. Esses requisitos são satisfeitos pelas estruturas e comportamentos da arquitetura.
+
+3) Restrições. Uma restrição é uma decisão de design que já foi tomada.
+---
+layout: false
+class: inverse, middle
+Para expressar um requisito de atributo de qualidade, usamos um cenário de atributo de qualidade. As partes do cenário são as seguintes:
+1. Fonte de estimulo
+2. Estímulo
+3. Ambiente
+4. Artefato
+5. Resposta
+6. Medida de resposta
+---
+layout: false
+class: inverse, middle
+Uma tática de arquitetura é uma decisão de design que afeta uma resposta de atributo de qualidade. O foco de uma tática está em uma única resposta de atributo de qualidade. Os padrões arquitetônicos podem ser vistos como "pacotes" de táticas.
+As sete categorias de decisões de projeto de arquitetura são:
+1. Alocação de responsabilidades
+2. Modelo de coordenação
+3. Modelo de dados
+4. Gerenciamento de recursos
+5. Mapeamento entre elementos arquitetônicos
+6. Decisões de tempo vinculativo
+7. Escolha da tecnologia
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
