@@ -20,6 +20,8 @@ Para ter acesso a aula 6, clique em [Slides][aula06].
 
 Para ter acesso a aula 7, clique em [Slides][aula07].
 
+Para ter acesso a aula 8, clique em [Slides][aula08].
+
 [aula01]: /unifil/arquitetura-software/slides/aula01.html
 [aula02]: /unifil/arquitetura-software/slides/aula02.html
 [aula03]: /unifil/arquitetura-software/slides/aula03/index.html
@@ -27,4 +29,5 @@ Para ter acesso a aula 7, clique em [Slides][aula07].
 [aula05]: /unifil/arquitetura-software/slides/aula05/index.html
 [aula06]: /unifil/arquitetura-software/slides/aula06/index.html
 [aula07]: /unifil/arquitetura-software/slides/aula07/index.html
+[aula08]: /unifil/arquitetura-software/slides/aula08/index.html
 

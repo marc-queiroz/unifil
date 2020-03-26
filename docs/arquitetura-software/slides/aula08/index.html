@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content {
+        font-size: 2.5em;
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 08
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle, center
+![Figura 41](image41.jpg)
+---
+layout: false
+class: inverse, middle
+
+## Disponibilidade
+Disponibilidade refere-se a uma propriedade do software que está lá e pronta para executar sua tarefa quando você precisar. Essa é uma perspectiva ampla e abrange o que normalmente é chamado de confiabilidade (embora possa incluir considerações adicionais, como tempo de inatividade devido à manutenção periódica). De fato, a disponibilidade baseia-se no conceito de confiabilidade, adicionando a noção de recuperação - ou seja, quando o sistema quebra, ele se repara. O reparo pode ser realizado por vários meios, como veremos neste capítulo. Mais precisamente, Avižienis e seus colegas definiram confiabilidade:
+---
+layout: false
+class: inverse, middle
+Confiabilidade é a capacidade de evitar falhas que são mais frequentes e mais graves do que o aceitável.
+Nossa definição de disponibilidade como um aspecto de confiabilidade é a seguinte: "Disponibilidade refere-se à capacidade de um sistema para mascarar ou reparar falhas, de modo que o período cumulativo de interrupção do serviço não exceda um valor necessário durante um intervalo de tempo especificado". Essas definições sujeitam o conceito de falha ao julgamento de um agente externo, possivelmente humano. Eles também incluem conceitos de confiabilidade, confidencialidade, integridade e qualquer outro atributo de qualidade que envolva um conceito de falha inaceitável.
+---
+layout: false
+class: inverse, middle
+A disponibilidade está intimamente relacionada à segurança. Um ataque de negação de serviço é projetado explicitamente para fazer com que um sistema falhe - ou seja, para torná-lo indisponível. A disponibilidade também está intimamente relacionada ao desempenho, porque pode ser difícil dizer quando um sistema falhou e quando é simplesmente absurdamente lento para responder. Por fim, a disponibilidade está intimamente aliada à segurança, preocupada em impedir que o sistema entre em um estado perigoso e recuperar ou limitar os danos quando isso ocorre.
+---
+layout: false
+class: inverse, middle
+Fundamentalmente, a disponibilidade é minimizar o tempo de interrupção do serviço, mitigando falhas. Falha implica visibilidade para um sistema ou observador humano no ambiente. Ou seja, uma falha é o desvio do sistema em relação à sua especificação, onde o desvio é visível externamente. Uma das tarefas mais exigentes na criação de um sistema tolerante a falhas e de alta disponibilidade é entender a natureza das falhas que podem surgir durante a operação. Uma vez entendidos, as estratégias de mitigação podem ser projetadas no software.
+---
+layout: false
+class: inverse, middle
+A causa de uma falha é chamada de falta. Uma falta pode ser interna ou externa ao sistema em consideração. Os estados intermediários entre a ocorrência de uma falha e a ocorrência de uma falha são chamados de erros. As faltas podem ser evitadas, toleradas, removidas ou previstas. Dessa maneira, um sistema se torna "resiliente" a falhas.
+Entre as áreas com as quais estamos preocupados, estão como as faltas do sistema são detectadas, com que frequência as faltas do sistema podem ocorrer, o que acontece quando ocorre uma falha, quanto tempo um sistema pode ficar fora de operação, quando faltas ou falhas podem ocorrer com segurança, como faltas ou falhas podem ser evitadas e que tipos de notificação são necessários quando ocorre uma falha.
+---
+layout: false
+class: inverse, middle
+Como uma falha do sistema é observável pelos usuários, o tempo para reparo é o tempo até a falha não ser mais observável. Isso pode ser um breve atraso no tempo de resposta ou pode ser o tempo que leva alguém para voar para um local remoto nos Andes para consertar uma peça de maquinaria de mineração (como nos foi relatado por uma pessoa responsável por reparar o software em um motor de máquina de mineração). A noção de “observabilidade” pode ser complicada: o vírus Stuxnet, por exemplo, ficou despercebido por muito tempo, mesmo causando danos. Além disso, estamos frequentemente preocupados com o nível de capacidade que permanece quando ocorre uma falha - um modo operacional degradado.
+---
+layout: false
+class: inverse, middle
+A distinção entre faltas e falhas permite discutir estratégias de reparo automático. Ou seja, se o código contendo uma falha for executado, mas o sistema puder se recuperar da falha sem que seja observado qualquer desvio do comportamento especificado, não haverá falha.
+---
+layout: false
+class: inverse, middle
+A disponibilidade de um sistema pode ser calculada como a probabilidade de que ele forneça os serviços especificados dentro dos limites necessários durante um intervalo de tempo especificado. Ao se referir ao hardware, existe uma expressão conhecida usada para derivar a disponibilidade em estado estacionário: em que MTBF se refere ao tempo médio entre falhas e MTTR se refere ao tempo médio para reparo. No mundo do software, essa fórmula deve ser interpretada como significando que, ao pensar em disponibilidade, você deve pensar sobre o que fará com que seu sistema falhe, qual a probabilidade de isso ocorrer e que haverá algum tempo necessário para repará-lo.
+---
+layout: false
+class: inverse, middle
+A partir dessa fórmula, é possível calcular probabilidades e fazer reivindicações como "99,999% de disponibilidade" ou uma probabilidade de 0,001% de que o sistema não estará operacional quando necessário. Paradas programadas (quando o sistema é intencionalmente retirado de serviço) podem não ser consideradas no cálculo da disponibilidade, porque o sistema é considerado "desnecessário"; é claro, isso depende dos requisitos específicos do sistema, geralmente codificados em acordos de nível de serviço (SLAs). Esse arranjo pode levar a situações aparentemente estranhas, nas quais o sistema está inoperante e os usuários aguardam, mas o tempo de inatividade é agendado e, portanto, não é contabilizado com relação a nenhum requisito de disponibilidade.
+---
+layout: false
+class: inverse, middle
+Nos sistemas operacionais, as falhas são detectadas e correlacionadas antes de serem relatadas e reparadas. A lógica de correlação de falhas categorizará uma falha de acordo com sua gravidade (crítica, principal ou secundária) e impacto no serviço (afetando ou não afetando o serviço), a fim de fornecer ao operador do sistema status do sistema oportuno e preciso e permitir a estratégia de reparo apropriada a ser empregada. A estratégia de reparo pode ser automatizada ou pode exigir intervenção manual.
+---
+layout: false
+class: inverse, middle
+A disponibilidade fornecida por um sistema de computador ou serviço de hospedagem é frequentemente expressa como um contrato de nível de serviço. Esse SLA especifica o nível de disponibilidade garantido e, geralmente, as penalidades que o sistema de computador ou serviço de hospedagem sofrerá se o SLA for violado. O SLA que a Amazon fornece para o seu serviço de nuvem EC2 é a
+AWS envidará esforços comercialmente razoáveis ​​para disponibilizar o Amazon EC2 com uma porcentagem anual de tempo de atividade [definida em outro lugar] de pelo menos 99,95% durante o ano de serviço. Caso o Amazon EC2 não atenda ao compromisso de Porcentagem anual de tempo de atividade, você estará qualificado para receber um crédito de serviço conforme descrito abaixo.
+---
+layout: false
+class: inverse, middle
+O quadro 5.1 fornece exemplos de requisitos de disponibilidade do sistema e valores limite associados para o tempo de inatividade aceitável do sistema, medido durante períodos de observação de 90 dias e um ano. O termo alta disponibilidade normalmente refere-se a projetos que visam a disponibilidade de 99,999 por cento ("5 noves") ou superior. Por definição ou convenção, apenas interrupções não programadas contribuem para o tempo de inatividade do sistema.
+---
+layout: false
+class: inverse, middle, center
+![Figura 51](image01.png)
+
+Quadro 5.1 requisitos de disponibilidade do sistema
+---
+layout: false
+class: inverse, middle
+## Planejamento para falhas
+Ao projetar um sistema de alta disponibilidade ou crítico para a segurança, é tentador dizer que a falha não é uma opção. É uma frase atraente, mas é uma péssima filosofia de design. De fato, o fracasso não é apenas uma opção, é quase inevitável. O que tornará seu sistema seguro e disponível é planejar a ocorrência de falhas ou falhas (mais prováveis) e tratá-las com calma. O primeiro passo é entender a que tipos de falhas seu sistema está sujeito e quais serão as consequências de cada uma delas. Aqui estão três técnicas conhecidas para entender isso.
+---
+layout: false
+class: inverse, middle
+## Análise de perigos
+A análise de perigos é uma técnica que tenta catalogar os perigos que podem ocorrer durante a operação de um sistema. Ele categoriza cada perigo de acordo com sua gravidade. Por exemplo, o padrão DO-178B usado na indústria aeronáutica define esses níveis de condição de falha em termos de seus efeitos na aeronave, tripulação e passageiros:
+---
+layout: false
+class: inverse, middle
+• Catastrófico. Esse tipo de falha pode causar um acidente. Essa falha representa a perda da função crítica necessária para voar e pousar com segurança aeronaves.
+
+• perigosos. Esse tipo de falha tem um grande impacto negativo na segurança ou no desempenho, ou reduz a capacidade da tripulação de operar a aeronave devido a problemas físicos ou maior carga de trabalho, ou causa ferimentos graves ou fatais entre os passageiros.
+
+• Major. Esse tipo de falha é significativa, mas tem um impacto menor que uma falha perigosa (por exemplo, leva ao desconforto do passageiro em vez de ferimentos) ou aumenta significativamente a carga de trabalho da tripulação até o ponto em que a segurança é afetada.
+
+---
+layout: false
+class: inverse, middle
+• Menor. Esse tipo de falha é perceptível, mas tem um impacto menor do que uma falha grave (por exemplo, causando transtornos aos passageiros ou uma alteração de rotina no plano de vôo).
+
+• sem efeito. Esse tipo de falha não afeta a segurança, a operação da aeronave ou a carga de trabalho da tripulação.
+
+Outros domínios têm suas próprias categorias e definições. A análise de risco também avalia a probabilidade de ocorrência de cada perigo. Riscos para os quais o produto de custo e probabilidade excede algum limite são então objeto de atividades de mitigação.
+---
+layout: false
+class: inverse, middle
+## Análise da árvore de falhas
+A análise da árvore de falhas é uma técnica analítica que especifica um estado do sistema que afeta negativamente a segurança ou a confiabilidade e, em seguida, analisa o contexto e a operação do sistema para encontrar todas as maneiras pelas quais o estado indesejado pode ocorrer. A técnica usa uma construção gráfica (a árvore de falhas) que ajuda a identificar todas as seqüências sequenciais e paralelas de falhas contribuintes que resultarão na ocorrência do estado indesejado, listado na parte superior da árvore (o "evento principal"). As falhas contribuintes podem ser falhas de hardware, erros humanos, erros de software ou quaisquer outros eventos pertinentes que possam levar ao estado indesejável.
+---
+layout: false
+class: inverse, middle
+A Figura 5.1, extraída de um manual da NASA sobre análise de árvore de falhas, mostra uma árvore de falhas muito simples para a qual o evento principal é falha do componente D. Ele mostra que o componente D pode falhar se A falhar e B ou C falhar.
+---
+layout: false
+class: inverse, middle, center
+![Figura 52](image03.png)
+
+Figura 5.1. Uma árvore de falhas simples. D falha se A falhar e B ou C falhar.
+---
+layout: false
+class: inverse, middle
+Os símbolos que conectam os eventos em uma árvore de falhas são chamados de símbolos de porta e são retirados dos diagramas lógicos booleanos. A Figura 5.2 ilustra a notação.
+---
+layout: false
+class: inverse, middle, center
+![Figura 53](image04.png)
+
+Figura 5.2. Símbolos de porta de árvore de falha
+---
+layout: false
+class: inverse, middle
+Uma árvore de falha se presta à análise estática de várias maneiras. Por exemplo, um "conjunto de corte mínimo" é a menor combinação de eventos na parte inferior da árvore que juntos podem causar o evento superior. O conjunto de conjuntos de cortes mínimos mostra todas as maneiras pelas quais os eventos inferiores podem ser combinados para causar a falha abrangente. Qualquer conjunto de cortes mínimos singleton revela um único ponto de falha, que deve ser cuidadosamente examinado. Além disso, as probabilidades de várias falhas contribuintes podem ser combinadas para gerar uma probabilidade do evento principal ocorrer. A análise dinâmica ocorre quando a ordem das falhas contribuintes é importante. Nesse caso, técnicas como a análise de Markov podem ser usadas para calcular a probabilidade de falha em diferentes seqüências de falha.
+---
+layout: false
+class: inverse, middle
+As árvores de falha ajudam no design do sistema, mas também podem ser usadas para diagnosticar falhas no tempo de execução. Se o evento principal ocorreu, então (assumindo que o modelo da árvore de falhas esteja completo) ocorreu uma ou mais das falhas contribuintes e a árvore de falhas pode ser usada para rastrear e iniciar reparos.
+---
+layout: false
+class: inverse, middle
+
+O modo de falha, efeitos e análise de criticidade (FMECA) catalogam os tipos de falhas às quais os sistemas de um determinado tipo são propensos, juntamente com a gravidade dos efeitos de cada um. A FMECA conta com o histórico de falhas de sistemas similares no passado. A Tabela 5.2, também retirada do manual da NASA, mostra os dados para um sistema de amplificadores redundantes. Dados históricos mostram que os amplificadores falham com mais freqüência quando há um curto-circuito ou o circuito é deixado aberto, mas também existem vários outros modos de falha (agrupados como "Outros").
+---
+layout: false
+class: inverse, middle, center
+![Figura 54](image05.png)
+
+Quadro 5.2 Probabilidades e efeitos de falhas A
+---
+layout: false
+class: inverse, middle
+adição da coluna crítica nos dá a probabilidade de uma falha crítica do sistema: 5 × 10^–5 + 5 × 10^–5 + 5 × 10^–5 + 5 × 10^–5 = 2 × 10^–4.
+
+Essas técnicas, e outras, são tão boas quanto o conhecimento e a experiência das pessoas que preenchem suas respectivas estruturas de dados. Um dos piores erros que você pode cometer, de acordo com o manual da NASA, é deixar a forma ter prioridade sobre a substância. Ou seja, não deixe a engenharia de segurança se tornar apenas uma questão de preencher as tabelas. Em vez disso, continue pressionando para descobrir o que mais pode dar errado e, em seguida, planeje-o.
+---
+layout: false
+class: inverse, middle
+## Cenário geral de disponibilidade
+A partir dessas considerações, agora podemos descrever as partes individuais de um cenário geral de disponibilidade. Estes estão resumidos na Tabela 5.3:
+
+• Fonte de estímulo. Diferenciamos as origens internas e externas de falhas ou falhas, porque a resposta desejada do sistema pode ser diferente.
+
+• estímulo. Ocorre uma falha de uma das seguintes classes:
+---
+layout: false
+class: inverse, middle
+• Omissão. Um componente falha ao responder a uma entrada.
+
+• Crash. O componente sofre repetidamente falhas de omissão.
+
+• tempo. Um componente responde, mas a resposta é precoce ou tardia.
+
+• Resposta.Um componente responde com um valor incorreto.
+
+• Artefato. Isso especifica o recurso necessário para estar altamente disponível, como um processador, canal de comunicação, processo ou armazenamento.
+
+---
+layout: false
+class: inverse, middle
+• meio ambiente. O estado do sistema quando a falha ou falha ocorre também pode afetar a resposta desejada do sistema. Por exemplo, se o sistema já viu algumas falhas e está operando em modo diferente do normal, pode ser desejável desligá-lo totalmente. No entanto, se esta é a primeira falha observada, pode ser preferida alguma degradação do tempo ou função de resposta.
+
+---
+layout: false
+class: inverse, middle
+• Resposta.Há várias reações possíveis a uma falha do sistema. Primeiro, a falha deve ser detectada e isolada (correlacionada) antes que qualquer outra resposta seja possível. (Uma exceção a isso é quando a falha é evitada antes que ela ocorra.) Depois que a falha é detectada, o sistema deve se recuperar dela. As ações associadas a essas possibilidades incluem registrar a falha, notificar usuários selecionados ou outros sistemas, tomar ações para limitar os danos causados ​​pela falha, alternar para um modo degradado com menos capacidade ou menos função, desligar sistemas externos ou tornar-se indisponível durante reparar.
+---
+layout: false
+class: inverse, middle
+• medir a resposta.A medida de resposta pode especificar uma porcentagem de disponibilidade ou especificar um tempo para detectar a falha, tempo para reparar a falha, tempos ou intervalos de tempo durante os quais o sistema deve estar disponível ou
+a duração pela qual o sistema deve estar disponível.
+---
+layout: false
+class: inverse, middle, center
+![Figura 55](image06.png)
+
+Quadro 5.3 Cenário geral de disponibilidade A
+---
+layout: false
+class: inverse, middle
+
+Figura 5.3 mostra um cenário concreto gerado a partir do cenário geral: O monitor de pulsação determina que o servidor não responde durante operações normais. O sistema informa o operador e continua a operar sem tempo de inatividade.
+
+---
+layout: false
+class: inverse, middle, center
+![Figura 53](image07.png)
+
+Figura 5.3. Exemplo de cenário de disponibilidade concreta
+---
+layout: false
+class: inverse, middle
+## Táticas para disponibilidade
+Uma falha ocorre quando o sistema não fornece mais um serviço consistente com sua especificação; essa falha é observável pelos atores do sistema. Uma falha (ou combinação de falhas) tem o potencial de causar uma falha. As táticas de disponibilidade, portanto, são projetadas para permitir que um sistema atenda a falhas do sistema, de modo que um serviço entregue pelo sistema permaneça em conformidade com suas especificações. As táticas discutidas nesta seção impedirão que as falhas se tornem falhas ou, pelo menos, limitem os efeitos da falha e possibilitarão o reparo. Ilustramos essa abordagem na Figura 5.4.
+---
+layout: false
+class: inverse, middle, center
+![Figura 54](image08.png)
+
+Figura 5.4. Objetivo das táticas de disponibilidade
+---
+layout: false
+class: inverse, middle
+As táticas de disponibilidade podem ser categorizadas como abordando uma das três categorias: detecção de falhas, recuperação de falhas e prevenção de falhas. A categorização das táticas para disponibilidade é mostrada na Figura 5.5. Observe que geralmente essas táticas serão fornecidas a você por uma infraestrutura de software, como um pacote de middleware; portanto, seu trabalho como arquiteto geralmente é escolher e avaliar (em vez de implementar) as táticas de disponibilidade corretas e as combinação certa de táticas.
+---
+layout: false
+class: inverse, middle, center
+![Figura 54](image09.png)
+
+Figura 5.5. Táticas de disponibilidade
+---
+layout: false
+class: inverse, middle
+## Detectar falhas
+Antes que qualquer sistema possa agir em relação a uma falha, a presença da falha deve ser detectada ou antecipada. As táticas nesta categoria incluem o seguinte:
+---
+layout: false
+class: inverse, middle
+
+• Ping / eco refere-se a um par de mensagens de solicitação / resposta assíncronas trocado entre nós, usado para determinar a acessibilidade e o atraso de ida e volta pelo caminho de rede associado. Mas o eco também determina que o componente pingado está ativo e está respondendo corretamente. O ping geralmente é enviado por um monitor do sistema. Ping / eco requer que um limite de tempo seja definido; esse limite informa ao componente de ping quanto tempo aguardará o eco antes de considerar que o componente ping falhou ("tempo limite excedido"). Implementações padrão de ping / eco estão disponíveis para nós interconectados via IP.
+---
+layout: false
+class: inverse, middle
+• monitor. Um monitor é um componente usado para monitorar o estado de funcionamento de várias outras partes do sistema: processadores, processos, E / S, memória e assim por diante. Um monitor do sistema pode detectar falhas ou congestionamentos na rede ou em outros recursos compartilhados, como em um ataque de negação de serviço. Ele orquestra o software usando outras táticas nesta categoria para detectar componentes com defeito. Por exemplo, o monitor do sistema pode iniciar autotestes ou ser o componente que detecta carimbos de data / hora com defeito ou batimentos cardíacos perdidos.
+---
+layout: false
+class: inverse, middle
+• A pulsação é um mecanismo de detecção de falhas que emprega uma troca periódica de mensagens entre um monitor do sistema e um processo que está sendo monitorado. Um caso especial de pulsação é quando o processo que está sendo monitorado redefine periodicamente o timer do watchdog em seu monitor para impedir que ele expire e, assim, sinalizando uma falha. Para sistemas em que a escalabilidade é uma preocupação, a sobrecarga de transporte e processamento pode ser reduzida com a troca de mensagens de pulsação para outras mensagens de controle trocadas entre o processo que está sendo monitorado e o controlador do sistema distribuído. A grande diferença entre pulsação e ping / eco é quem é responsável por iniciar a verificação de integridade - o monitor ou o próprio componente.
+---
+layout: false
+class: inverse, middle
+• Carimbo de hora. Essa tática é usada para detectar seqüências incorretas de eventos, principalmente em sistemas distribuídos de transmissão de mensagens. Um registro de data e hora de um evento pode ser estabelecido atribuindo o estado de um relógio local ao evento imediatamente após a ocorrência do evento. Números de sequência simples também podem ser usados ​​para esse fim, se as informações de tempo não forem importantes.
+
+• A verificação de integridade verifica a validade ou razoabilidade de operações ou saídas específicas de um componente. Essa tática geralmente é baseada no conhecimento do design interno, do estado do sistema ou da natureza das informações sob análise. Geralmente, é empregado em interfaces para examinar um fluxo de informações específico.
+---
+layout: false
+class: inverse, middle
+• O monitoramento de condições envolve a verificação de condições em um processo ou dispositivo, ou a validação de suposições feitas durante o projeto. Ao monitorar as condições, essa tática impede que um sistema produza um comportamento defeituoso. O cálculo das somas de verificação é um exemplo comum dessa tática. No entanto, o próprio monitor deve ser simples (e, idealmente, comprovável) para garantir que não introduza novos erros de software.
+---
+layout: false
+class: inverse, middle
+• votação. A realização mais comum dessa tática é chamada de redundância modular tripla (TMR), que emprega três componentes que fazem a mesma coisa, cada um dos quais recebe entradas idênticas e encaminha sua saída para a lógica de votação, usada para detectar qualquer inconsistência entre os grupos. três estados de saída. Diante de uma inconsistência, o eleitor relata uma falha. Ele também deve decidir qual saída usar. Pode deixar a maioria governar ou escolher alguma média calculada dos resultados díspares. Essa tática depende criticamente da lógica da votação, que geralmente é realizada como um singleton simples, rigorosamente revisado e testado, para que a probabilidade de erro seja baixa.
+---
+layout: false
+class: inverse, middle
+• Replicação é a forma mais simples de votação; aqui, os componentes são clones exatos um do outro. Ter várias cópias de componentes idênticos pode ser eficaz na proteção contra falhas aleatórias de hardware, mas isso não pode proteger contra erros de design ou implementação, em hardware ou software, porque não há nenhuma forma de diversidade embutida nessa tática.
+---
+layout: false
+class: inverse, middle
+• Redundância funcional é uma forma de votação destinada a solucionar o problema de falhas no modo comum (falhas de projeto ou implementação) nos componentes de hardware ou software. Aqui, os componentes sempre devem fornecer a mesma saída, com a mesma entrada, mas são projetados e implementados de forma diversa.
+---
+layout: false
+class: inverse, middle
+• A redundância analítica permite não apenas a diversidade entre os lados privados dos componentes, mas também a diversidade entre as entradas e saídas dos componentes. Essa tática visa tolerar erros de especificação usando especificações de requisitos separadas. Em sistemas embarcados, a redundância analítica também ajuda quando algumas fontes de entrada provavelmente não estarão disponíveis às vezes. Por exemplo, os programas aviônicos têm várias maneiras de calcular a altitude da aeronave, como o uso de pressão barométrica, o altímetro de radar e geometricamente usando a distância em linha reta e o ângulo de visão de um ponto à frente no solo.
+---
+layout: false
+class: inverse, middle
+O mecanismo de eleitores usado com redundância analítica precisa ser mais sofisticado do que apenas permitir que a maioria governe ou calcule uma média simples. Talvez seja necessário entender quais sensores são atualmente confiáveis ​​ou não, e pode ser solicitado que você produza um valor de fidelidade mais alto do que qualquer componente individual, misturando e suavizando os valores individuais ao longo do tempo.
+---
+layout: false
+class: inverse, middle
+• Detecção de exceção refere-se à detecção de uma condição do sistema que altera o fluxo normal de execução. A tática de detecção de exceção pode ser aprimorada ainda mais:
+
+• As exceções do sistema variam de acordo com a arquitetura de hardware do processador empregada e incluem falhas como dividir por zero, falhas de barramento e endereço, instruções ilegais de programas e assim por diante.
+
+• A vedação de parâmetro tática deincorpora um priori padrão de dados a(como 0xDEADBEEF) colocado imediatamente após qualquer parâmetro de tamanho variável de um objeto. Isso permite a detecção em tempo de execução da substituição da memória alocada para os parâmetros de comprimento variável do objeto.
+---
+layout: false
+class: inverse, middle
+• A digitação de parâmetros emprega uma classe base que define funções que adicionam, localizam e repetem sobre parâmetros de mensagem formatados por valor do comprimento do tipo (TLV). As classes derivadas usam as funções da classe base para implementar funções que fornecem a digitação de parâmetros de acordo com cada parâmetros estrutura de. O uso de digitação forte para criar e analisar mensagens resulta em maior disponibilidade do que implementações que simplesmente tratam as mensagens como buckets de bytes. Obviamente, todo design envolve trocas. Quando você usa digitação forte, normalmente negocia uma disponibilidade mais alta com a facilidade da evolução.
+---
+layout: false
+class: inverse, middle
+• O tempo limite é uma tática que gera uma exceção quando um componente detecta que ele ou outro componente falhou em atender às restrições de tempo. Por exemplo, um componente que aguarda uma resposta de outro componente pode gerar uma exceção se o tempo de espera exceder um determinado valor.
+• Autoteste. Componentes (ou, mais provavelmente, subsistemas inteiros) podem executar procedimentos para testar a si mesmos quanto à operação correta. Os procedimentos de autoteste podem ser iniciados pelo próprio componente ou invocados periodicamente por um monitor do sistema. Isso pode envolver o emprego de algumas das técnicas encontradas no monitoramento de condições, como somas de verificação.
+---
+layout: false
+class: inverse, middle
+## Recuperar de falhas
+As táticas de recuperação de falhas são refinadas em táticas de preparação e reparo e reintrodução táticas de. Este último está preocupado em reintroduzir um componente com falha (mas reabilitado) de volta à operação normal.
+As táticas de preparação e reparo são baseadas em uma variedade de combinações de tentar novamente um cálculo ou introduzir redundância. Eles incluem o seguinte:
+---
+layout: false
+class: inverse, middle
+• Redundância ativa (hot spare). Isso se refere a uma configuração em que todos os nós (sobressalente ativo ou redundante) em um grupo de proteção2 recebem e processam entradas idênticas em paralelo, permitindo que os sobressalentes redundantes mantenham o estado síncrono com o (s) nó (s) ativo (s). Como o sobressalente redundante possui um estado idêntico ao processador ativo, ele pode substituir um componente com falha em questão de milissegundos. O caso simples de um nó ativo e um nó sobressalente redundante é geralmente chamado de redundância 1 + 1 ("um mais um"). A redundância ativa também pode ser usada para proteção de instalações, onde links de rede ativos e em espera são usados ​​para garantir conectividade de rede altamente disponível.
+---
+layout: false
+class: inverse, middle
+• Redundância passiva (warm spare). Isso se refere a uma configuração em que apenas os membros ativos do grupo de proteção processam o tráfego de entrada; uma de suas funções é fornecer ao (s) sobressalente (s) redundante (s) atualizações periódicas do estado. Como o estado mantido pelas peças de reposição redundantes é apenas fracamente acoplado ao do (s) nó (s) ativo (s) no grupo de proteção (com a folga do acoplamento sendo uma função do mecanismo de ponto de verificação empregado entre nós ativos e redundantes), os nós redundantes são referidos como peças quentes.
+---
+layout: false
+class: inverse, middle
+Dependendo dos requisitos de disponibilidade de um sistema, a redundância passiva fornece uma solução que alcança o equilíbrio entre a tática de redundância ativa mais altamente disponível, mas mais intensiva em computação (e cara) e a tática de reposição a frio menos disponível, mas significativamente menos complexa (que também é significativamente mais barata ) (Para um exemplo de implementação de redundância passiva, consulte a seção sobre modelos de código no Capítulo 19.)
+---
+layout: false
+class: inverse, middle
+• Sobressalente (cold spare). Poupança a frio refere-se a uma configuração em que as peças de reposição redundantes de um grupo de proteção permanecem fora de serviço até que ocorra um failover; nesse ponto, um procedimento de inicialização ao reiniciar é iniciado no sobressalente redundante antes de ser colocado em serviço. Devido ao seu baixo desempenho de recuperação, a reposição a frio é mais adequada para sistemas com requisitos apenas de alta confiabilidade (MTBF), em oposição aos que também possuem requisitos de alta disponibilidade.
+---
+layout: false
+class: inverse, middle
+• Manuseio de exceção. Depois que uma exceção é detectada, o sistema deve tratá-la de alguma maneira. A coisa mais fácil que pode fazer é simplesmente travar, mas é claro que é uma péssima ideia do ponto de disponibilidade, usabilidade, testabilidade e bom senso. Existem muito mais possibilidades produtivas. O mecanismo empregado para o tratamento de exceções depende muito do ambiente de programação empregado, variando de códigos de retorno de função simples (códigos de erro) ao uso de classes de exceção que contêm informações úteis na correlação de falhas, como o nome da exceção lançada, a origem do a exceção e a causa da exceção lançada. O software pode usar essas informações para mascarar a falha, geralmente corrigindo a causa da exceção e repetindo a operação.
+---
+layout: false
+class: inverse, middle
+• Reversão. Essa tática permite que o sistema volte a um estado bom conhecido anterior, conhecido como "linha de reversão" - retornando o tempo - na detecção de uma falha. Quando o bom estado é alcançado, a execução pode continuar. Essa tática geralmente é combinada com táticas de redundância ativa ou passiva, para que, após a reversão, uma versão em espera do componente com falha seja promovida para o status ativo. A reversão depende da disponibilidade de uma cópia de um bom estado anterior (um ponto de verificação) para os componentes que estão sendo revertidos. Os pontos de verificação podem ser armazenados em um local fixo e atualizados a intervalos regulares ou em momentos convenientes ou significativos do processamento, como na conclusão de uma operação complexa.
+---
+layout: false
+class: inverse, middle
+• A atualização de software é outra tática de preparação e reparo cujo objetivo é obter atualizações em serviço para imagens de código executáveis ​​de maneira que não afeta o serviço. Isso pode ser realizado como um patch de função, um patch de classe ou uma atualização de software em serviço sem sucesso (ISSU). Um patch de função é usado na programação procedural e emprega um vinculador / carregador incremental para armazenar uma função de software atualizada em um segmento pré-alocado da memória de destino. A nova versão da função de software empregará os pontos de entrada e saída da função obsoleta.
+---
+layout: false
+class: inverse, middle
+Além disso, ao carregar a nova função do software, a tabela de símbolos deve ser atualizada e o cache de instruções invalidado. A tática de correção de classe é aplicável a destinos que executam código orientado a objetos, onde as definições de classe incluem um mecanismo de porta traseira que permite a adição em tempo de execução de dados e funções de membros. A atualização sem problemas do software em serviço aproveita as táticas de redundância ativa ou passiva para obter atualizações que não afetam o serviço do software e do esquema associado. Na prática, o patch de função e o patch de classe são usados ​​para fornecer correções de bugs, enquanto a atualização de software em serviço é usada para fornecer novos recursos e capacidades.
+---
+layout: false
+class: inverse, middle
+• Repetir. A tática de nova tentativa assume que a falha que causou uma falha é transitória e a nova tentativa da operação pode levar ao sucesso. Essa tática é usada em redes e em farms de servidores onde as falhas são esperadas e comuns. Deve haver um limite no número de novas tentativas antes que uma falha permanente seja declarada.
+---
+layout: false
+class: inverse, middle
+• Ignore o comportamento defeituoso. Essa tática exige que as mensagens enviadas de uma fonte específica sejam ignoradas quando determinamos que essas mensagens são falsas. Por exemplo, gostaríamos de ignorar as mensagens de um componente externo que inicia um ataque de negação de serviço estabelecendo, por exemplo, filtros da Lista de controle de acesso.
+---
+layout: false
+class: inverse, middle
+• A degradação tática mantém as funções mais críticas do sistema na presença de falhas de componentes, eliminando funções menos críticas. Isso é feito em circunstâncias nas quais falhas individuais de componentes reduzem graciosamente a funcionalidade do sistema, em vez de causar uma falha completa do sistema.
+
+• A reconfiguração tenta se recuperar de falhas de componentes atribuindo responsabilidades aos recursos (potencialmente restritos) deixados em funcionamento, mantendo a maior funcionalidade possível.
+---
+layout: false
+class: inverse, middle
+Reintrodução é onde um componente com falha é reintroduzido após ter sido corrigido. As táticas de reintrodução incluem o seguinte:
+
+• A sombra tática refere-se à operação de um componente atualizado com falha ou em serviço anteriormente em um "modo de sombra" por um período de tempo predefinido antes de reverter o componente para uma função ativa. Durante essa duração, seu comportamento pode ser monitorado quanto à correção e pode repovoar seu estado incrementalmente.
+---
+layout: false
+class: inverse, middle
+• A ressincronização de estado é um parceiro de reintrodução das táticas ativas de preparação e reparo de redundância passiva. Quando usada juntamente com a tática de redundância ativa, a ressincronização de estado ocorre organicamente, porque os componentes ativo e de espera recebem e processam entradas idênticas em paralelo. Na prática, os estados dos componentes ativo e de espera são comparados periodicamente para garantir a sincronização.
+---
+layout: false
+class: inverse, middle
+Essa comparação pode ser baseada em um cálculo de verificação cíclica de redundância (soma de verificação) ou, para sistemas que fornecem serviços críticos de segurança, em um cálculo de resumo da mensagem (uma função de hash unidirecional). Quando usada juntamente com a tática de redundância passiva (reposição a quente), a ressincronização de estado é baseada apenas em informações periódicas de estado transmitidas do (s) componente (s) ativo (s) para o (s) componente (s) em espera, normalmente via ponto de verificação. Um caso especial dessa tática é encontrado em serviços sem estado, em que qualquer recurso pode manipular uma solicitação de outro recurso (com falha).
+---
+layout: false
+class: inverse, middle
+
+• Escalonar a reinicialização é uma tática de reintrodução que permite ao sistema se recuperar de falhas variando a granularidade do (s) componente (s) reiniciado (s) e minimizando o nível de serviço afetado. Por exemplo, considere um sistema que suporte quatro níveis de reinicialização, como a seguir. O nível mais baixo de reinicialização (chame de nível 0) e, portanto, tendo o menor impacto nos serviços, emprega redundância passiva (reposição a quente), onde todos os threads filhos do componente defeituoso são eliminados e recriados. Dessa maneira, somente os dados associados aos encadeamentos filhos são liberados e reinicializados.
+---
+layout: false
+class: inverse, middle
+O próximo nível de reinicialização (Nível 1) libera e reinicializa toda a memória desprotegida (a memória protegida permaneceria intocada). O próximo nível de reinicialização (Nível 2) libera e reinicializa toda a memória, protegida e desprotegida, forçando todos os aplicativos a recarregar e reinicializar. E o nível final de reinicialização (Nível 3) envolveria recarregar e reinicializar completamente a imagem executável e os segmentos de dados associados. O suporte à tática de reinicialização escalável é particularmente útil para o conceito de degradação normal, em que um sistema é capaz de degradar os serviços que fornece, mantendo o suporte para aplicativos essenciais ou de segurança.
+---
+layout: false
+class: inverse, middle
+• O encaminhamento sem parar (NSF) é um conceito que se originou no design do roteador. Nesse design, a funcionalidade é dividida em duas partes: plano de supervisão ou controle (que gerencia as informações de conectividade e roteamento) e plano de dados (que realiza o trabalho real de rotear pacotes do remetente para o destinatário). Se um roteador sofrer a falha de um supervisor ativo, ele poderá continuar encaminhando pacotes ao longo de rotas conhecidas - com roteadores vizinhos - enquanto as informações do protocolo de roteamento são recuperadas e validadas. Quando o plano de controle é reiniciado, ele implementa o que às vezes é chamado de "reinício normal", reconstruindo incrementalmente o banco de dados do protocolo de roteamento, mesmo quando o plano de dados continua em operação.
+---
+layout: false
+class: inverse, middle
+## Evitar falhas
+Em vez de detectar falhas e tentar se recuperar delas, e se o seu sistema pudesse impedir que elas ocorressem em primeiro lugar? Embora isso pareça uma medida de clarividência, pode ser que em muitos casos seja possível fazer exatamente isso.
+
+• Remoção de serviço. Essa tática refere-se a colocar temporariamente um componente do sistema em um estado fora de serviço com o objetivo de mitigar possíveis falhas do sistema. Um exemplo envolve colocar um componente de um sistema fora de serviço e redefinir o componente para eliminar falhas latentes (como vazamentos de memória, fragmentação ou erros leves em um cache não protegido) antes que o acúmulo de falhas afete o serviço (resultando em falha do sistema ) Outro termo para essa tática é rejuvenescimento de software.
+---
+layout: false
+class: inverse, middle
+• transações. Os sistemas voltados para serviços de alta disponibilidade aproveitam a semântica transacional para garantir que as mensagens assíncronas trocadas entre componentes distribuídos sejam atômicas, consistentes, isoladase duráveis. Essas quatro propriedades são chamadas de "propriedades ACID". A realização mais comum da tática de transações é o protocolo "commit de duas fases" (também conhecido como 2PC). Essa tática evita condições de corrida causadas por dois processos que tentam atualizar o mesmo item de dados.
+---
+layout: false
+class: inverse, middle
+• modelo preditivo. Um modelo preditivo, quando combinado com um monitor, é empregado para monitorar o estado de funcionamento de um processo do sistema para garantir que o sistema esteja operando dentro de seus parâmetros operacionais nominais e para executar ações corretivas quando forem detectadas condições que são preditivas de provável futuro falhas, panes. As métricas de desempenho operacional monitoradas são usadas para prever o aparecimento de falhas; exemplos incluem taxa de estabelecimento de sessão (em um servidor HTTP), passagem de limite (monitoramento de marcas d'água alta e baixa para algum recurso restrito e compartilhado) ou manutenção de estatísticas para o estado do processo (em serviço, fora de serviço, em manutenção, ocioso), mensagem estatísticas de comprimento da fila e assim por diante.
+---
+layout: false
+class: inverse, middle
+• prevenção de exceções. Essa tática refere-se às técnicas empregadas com o objetivo de impedir a ocorrência de exceções do sistema. O uso de classes de exceção, que permite a recuperação transparente de exceções do sistema, foi discutido anteriormente. Outros exemplos de prevenção de exceções incluem tipos de dados abstratos, como ponteiros inteligentes, e o uso de wrappers para evitar falhas, como ponteiros pendentes e violações de acesso ao semáforo. Ponteiros inteligentes evitam exceções, verificando os limites e garantindo que os recursos sejam desalocados automaticamente quando nenhum dado se refere a eles. Dessa maneira, vazamentos de recursos são evitados.
+---
+layout: false
+class: inverse, middle
+• Aumentar o conjunto de competências. O conjunto de competências de um programa é o conjunto de estados nos quais ele é "competente" para operar. Por exemplo, o estado em que o denominador é zero está fora do conjunto de competências da maioria dos programas de divisão. Quando um componente gera uma exceção, está sinalizando que se descobriu fora do seu conjunto de competências; em essência, ele não sabe o que fazer e está jogando a toalha.
+---
+layout: false
+class: inverse, middle
+Aumentar o conjunto de competências de um componente significa projetá-lo para lidar com mais casos - falhas - como parte de sua operação normal. Por exemplo, um componente que assume que tem acesso a um recurso compartilhado pode gerar uma exceção se descobrir que o acesso está bloqueado. Outro componente pode simplesmente aguardar o acesso ou retornar imediatamente com uma indicação de que concluirá sua operação por conta própria na próxima vez que tiver acesso. Neste exemplo, o segundo componente tem um conjunto de competências maior que o primeiro.
+---
+layout: false
+class: inverse, middle
+## Uma lista de verificação de design para disponibilidade A
+Tabela 5.4 é uma lista de verificação para apoiar o processo de design e análise de disponibilidade.
+
+---
+layout: false
+class: inverse, middle
+
+Quadro 5.4 Lista de verificação para apoiar o processo de design e análise de disponibilidade
+---
+layout: false
+class: inverse, middle, center
+![Quadro 54](image10.png)
+---
+layout: false
+class: inverse, middle, center
+![Quadro 54](image11.png)
+---
+layout: false
+class: inverse, middle, center
+![Quadro 54](image12.png)
+---
+layout: false
+class: inverse, middle, center
+![Quadro 54](image13.png)
+---
+layout: false
+class: inverse, middle
+## Resumo
+Disponibilidade refere-se à capacidade do sistema estar disponível para uso, especialmente após a ocorrência de uma falha. A falha deve ser reconhecida (ou evitada) e, em seguida, o sistema deve responder de alguma maneira. A resposta desejada dependerá da criticidade do aplicativo e do tipo de falha e pode variar de "ignorá-lo" a "continuar como se não tivesse ocorrido".
+---
+layout: false
+class: inverse, middle
+As táticas de disponibilidade são categorizadas em detectar falhas, recuperar-se de falhas e evitar falhas. As táticas de detecção dependem, essencialmente, da detecção de sinais de vida de vários componentes. As táticas de recuperação são uma combinação de tentar novamente uma operação ou manter dados ou cálculos redundantes. As táticas de prevenção dependem da remoção de elementos do serviço ou da utilização de mecanismos para limitar o escopo das falhas.
+
+Todas as táticas de disponibilidade envolvem o modelo de coordenação porque o modelo de coordenação deve estar ciente das falhas que ocorrem para gerar uma resposta apropriada.
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
