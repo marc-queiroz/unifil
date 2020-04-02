@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content {
+        font-size: 2.5em;
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 09
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+## Interoperabilidade
+
+Interoperabilidade é sobre o grau em que dois ou mais sistemas podem trocar informações úteis através de interfaces em um contexto específico. A definição inclui não apenas a capacidade de trocar dados (interoperabilidade sintática), mas também a capacidade de interpretar corretamente os dados que estão sendo trocados (interoperabilidade semântica). Um sistema não pode ser interoperável isoladamente. Qualquer discussão sobre a interoperabilidade de um sistema precisa se identificar com quem, com o quê e sob quais circunstâncias - daí a necessidade de incluir o contexto.
+---
+layout: false
+class: inverse, middle
+A interoperabilidade é afetada pelos sistemas que devem interoperar. Se já conhecemos as interfaces de sistemas externos com os quais nosso sistema interoperará, podemos projetar esse conhecimento no sistema. Ou podemos projetar nosso sistema para interoperar de maneira mais genérica, para que a identidade e os serviços que outro sistema fornece possam ser vinculados mais tarde no ciclo de vida, no tempo de construção ou no tempo de execução.
+---
+layout: false
+class: inverse, middle
+Como todos os atributos de qualidade, a interoperabilidade não é uma proposição de sim ou não, mas tem tonalidades de significado. Existem várias estruturas de caracterização para interoperabilidade, as quais parecem definir cinco níveis de “maturidade” de interoperabilidade (consulte a seção “Para leituras adicionais” no final deste capítulo para obter um ponteiro). O nível mais baixo significa sistemas que não compartilham dados ou que não o fazem com sucesso. O nível mais alto significa sistemas que funcionam juntos sem problemas, nunca cometem erros na interpretação das comunicações uns dos outros e compartilham o mesmo modelo semântico subjacente do mundo em que trabalham.
+---
+layout: false
+class: inverse, middle
+
+## Texto: “Troca de informações por interfaces”
+A interoperabilidade, como dissemos, é sobre dois ou mais sistemas que trocam informações por interfaces.
+Nesse ponto, precisamos esclarecer dois conceitos críticos centrais dessa discussão e enfatizar que estamos adotando uma visão ampla de cada um.
+---
+layout: false
+class: inverse, middle
+O primeiro é o que significa "trocar informações". Isso pode significar algo tão simples quanto o programa A que chama o programa B com alguns parâmetros. No entanto, dois sistemas (ou partes de um sistema) podem trocar informações, mesmo que nunca se comuniquem diretamente um com o outro. Você já teve uma conversa como a seguinte na escola secundária? "Charlene disse que Kim disse a ela que Trevor ouviu que Heather quer ir à sua festa." Obviamente, o protocolo do ensino médio impediria a possibilidade de responder diretamente a Heather. Em vez disso, sua resposta (se você gosta de Heather) pode ser "Legal", que retornaria por Charlene, Kim e Trevor. Você e Heather trocaram informações, mas nunca conversaram. (Esperamos que você tenha que conversar entre si na festa.)
+---
+layout: false
+class: inverse, middle
+As entidades podem trocar informações de maneiras ainda menos diretas. Se eu tenho uma idéia do comportamento de um programa e o designo para funcionar assumindo esse comportamento, os dois programas também trocaram informações - mas não em tempo de execução.
+---
+layout: false
+class: inverse, middle
+Um dos desastres mais infames da história ocorreu quando um sistema antimísseis não interceptou um foguete balístico na Operação Tempestade no Deserto, em 1991, resultando em 28 mortes. Um dos componentes de software do míssil "esperava" ser desligado e reiniciado periodicamente, para que ele pudesse recalibrar sua estrutura de orientação a partir de um ponto inicial conhecido. O software estava em funcionamento há cerca de 100 horas quando o míssil foi lançado, e os erros de cálculo haviam se acumulado até o ponto em que a idéia de orientação do componente de software se afastou irremediavelmente da verdade.
+---
+layout: false
+class: inverse, middle
+Os sistemas (ou componentes dentro dos sistemas) geralmente têm ou incorporam expectativas sobre o comportamento de seus parceiros de "troca de informações". A suposição de que tudo interagia com o componente incorreto no exemplo anterior era que sua precisão não se degradava ao longo do tempo. O resultado foi um sistema de peças que não funcionaram juntas corretamente para resolver o problema que deveriam.
+---
+layout: false
+class: inverse, middle
+O segundo conceito que precisamos enfatizar é o que entendemos por "interface". Mais uma vez, queremos dizer algo além do caso simples - uma descrição sintática dos programas de um componente e o tipo e número de seus parâmetros, mais comumente realizados como uma API. Isso é necessário para a interoperabilidade - diabos, é necessário se você deseja que seu software seja compilado com êxito - mas não é suficiente. Para ilustrar esse conceito, usaremos outra analogia de "conversa". Seu parceiro ou cônjuge chegou em casa, bateu a porta e, quando você perguntou o que havia de errado, respondeu "Nada!"? Nesse caso, você deve ser capaz de apreciar a grande diferença entre sintaxe e semântica e o papel das expectativas na compreensão de como uma entidade se comporta.
+---
+layout: false
+class: inverse, middle
+Como queremos sistemas e componentes interoperáveis, e não simplesmente aqueles que se compilam bem, exigimos uma barra mais alta para interfaces do que apenas uma declaração de sintaxe. Por "interface", entendemos o conjunto de suposições que você pode fazer com segurança sobre uma entidade. Por exemplo, é uma suposição segura de que o que está errado com seu cônjuge / parceiro, não é "Nada", e você sabe disso porque essa "interface" se estende muito além das palavras que eles dizem. E também é uma suposição segura de que nada sobre a degradação da precisão do nosso componente de míssil ao longo do tempo estava em sua API e, no entanto, isso era uma parte crítica de sua interface.
+* * * * * *
+---
+layout: false
+class: inverse, middle
+Aqui estão alguns dos motivos pelos quais você deseja que os sistemas interoperem:
+
+• Seu sistema fornece um serviço para ser usado por uma coleção de sistemas desconhecidos. Esses sistemas precisam interoperar com seu sistema, mesmo que você não saiba nada sobre eles. Um exemplo é um serviço como o Google Maps.
+---
+layout: false
+class: inverse, middle
+• Você está construindo recursos a partir de sistemas existentes. Por exemplo, um dos sistemas existentes é responsável por detectar seu ambiente, outro é responsável pelo processamento dos dados brutos, um terceiro é responsável pela interpretação dos dados e o último é responsável pela produção e distribuição de uma representação do que foi detectado. . Um exemplo é um sistema de detecção de tráfego em que a entrada vem de veículos individuais, os dados brutos são processados ​​em unidades de medida comuns, são interpretados e fundidos e as informações de congestionamento de tráfego são transmitidas.
+---
+layout: false
+class: inverse, middle
+Esses exemplos destacam dois aspectos importantes da interoperabilidade:
+1. Descoberta. O consumidor de um serviço deve descobrir (possivelmente no tempo de execução, possivelmente antes do tempo de execução) o local, a identidade e a interface do serviço.
+---
+layout: false
+class: inverse, middle
+
+2) Manipulação da resposta. Existem três possibilidades distintas:
+
+• O serviço reporta ao solicitante com a resposta.
+
+• O serviço envia sua resposta para outro sistema.
+
+• O serviço transmite sua resposta a todas as partes interessadas.
+---
+layout: false
+class: inverse, middle
+Esses elementos, descoberta e disposição da resposta, juntamente com o gerenciamento de interfaces, governam nossa discussão de cenários e táticas de interoperabilidade.
+
+## Sistemas de sistemas
+Se você possui um grupo de sistemas que interoperam para atingir um objetivo conjunto, possui o que é chamado de sistema de sistemas (SoS). Um SoS é um arranjo de sistemas que resulta quando sistemas independentes e úteis são integrados a um sistema maior que oferece recursos exclusivos. A Tabela 6.1 mostra uma categorização de SoSs.
+---
+layout: false
+class: inverse, middle, center
+![Figura 61](image01.png)
+
+Quadro 6.1 Taxonomia de sistemas de sistemas.
+A taxonomia mostrada é uma extensão do trabalho realizado por Mark Maier em 1998.
+---
+layout: false
+class: inverse, middle
+Nos SoSs dirigidos e reconhecidos, há uma tentativa deliberada de criar um SoS. A principal diferença é que, no primeiro, existe um gerenciamento no nível de SoS que exerce controle sobre os sistemas constituintes, enquanto no segundo, os sistemas constituintes mantêm um alto grau de autonomia em sua própria evolução. Os sistemas colaborativos e virtuais de sistemas são mais ad hoc, sem uma autoridade ou fonte abrangente de financiamento e, no caso de um SoS virtual, até faltam o conhecimento sobre o escopo e a associação ao SoS.
+---
+layout: false
+class: inverse, middle
+O caso colaborativo é bastante comum. Considere o exemplo do Google Maps da introdução. O Google é o gerente e a autoridade de financiamento do serviço de mapas. Cada uso dos mapas em um aplicativo (um SoS) tem sua própria autoridade de gerenciamento e financiamento, e não há gerenciamento geral de todos os aplicativos que usam o Google Maps. As várias organizações envolvidas nos aplicativos colaboram (explícita ou implicitamente) para permitir que os aplicativos funcionem corretamente.
+---
+layout: false
+class: inverse, middle
+Um SoS virtual envolve grandes sistemas e é muito mais ad hoc. Por exemplo, existem mais de 3.000 empresas de eletricidade na rede elétrica dos EUA, cada estado possui uma comissão de serviço público que supervisiona as empresas de serviços públicos que operam em seu estado, e o Departamento Federal de Energia fornece algum nível de orientação política. Muitos dos sistemas da rede elétrica devem interoperar, mas não há autoridade de gerenciamento para o sistema geral.
+---
+layout: false
+class: inverse, middle
+
+## Cenário geral de interoperabilidade
+A seguir, estão as partes de um cenário geral de interoperabilidade:
+• Fonte de estímulo. Um sistema que inicia uma solicitação.
+
+• estímulo. Uma solicitação para trocar informações entre sistemas.
+
+• artefatos.Os sistemas que desejam interoperar.
+
+• meio ambiente. Os sistemas que desejam interoperar são descobertos no tempo de execução ou são conhecidos antes do tempo de execução.
+---
+layout: false
+class: inverse, middle
+• Resposta.A solicitação para interoperar resulta na troca de informações. A informação é entendida pela parte receptora de forma sintática e semântica. Como alternativa, a solicitação é rejeitada e as entidades apropriadas são notificadas. Em qualquer um dos casos, a solicitação pode ser registrada.
+---
+layout: false
+class: inverse, middle
+• medir a resposta.A porcentagem de trocas de informações processadas corretamente ou a porcentagem de trocas de informações corretamente rejeitadas.
+
+A Figura 6.1 dá um exemplo: Nosso sistema de informações do veículo envia nossa localização atual para o sistema de monitoramento de tráfego. O sistema de monitoramento de tráfego combina nossa localização com outras informações, as sobrepõe em um mapa do Google e as transmite. Nossas informações de localização estão corretamente incluídas com uma probabilidade de 99,9%.
+---
+layout: false
+class: inverse, middle, center
+![Figura 62](image02.png)
+
+Figura 6.1. Exemplo de cenário de interoperabilidade concreto A
+---
+layout: false
+class: inverse, middle
+Quadro 6.2 apresenta os valores possíveis para cada parte de um cenário de interoperabilidade.
+---
+layout: false
+class: inverse, middle, center
+![Figura 63](image03.png)
+
+Quadro 6.2 Cenário geral de interoperabilidade
+---
+layout: false
+class: inverse, middle
+##Texto: SOAP x REST
+Se você deseja permitir a interoperabilidade de aplicativos baseados na Web, hoje existem duas opções principais de tecnologia disponíveis hoje: (1) WS * e SOAP (que antes eram “Simple Object Access Protocol, ”, Mas esse acrônimo não é mais abençoado) e (2) REST (que significa“ Transferência de Estado de Representação ”) e, portanto, às vezes é escrito ReST). Como podemos comparar essas tecnologias? Para que serve cada um? Quais são os perigos da estrada que você precisa conhecer? Esta é uma comparação entre maçãs e laranjas, mas tentarei esboçar a paisagem.
+---
+layout: false
+class: inverse, middle
+SOAP é uma especificação de protocolo para informações baseadas em XML que aplicativos distribuídos podem usar para trocar informações e, portanto, interoperar. Geralmente é acompanhado por um conjunto de padrões de interoperabilidade de middleware SOA e implementações compatíveis, conhecidas (coletivamente) como WS *. SOAP e WS * juntos definem muitos padrões, incluindo o seguinte:
+---
+layout: false
+class: inverse, middle
+• Uma infraestrutura para composição de serviço. O SOAP pode empregar a BPEL (Business Process Execution Language) como uma maneira de permitir que os desenvolvedores expressem processos de negócios implementados como serviços WS *.
+
+• transações. Existem vários padrões de serviço da web para garantir que as transações sejam gerenciadas corretamente: WS-AT, WS-BA, WS-CAF e WS-Transaction.
+
+• descoberta de serviço. A linguagem Universal Description, Discovery and Integration (UDDI) permite que as empresas publiquem listagens de serviços e se descubram.
+---
+layout: false
+class: inverse, middle
+
+• Confiabilidade. O SOAP, por si só, não garante a entrega confiável de mensagens. Os aplicativos que exigem tais garantias devem usar serviços compatíveis com o padrão de confiabilidade do SOAP: WS-Reliability.
+---
+layout: false
+class: inverse, middle
+O SOAP é bastante geral e tem suas raízes em um modelo de chamada de procedimento remoto (RPC) de aplicativos em interação, embora outros modelos sejam certamente possíveis. O SOAP possui um sistema de tipos simples, comparável ao encontrado nas principais linguagens de programação. O SOAP conta com HTTP e RPC para transmissão de mensagens, mas poderia, em teoria, ser implementado sobre qualquer protocolo de comunicação. O SOAP não exige nomes de métodos, modelos de endereçamento ou convenções de procedimentos de um serviço. Portanto, a escolha do SOAP compra pouca interoperabilidade real entre aplicativos - é apenas um padrão de troca de informações. Os aplicativos em interação precisam concordar em como interpretar a carga útil, que é onde você obtém interoperabilidade semântica.
+---
+layout: false
+class: inverse, middle
+REST, por outro lado, é um estilo de arquitetura baseado em cliente-servidor estruturado em torno de um pequeno conjunto de operações de criação, leitura, atualização, exclusão (CRUD) (chamadas POST, GET, PUT, DELETE, respectivamente no mundo REST) e um único esquema de endereçamento (com base em um URI ou identificador uniforme de recursos). O REST impõe poucas restrições a uma arquitetura: o SOAP oferece integridade; O REST oferece simplicidade.
+---
+layout: false
+class: inverse, middle
+O REST trata da transferência de estado e estado e exibe a Web (e os serviços que os sistemas orientados a serviços podem unir) como uma enorme rede de informações acessíveis por um único esquema de endereçamento baseado em URI. Não há noção de tipo e, portanto, não há verificação de tipo no REST - cabe aos aplicativos acertar a semântica da interação.
+---
+layout: false
+class: inverse, middle
+Como as interfaces REST são tão simples e gerais, qualquer cliente HTTP pode conversar com qualquer servidor HTTP, usando as operações REST (POST, GET, PUT, DELETE) sem nenhuma configuração adicional. Isso compra interoperabilidade sintática, mas é claro que deve haver um acordo no nível da organização sobre o que esses programas realmente fazem e quais informações eles trocam. Ou seja, a interoperabilidade semântica não é garantida entre os serviços apenas porque ambos têm interfaces REST.
+---
+layout: false
+class: inverse, middle
+O REST, além do HTTP, deve ser auto-descritivo e, na melhor das hipóteses, é um protocolo sem estado. Considere o exemplo a seguir, no REST, de um serviço de catálogo telefônico que permite que alguém procure uma pessoa, com um identificador exclusivo para essa pessoa:
+```html
+http://www.XYZdirectory.com/phonebook/UserInfo/99999
+```
+---
+layout: false
+class: inverse, middle
+A mesma pesquisa simples, implementada no SOAP, seria especificada da seguinte forma:
+```xml
+<? Xml version = "1.0"?>
+<Soap:Envelope xmlns:soap=http://www.w3.org/2001/12/soap-envelope
+    soap:encodingStyle="http://www.w3.org/2001/12/soap-cododing">
+   <soap:Body pb="http://www.XYZdirectory.com/agenda">
+     <pb:GetUserInfo>
+        <pb:UserIdentifier>99999</pb:UserIdentifier>
+     </pb:GetUserInfo>
+   </soap:Body>
+</soap:Envelope>
+```
+---
+layout: false
+class: inverse, middle
+Um aspecto da escolha entre SOAP e REST é se você deseja aceitar a complexidade e as restrições do SOAP + WSDL (a linguagem de descrição de serviços da Web) para obter uma interoperabilidade mais padronizada ou se deseja evitar a sobrecarga usando o REST, mas talvez se beneficie de menos padronização. Quais são as outras considerações?
+---
+layout: false
+class: inverse, middle
+Uma troca de mensagens no REST possui um pouco menos caracteres do que uma troca de mensagens no SOAP. Portanto, uma das compensações na escolha entre REST e SOAP é o tamanho das mensagens individuais. Para sistemas que trocam um grande número de mensagens, outra troca é entre desempenho (favorecendo o REST) ​​e mensagens estruturadas (favorecendo o SOAP).
+
+A decisão de implementar o WS * ou REST dependerá de aspectos como a qualidade de serviço (QoS) necessária - a implementação do WS * tem maior suporte à segurança, disponibilidade e assim por diante - e tipo de funcionalidade. Uma implementação RESTful, devido à sua simplicidade, é mais apropriada para a funcionalidade somente leitura, típica de mashups, onde existem requisitos e preocupações mínimos de QoS.
+---
+layout: false
+class: inverse, middle
+OK, então se você está construindo um sistema baseado em serviço, como escolhe? A verdade é que você não precisa fazer uma escolha única, de uma vez por todas; cada tecnologia é razoavelmente fácil de usar, pelo menos para aplicações simples. E cada um tem seus pontos fortes e fracos. Como tudo na arquitetura, é tudo uma questão de troca; sua decisão provavelmente dependerá da maneira como essas compensações afetam seu sistema em seu contexto.
+* * *
+## Táticas para interoperabilidade
+A Figura 6.2 mostra o objetivo do conjunto de táticas de interoperabilidade.
+---
+layout: false
+class: inverse, middle, center
+![Figura 64](image04.png)
+
+Figura 6.2. Objetivo das táticas de interoperabilidade
+---
+layout: false
+class: inverse, middle
+Identificamos duas categorias de táticas de interoperabilidade: localizar e gerenciar interfaces.
+
+### Localize
+Há apenas uma tática nesta categoria: descobrir serviço. É usado quando os sistemas que interoperam devem ser descobertos em tempo de execução.
+---
+layout: false
+class: inverse, middle
+
+• Descubra serviço. Localize um serviço pesquisando um serviço de diretório conhecido. (Por "serviço", entendemos simplesmente um conjunto de recursos acessíveis por meio de algum tipo de interface.) Pode haver vários níveis de indireção nesse processo de localização - ou seja, uma localização conhecida aponta para outro local que, por sua vez, pode ser procurou pelo serviço. O serviço pode ser localizado por tipo de serviço, nome, localização ou outro atributo.
+---
+layout: false
+class: inverse, middle
+### Gerenciar interfaces
+O gerenciamento de interfaces consiste em duas táticas: orquestrar e adaptar a interface.
+---
+layout: false
+class: inverse, middle
+
+• orquestrar. Orquestrar é uma tática que usa um mecanismo de controle para coordenar, gerenciar e sequenciar a invocação de serviços específicos (que podem ser ignorantes um do outro). A orquestração é usada quando os sistemas interoperantes precisam interagir de maneira complexa para realizar uma tarefa complexa; a orquestração “rotula” a interação. Os mecanismos de fluxo de trabalho são um exemplo do uso da tática de orquestrar. O padrão de design do mediador pode servir essa função para uma orquestração simples. A orquestração complexa pode ser especificada em um idioma como o BPEL.
+---
+layout: false
+class: inverse, middle
+• interface sob medida. A interface personalizada é uma tática que adiciona ou remove recursos de uma interface. Recursos como conversão, adição de buffer ou suavização de dados podem ser adicionados. Os recursos também podem ser removidos. Um exemplo de remoção de recursos é ocultar funções específicas de usuários não confiáveis. O padrão decorador é um exemplo da tática da interface sob medida.
+---
+layout: false
+class: inverse, middle
+O barramento de serviço corporativo subjacente a muitas arquiteturas orientadas a serviços combina as duas táticas da interface de gerenciamento.
+A Figura 6.3 mostra um resumo das táticas para alcançar a interoperabilidade.
+---
+layout: false
+class: inverse, middle, center
+![Figura 65](image05.png)
+
+Figura 6.3. Resumo das táticas de interoperabilidade
+---
+layout: false
+class: inverse, middle
+# Texto: Por que os padrões não são suficientes para garantir a interoperabilidade Por Grace Lewis
+
+O desenvolvedor do sistema A precisa trocar dados do produto com o sistema B. O desenvolvedor A descobre que existe uma interface de serviço da web WS * existente para enviar dados do produto que, entre outros campos, contém preço expresso no esquema XML como um decimal com dois dígitos da fração. O desenvolvedor A escreve um código para interagir com o serviço web e o sistema funciona perfeitamente.
+---
+layout: false
+class: inverse, middle
+No entanto, após duas semanas de operação, há uma enorme discrepância entre os totais relatados pelo Sistema A e os totais relatados pelo Sistema B. Após conversas entre os dois desenvolvedores, eles descobrem que o Sistema B esperava receber um preço que incluísse impostos e Sistema. A estava enviando sem impostos.
+---
+layout: false
+class: inverse, middle
+Este é um exemplo simples de por que os padrões não são suficientes. Os sistemas trocaram dados perfeitamente porque ambos concordaram que o preço era um decimal com dois dígitos de frações expressos no Esquema XML e a mensagem foi enviada via SOAP sobre HTTP (sintaxe) - padrões usados ​​na implementação de serviços da Web WS * - mas eles fizeram não concorda se o preço inclui impostos ou não (semântica).
+---
+layout: false
+class: inverse, middle
+Obviamente, a única abordagem realista para fazer com que diversos aplicativos compartilhem informações é alcançando acordos sobre a estrutura e a função das informações a serem compartilhadas. Esses acordos geralmente são refletidos em padrões que fornecem uma interface comum que vários fornecedores e construtores de aplicativos suportam. Os padrões realmente foram fundamentais para alcançar um nível significativo de interoperabilidade em que confiamos em quase todos os domínios. No entanto, embora os padrões sejam úteis e, em muitos aspectos, indispensáveis, as expectativas do que pode ser alcançado através dos padrões são irreais. Aqui estão alguns dos desafios que as organizações enfrentam relacionados a padrões e interoperabilidade:
+---
+layout: false
+class: inverse, middle
+1) Idealmente, toda implementação de um padrão deve ser idêntica e, portanto, completamente interoperável com qualquer outra implementação. No entanto, isso está longe da realidade. Os padrões, quando incorporados a produtos, ferramentas e serviços, passam por personalizações e extensões, porque cada fornecedor deseja criar um ponto de venda exclusivo como vantagem competitiva.
+---
+layout: false
+class: inverse, middle
+
+2) Os padrões geralmente são deliberadamente abertos e fornecem pontos de extensão. A implementação real desses pontos de extensão fica a critério dos implementadores, levando a implementações proprietárias.
+
+3) Os padrões, como qualquer tecnologia, têm um ciclo de vida próprio e evoluem ao longo do tempo de maneiras compatíveis e não compatíveis. Decidir quando adotar um padrão novo ou revisado é uma decisão crítica para as organizações. O comprometimento com um novo padrão que não está pronto ou, eventualmente, não é adotado pela comunidade é um grande risco para as organizações. Por outro lado, esperar muito tempo também pode se tornar um problema, o que pode levar a produtos, incompatibilidades e soluções alternativas não suportadas, porque todo mundo está usando o padrão.
+---
+layout: false
+class: inverse, middle
+4) Na comunidade de software, existem tantos padrões ruins quanto engenheiros com opiniões. Padrões ruins incluem padrões subespecíficos, superespecíficos, inconsistentemente especificados, instáveis ​​ou irrelevantes.
+
+5) É bastante comum que os padrões sejam defendidos por organizações concorrentes, resultando em padrões conflitantes devido à sobreposição ou exclusão mútua.
+---
+layout: false
+class: inverse, middle
+6) Para domínios novos e rapidamente emergentes, o argumento freqüentemente apresentado é que a padronização será destrutiva porque dificultará a flexibilidade: a padronização prematura forçará o uso de uma abordagem inadequada e levará ao abandono de outras abordagens presumivelmente melhores. Então, o que as organizações fazem enquanto isso?
+---
+layout: false
+class: inverse, middle
+O que esses desafios ilustram é que, devido à maneira como os padrões são geralmente criados e evoluídos, não podemos deixar que os padrões direcionem nossas arquiteturas. Primeiro precisamos arquitetar os sistemas e depois decidir quais padrões podem suportar os requisitos e qualidades desejados do sistema. Essa abordagem permite que os padrões mudem e evoluam sem afetar a arquitetura geral do sistema.
+
+Certa vez, ouvi alguém em um discurso principal dizer: "O bom dos padrões é que existem muitos por onde escolher".
+* * *
+---
+layout: false
+class: inverse, middle
+## Uma lista de verificação de design para interoperabilidade
+O Quadro 6.3 é uma lista de verificação para apoiar o processo de design e análise para interoperabilidade.
+---
+layout: false
+class: inverse, middle, center
+![Figura 66](image06.png)
+---
+layout: false
+class: inverse, middle, center
+![Figura 67](image07.png)
+---
+layout: false
+class: inverse, middle, center
+![Figura 68](image08.png)
+
+Quadro 6.3. Lista de verificação para apoiar o processo de design e análise para interoperabilidade
+---
+layout: false
+class: inverse, middle
+## Resumo
+A interoperabilidade refere-se à capacidade dos sistemas de trocar informações úteis. Esses sistemas podem ter sido construídos com a intenção de trocar informações, podem ser sistemas existentes desejados para troca de informações ou podem fornecer serviços gerais sem conhecer os detalhes dos sistemas que desejam utilizar esses serviços.
+---
+layout: false
+class: inverse, middle
+O cenário geral para interoperabilidade fornece os detalhes desses diferentes casos. Em qualquer caso de interoperabilidade, o objetivo é trocar informações intencionalmente ou rejeitar a solicitação de troca de informações.
+Atingir a interoperabilidade envolve os sistemas relevantes que se localizam e depois gerenciam as interfaces para que eles possam trocar informações.
+
+
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
