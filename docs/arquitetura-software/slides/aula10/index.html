@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content {
+        font-size: 2.5em;
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 10
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+## Modificabilidade
+
+Estudo após estudo mostra que a maior parte do custo do sistema de software típico ocorre após o lançamento inicial. Se a mudança é a única constante no universo, a mudança de software não é apenas constante, mas onipresente. Mudanças acontecem para adicionar novos recursos, alterar ou até mesmo aposentar os antigos. Alterações acontecem para corrigir defeitos, reforçar a segurança ou melhorar o desempenho. As mudanças acontecem para melhorar a experiência do usuário. As mudanças acontecem para adotar novas tecnologias, novas plataformas, novos protocolos, novos padrões. As mudanças acontecem para fazer com que os sistemas funcionem juntos, mesmo que nunca tenham sido projetados para isso.
+---
+layout: false
+class: inverse, middle
+Modificabilidade é sobre mudança, e nosso interesse nela se concentra no custo e no risco de fazer alterações. Para planejar a modificabilidade, um arquiteto deve considerar quatro perguntas:
+
+• O que pode mudar? Uma mudança pode ocorrer em qualquer aspecto de um sistema: as funções que o sistema calcula, a plataforma (o hardware, o sistema operacional, o middleware), o ambiente em que o sistema opera (os sistemas com os quais ele deve interoperar, os protocolos usados) para se comunicar com o resto do mundo), as qualidades que o sistema exibe (seu desempenho, sua confiabilidade e até suas futuras modificações) e sua capacidade (número de usuários suportados, número de operações simultâneas).
+---
+layout: false
+class: inverse, middle
+• Qual é a probabilidade da mudança? Não se pode planejar um sistema para todas as possíveis mudanças - o sistema nunca seria feito ou, se fosse feito, seria muito caro e provavelmente sofreria problemas de atributos de qualidade em outras dimensões. Embora algo possa mudar, o arquiteto precisa tomar decisões difíceis sobre quais mudanças são prováveis e, portanto, quais mudanças devem ser suportadas e quais não são.
+---
+layout: false
+class: inverse, middle
+• Quando é que a alteração é feita e quem a faz? Mais comumente no passado, foi feita uma alteração no código-fonte. Ou seja, um desenvolvedor precisou fazer a alteração, que foi testada e implantada em uma nova versão. Agora, no entanto, a questão de quando uma mudança é feita está entrelaçada com a questão de quem a faz. Um usuário final que altera a proteção de tela está claramente fazendo uma alteração em um dos aspectos do sistema. Igualmente claro, ele não está na mesma categoria que alterar o sistema, para que possa ser usado na Web e não em uma única máquina.
+---
+layout: false
+class: inverse, middle
+Alterações podem ser feitas na implementação (modificando o código-fonte), durante a compilação (usando opções de tempo de compilação), durante a compilação (por escolha de bibliotecas), durante a instalação (por várias técnicas, incluindo a definição de parâmetros) ou durante a execução (por configurações de parâmetros, plugins, etc.). Uma alteração também pode ser feita por um desenvolvedor, um usuário final ou um administrador do sistema.
+---
+layout: false
+class: inverse, middle
+• Qual é o custo da mudança? Tornar um sistema mais modificável envolve dois tipos de custo:
+
+• O custo de introdução do (s) mecanismo (s) para tornar o sistema mais modificável
+
+• O custo de fazer a modificação usando o (s) mecanismo (s)
+---
+layout: false
+class: inverse, middle
+Por exemplo, o mecanismo mais simples para fazer uma alteração é aguardar a entrada de uma solicitação de alteração e, em seguida, altere o código-fonte para acomodar a solicitação. O custo da introdução do mecanismo é zero; o custo do exercício é o custo da alteração do código-fonte e da revalidação do sistema. No outro extremo do espectro, há um gerador de aplicativos, como um construtor de interface com o usuário. O construtor usa como entrada uma descrição da interface com o usuário do designer produzida por meio de técnicas de manipulação direta e produz (geralmente) código-fonte. O custo da introdução do mecanismo é o custo da construção do construtor de UI, que pode ser substancial. O custo do uso do mecanismo é o custo da produção da entrada para alimentar o construtor (o custo pode ser substancial ou insignificante), o custo de execução do construtor (aproximadamente zero) e, em seguida, o custo de qualquer teste realizado no resultado ( geralmente muito menos que o normal).
+---
+layout: false
+class: inverse, middle
+Para N modificações semelhantes, uma justificativa simplificada para um mecanismo de mudança é que N × Custo de fazer a alteração sem o mecanismo ≤ Custo de instalação do mecanismo + (N × Custo de fazer a alteração usando o mecanismo).
+
+N é o número previsto de modificações que usarão o mecanismo de modificabilidade, mas N é uma previsão. Se houver menos mudanças do que o esperado, um mecanismo de modificação caro pode não ser necessário. Além disso, o custo de criação do mecanismo de modificabilidade pode ser aplicado em outro lugar - na adição de funcionalidade, na melhoria do desempenho ou mesmo em investimentos que não são de software, como a compra de ações de tecnologia. Além disso, a equação não leva tempo em consideração. Pode ser mais barato a longo prazo criar um mecanismo sofisticado de manipulação de alterações, mas talvez você não possa esperar por isso.
+
+---
+layout: false
+class: inverse, middle
+7.1 Cenário Geral de Modificabilidade
+
+A partir dessas considerações, podemos ver as partes do cenário geral de modificabilidade:
+
+• Fonte de estímulo. Esta parte especifica quem faz a alteração: o desenvolvedor, um administrador do sistema ou um usuário final.
+---
+layout: false
+class: inverse, middle
+
+• estímulo. Esta parte especifica a alteração a ser feita. Uma mudança pode ser a adição de uma função, a modificação de uma função existente ou a exclusão de uma função. (Para essa categorização, consideramos a correção de um defeito a alteração de uma função, que presumivelmente não estava funcionando corretamente como resultado do defeito.) Também é possível fazer uma alteração nas qualidades do sistema: tornando-o mais responsivo, aumentando sua disponibilidade e assim por diante.
+
+A capacidade do sistema também pode mudar. Acomodar um número crescente de usuários simultâneos é um requisito frequente. Finalmente, podem ocorrer mudanças para acomodar algum tipo de nova tecnologia, a mais comum delas é transportar o sistema para um tipo diferente de computador ou rede de comunicação.
+---
+layout: false
+class: inverse, middle
+• Artefato.Esta parte especifica o que deve ser alterado: componentes ou módulos específicos, a plataforma do sistema, sua interface com o usuário, seu ambiente ou outro sistema com o qual ele interopera.
+
+• meio ambiente. Esta parte especifica quando a alteração pode ser feita: tempo de design, tempo de compilação, tempo de construção, tempo de iniciação ou tempo de execução.
+
+• Resposta.Faça a alteração, teste e implante.
+---
+layout: false
+class: inverse, middle
+• medir a resposta. Todas as respostas possíveis levam tempo e custam dinheiro; tempo e dinheiro são as medidas de resposta mais comuns. Embora ambos pareçam simples de medir, não são. Você pode medir o tempo do calendário ou o tempo da equipe. Mas você mede o tempo que leva para a mudança percorrer os painéis de controle de configuração e as autoridades de aprovação (algumas das quais podem estar fora da sua organização) ou apenas o tempo que seus engenheiros levam para fazer a alteração? Custo geralmente significa desembolso direto, mas também pode incluir o custo de oportunidade de ter sua equipe trabalhando em alterações, em vez de outras tarefas.
+
+---
+layout: false
+class: inverse, middle
+Outras medidas incluem a extensão da mudança (número de módulos ou outros artefatos afetados) ou o número de novos defeitos introduzidos pela mudança ou o efeito em outros atributos de qualidade. Se a alteração estiver sendo feita por um usuário, você poderá medir a eficácia dos mecanismos de alteração fornecidos, que se sobrepõem às medidas de usabilidade.
+
+---
+layout: false
+class: inverse, middle
+A Figura 7.1 ilustra um cenário concreto de modificabilidade: O desenvolvedor deseja alterar a interface do usuário modificando o código em tempo de design. As modificações são feitas sem efeitos colaterais dentro de três horas.
+---
+layout: false
+class: inverse, middle, center
+![Figura 71](image01.png)
+
+Figura 7.1. Exemplo de cenário concreto de modificabilidade
+
+O quadro 7.1 enumera os elementos do cenário geral que caracterizam a modificabilidade.
+---
+layout: false
+class: inverse, middle, center
+![Figura 72](image02.png)
+
+Quadro 7.1 Cenário Geral de Modificabilidade
+
+---
+layout: false
+class: inverse, middle
+
+7.2. Táticas para modificabilidade
+
+As táticas para controlar a modificabilidade têm como objetivo controlar a complexidade de fazer alterações, bem como o tempo e o custo para fazer alterações. A Figura 7.2 mostra esse relacionamento.
+---
+layout: false
+class: inverse, middle, center
+![Figura 73](image03.png)
+
+Figura 7.2. O objetivo das táticas de modificabilidade
+---
+layout: false
+class: inverse, middle
+Para entender a modificabilidade, começamos com o acoplamento e a coesão.
+
+Módulos têm responsabilidades. Quando uma mudança faz com que um módulo seja modificado, suas responsabilidades são alteradas de alguma maneira. Geralmente, uma alteração que afeta um módulo é mais fácil e menos dispendiosa do que se alterar mais de um módulo. No entanto, se as responsabilidades de dois módulos se sobrepuserem de alguma forma, uma única alteração poderá afetar os dois. Podemos medir essa sobreposição medindo a probabilidade de que uma modificação em um módulo se propague para o outro. Isso é chamado de acoplamento, e o acoplamento alto é um inimigo da modificabilidade.
+---
+layout: false
+class: inverse, middle
+A coesão mede quão fortemente as responsabilidades de um módulo estão relacionadas. Informalmente, ele mede a "unidade de propósito" do módulo. A unidade de propósito pode ser medida pelos cenários de mudança que afetam um módulo. A coesão de um módulo é a probabilidade de que um cenário de mudança que afete uma responsabilidade também afete outras responsabilidades (diferentes). Quanto maior a coesão, menor a probabilidade de uma determinada alteração afetar múltiplas responsabilidades. Coesão alta é boa; baixa coesão é ruim. A definição permite que dois módulos com finalidades semelhantes sejam coesos.
+---
+layout: false
+class: inverse, middle
+Dada essa estrutura, agora podemos identificar os parâmetros que usaremos para motivar as táticas de modificabilidade:
+
+• Tamanho de um módulo. As táticas que dividem os módulos reduzirão o custo de fazer uma modificação no módulo que está sendo dividido, desde que a divisão seja escolhida para refletir o tipo de alteração que provavelmente será feita.
+---
+layout: false
+class: inverse, middle
+• acoplamento. Reduzir a força do acoplamento entre os dois módulos A e B diminuirá o custo esperado de qualquer modificação que afete A. Táticas que reduzem o acoplamento são aquelas que colocam intermediários de vários tipos entre os módulos A e B.
+
+• Coesão. Se o módulo A tiver uma baixa coesão, a coesão poderá ser melhorada, removendo responsabilidades não afetadas por alterações antecipadas.
+---
+layout: false
+class: inverse, middle
+Finalmente, precisamos nos preocupar com quando ocorre uma mudança no ciclo de vida do desenvolvimento de software. Se ignorarmos o custo de preparar a arquitetura para a modificação, preferimos que uma alteração seja vinculada o mais tarde possível. As alterações só podem ser feitas com êxito (ou seja, rapidamente e com o menor custo) no final do ciclo de vida se a arquitetura estiver adequadamente preparada para acomodá-las. Portanto, o quarto e último parâmetro em um modelo de modificabilidade é este:
+---
+layout: false
+class: inverse, middle
+• Tempo de modificação da ligação. Uma arquitetura que esteja adequadamente equipada para acomodar modificações no final do ciclo de vida, em média, custará menos do que uma arquitetura que força a mesma modificação a ser feita anteriormente. A preparação do sistema significa que alguns custos serão zero, ou muito baixos, para modificações tardias do ciclo de vida. Isso, no entanto, negligencia o custo de preparar a arquitetura para a ligação tardia.
+---
+layout: false
+class: inverse, middle
+Agora, podemos entender as táticas e suas conseqüências como afetando um ou mais dos parâmetros anteriores: reduzindo o tamanho de um módulo, aumentando a coesão, reduzindo o acoplamento e adiando o tempo de ligação. Essas táticas são mostradas na Figura 7.3.
+---
+layout: false
+class: inverse, middle, center
+![Figura 74](image04.png)
+
+Figura 7.3. Táticas de modificabilidade
+---
+layout: false
+class: inverse, middle
+Reduza o tamanho de um módulo
+
+Módulo
+
+• dividido. Se o módulo que está sendo modificado incluir uma grande capacidade, os custos de modificação provavelmente serão altos. O refinamento do módulo em vários módulos menores deve reduzir o custo médio de alterações futuras.
+---
+layout: false
+class: inverse, middle
+Aumentar a coesão
+
+Várias táticas envolvem a transferência de responsabilidades de um módulo para outro. O objetivo de mover uma responsabilidade de um módulo para outro é reduzir a probabilidade de efeitos colaterais que afetam outras responsabilidades no módulo original.
+---
+layout: false
+class: inverse, middle
+• Aumentar a coerência semântica. Se as responsabilidades A e B em um módulo não servirem ao mesmo propósito, elas deverão ser colocadas em módulos diferentes. Isso pode envolver a criação de um novo módulo ou a transferência de uma responsabilidade para um módulo existente. Um método para identificar responsabilidades a serem movidas é a hipótese de mudanças prováveis que afetam um módulo. Se algumas responsabilidades não forem afetadas por essas alterações, essas responsabilidades provavelmente deverão ser removidas.
+
+---
+layout: false
+class: inverse, middle
+Reduzir o acoplamento
+Passamos agora a táticas que reduzem o acoplamento entre os módulos.
+
+• Encapsular. O encapsulamento apresenta uma interface explícita para um módulo. Essa interface inclui uma interface de programação de aplicativos (API) e suas responsabilidades associadas, como "executar uma transformação sintática em um parâmetro de entrada em uma representação interna". Talvez a tática de modificabilidade mais comum, o encapsulamento reduz a probabilidade de que uma alteração em um módulo se propague para outros módulos. Os pontos fortes do acoplamento que foram anteriormente para o módulo agora vão para a interface do módulo.
+---
+layout: false
+class: inverse, middle
+
+Esses pontos fortes são, no entanto, reduzidos porque a interface limita as maneiras pelas quais responsabilidades externas podem interagir com o módulo (talvez por meio de um wrapper). As responsabilidades externas agora podem interagir apenas diretamente com o módulo através da interface exposta (interações indiretas, no entanto, como dependência da qualidade do serviço, provavelmente permanecerão inalteradas). As interfaces projetadas para aumentar a modificabilidade devem ser abstratas com relação aos detalhes do módulo que provavelmente serão alterados - ou seja, eles devem ocultar esses detalhes.
+---
+layout: false
+class: inverse, middle
+• Usar um intermediário interrompe uma dependência. Dada uma dependência entre a responsabilidade A e a responsabilidade B (por exemplo, executar A primeiro requer a execução de B), a dependência pode ser quebrada usando um intermediário. O tipo de intermediário depende do tipo de dependência. Por exemplo, um intermediário de publicação e assinatura removerá o conhecimento do produtor de dados sobre seus consumidores. O mesmo acontece com um repositório de dados compartilhado, que separa os leitores de um dado e os gravadores desses dados. Em uma arquitetura orientada a serviços, na qual os serviços se descobrem por meio de pesquisa dinâmica, o serviço de diretório é um intermediário.
+---
+layout: false
+class: inverse, middle
+• Restringir dependências é uma tática que restringe os módulos com os quais um determinado módulo interage ou depende. Na prática, essa tática é alcançada restringindo a visibilidade de um módulo (quando os desenvolvedores não podem ver uma interface, eles não podem empregá-la) e mediante autorização (restringindo o acesso apenas aos módulos autorizados). Essa tática é vista em arquiteturas em camadas, nas quais uma camada só pode usar camadas inferiores (às vezes apenas a próxima camada inferior) e no uso de wrappers, onde entidades externas só podem ver (e, portanto, dependem) do wrapper e não a funcionalidade interna que envolve.
+---
+layout: false
+class: inverse, middle
+• Refatorar é uma tática adotada quando dois módulos são afetados pela mesma alteração porque eles são (pelo menos parciais) duplicados um do outro. A refatoração de código é uma prática essencial dos projetos de desenvolvimento Agile, como uma etapa de limpeza para garantir que as equipes não produzam código duplicado ou excessivamente complexo; no entanto, o conceito também se aplica aos elementos arquitetônicos. Responsabilidades comuns (e o código que as implementa) são “fatoradas” nos módulos em que existem e são designadas por um lar apropriado. Ao co-localizar responsabilidades comuns - ou seja, torná-las submódulos do mesmo módulo pai - o arquiteto pode reduzir o acoplamento.
+---
+layout: false
+class: inverse, middle
+• Serviços comuns abstratos. No caso em que dois módulos fornecem serviços não exatamente iguais, mas semelhantes, pode ser rentável implementar os serviços apenas uma vez, de uma forma mais geral (abstrata). Qualquer modificação no serviço (comum) precisaria ocorrer apenas em um local, reduzindo os custos de modificação. Uma maneira comum de introduzir uma abstração é parametrizando a descrição (e implementação) das atividades de um módulo. Os parâmetros podem ser tão simples quanto valores para variáveis-chave ou tão complexos quanto declarações em uma linguagem especializada que são interpretadas posteriormente.
+---
+layout: false
+class: inverse, middle
+Atrase a vinculação
+
+Como o trabalho das pessoas é quase sempre mais caro do que o trabalho dos computadores, permitir que os computadores manejem uma alteração o máximo possível quase sempre reduzirá o custo de fazer essa alteração. Se projetarmos artefatos com flexibilidade integrada, o exercício dessa flexibilidade geralmente será mais barato do que codificar manualmente uma alteração específica.
+---
+layout: false
+class: inverse, middle
+
+Os parâmetros são talvez o mecanismo mais conhecido para introduzir flexibilidade, lembrando a tática abstrata de serviços comuns. Uma função parametrizada f(a, b) é mais geral do que a função similar f (a) que assume b = 0. Quando ligamos o valor de alguns parâmetros em uma fase diferente no ciclo de vida daquele em que definimos o parâmetro parâmetros, estamos aplicando a tática de adiamento de ligação.
+---
+layout: false
+class: inverse, middle
+Em geral, quanto mais tarde no ciclo de vida, podemos vincular valores, melhor. No entanto, implementar os mecanismos para facilitar essa ligação tardia tende a ser mais caro - mais uma troca. Queremos vincular o mais tarde possível, contanto que o mecanismo que o permita seja econômico.
+
+Táticas para valores de vinculação em tempo de compilação ou tempo de compilação incluem estes:
+
+• substituição do componente (por exemplo, em um script de construção ou makefile)
+
+• tempo de compilação de parametrização
+---
+layout: false
+class: inverse, middle
+
+Táticas para valores de vinculação em tempo de implantação incluem o seguinte:
+• configuração em tempo de execução
+
+Táticas para vincular valores no momento da inicialização ou inicialização, inclua:
+• Arquivos de recursos
+
+As táticas para vincular valores no tempo de execução incluem:
+• Registro do tempo de execução
+
+• Pesquisa dinâmica (por exemplo, para serviços)
+---
+layout: false
+class: inverse, middle
+
+• Interpretar parâmetros
+
+• Ligação no tempo de inicialização
+
+• Servidores de nome
+
+• Plug-ins
+
+• Publicar-assinar
+
+• Repositórios compartilhados
+
+• Polimorfismo
+---
+layout: false
+class: inverse, middle
+Separar a criação de um mecanismo de modificabilidade do uso do mecanismo para fazer uma modificação admite a possibilidade de envolvimento de diferentes partes interessadas - uma parte interessada (geralmente um desenvolvedor) para fornecer o mecanismo e outra parte interessada (um instalador, por exemplo). exemplo, ou um usuário) para exercitá-lo mais tarde, possivelmente em uma fase do ciclo de vida completamente diferente. A instalação de um mecanismo para que outra pessoa possa fazer uma alteração no sistema sem precisar alterar nenhum código às vezes é chamada de externalização da alteração.
+---
+layout: false
+class: inverse, middle
+
+7.3 Uma lista de verificação de design para modificabilidade
+
+O Quadro 7.2 é uma lista de verificação para apoiar o processo de design e análise de modificabilidade.
+
+---
+layout: false
+class: inverse, middle, center
+![Figura 75](image05.png)
+---
+layout: false
+class: inverse, middle, center
+![Figura 76](image06.png)
+---
+layout: false
+class: inverse, middle, center
+![Figura 77](image07.png)
+
+---
+layout: false
+class: inverse, middle
+
+7.4. Resumo
+
+A modificabilidade lida com a mudança e o custo em tempo ou dinheiro de fazer uma alteração, incluindo a extensão em que essa modificação afeta outras funções ou atributos de qualidade.
+
+As alterações podem ser feitas por desenvolvedores, instaladores ou usuários finais, e essas alterações precisam ser preparadas. Há um custo de preparação para a mudança, bem como um custo de fazer uma mudança. As táticas de modificabilidade são projetadas para se preparar para alterações subseqüentes.
+---
+layout: false
+class: inverse, middle
+As táticas para reduzir o custo de fazer uma mudança incluem diminuir os módulos, aumentar a coesão e reduzir o acoplamento. Adiar a ligação também reduzirá o custo de fazer uma alteração.
+
+Reduzir o acoplamento é uma categoria padrão de tática que inclui encapsular, usar um intermediário, restringir dependências, co-localizar responsabilidades relacionadas, refatorar e abstrair serviços comuns.
+
+Aumentar a coesão é outra tática padrão que envolve a separação de responsabilidades que não servem ao mesmo objetivo.
+
+Adiar a ligação é uma categoria de táticas que afetam o tempo de construção, o tempo de carregamento, o tempo de inicialização ou o tempo de execução.
+
+---
+layout: false
+class: inverse, middle
+
+7.5 Para Leituras Mais Avançadas
+
+Estudantes sérios de engenharia de software devem ler dois artigos anteriores sobre o design para modificação. O primeiro é o artigo de Edsger Dijkstra, de 1968, sobre o sistema operacional THE [Dijkstra 68], que é o primeiro artigo que fala sobre o design de sistemas a serem em camadas e os benefícios de modificação que ele traz. O segundo é o artigo de David Parnas, de 1972, que introduziu o conceito de ocultação de informações [Parnas 72]. Parnas prescreveu módulos de definição não por sua funcionalidade, mas por sua capacidade de internalizar os efeitos das mudanças.
+---
+layout: false
+class: inverse, middle
+
+As táticas que apresentamos neste material são uma variante daquelas introduzidas por [Bachmann 07].
+
+Táticas adicionais para modificabilidade no domínio aviônico podem ser encontradas em [EOSAN 07], publicado pela Organização Europeia para a Segurança da Navegação Aérea.
+
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
