@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content {
+        font-size: 2.5em;
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 11
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+Desempenho
+
+Desempenho, isto é: trata-se de tempo e da capacidade do sistema de software de atender aos requisitos de tempo. Quando ocorrem eventos - interrupções, mensagens, solicitações de usuários ou outros sistemas ou eventos que marcam a passagem do tempo - o sistema, ou algum elemento do sistema, deve responder a eles a tempo. Caracterizar os eventos que podem ocorrer (e quando podem ocorrer) e a resposta baseada em tempo do sistema ou elemento a esses eventos é a essência da discussão do desempenho.
+---
+layout: false
+class: inverse, middle
+
+Os eventos do sistema baseados na Web são apresentados sob a forma de solicitações dos usuários (numerando dezenas ou dezenas de milhões) por meio de seus clientes, como navegadores da web. Em um sistema de controle para um motor de combustão interna, os eventos vêm dos controles do operador e da passagem do tempo; o sistema deve controlar o disparo da ignição quando um cilindro está na posição correta e a mistura do combustível para maximizar a potência e a eficiência e minimizar a poluição.
+---
+layout: false
+class: inverse, middle
+
+Para um sistema baseado na Web, a resposta desejada pode ser expressa como número de transações que podem ser processadas em um minuto. Para o sistema de controle do motor, a resposta pode ser a variação permitida no tempo de queima. Em cada caso, o padrão de chegada de eventos e o padrão de respostas podem ser caracterizados, e essa caracterização forma a linguagem com a qual construir cenários de desempenho.
+---
+layout: false
+class: inverse, middle
+
+Durante grande parte da história da engenharia de software, o desempenho tem sido o fator determinante na arquitetura do sistema. Como tal, freqüentemente comprometeu a conquista de todas as outras qualidades. À medida que a relação preço / desempenho do hardware continua a despencar e o custo do desenvolvimento de software continua a aumentar, outras qualidades surgiram como concorrentes importantes para o desempenho.
+---
+layout: false
+class: inverse, middle
+
+No entanto, todos os sistemas têm requisitos de desempenho, mesmo que não sejam expressos. Por exemplo, uma ferramenta de processamento de texto pode não ter nenhum requisito explícito de desempenho, mas sem dúvida todos concordariam que é inaceitável esperar uma hora (ou um minuto ou um segundo) antes de ver um caractere digitado aparecer na tela. O desempenho continua sendo um atributo de qualidade fundamentalmente importante para todos os softwares.
+
+O desempenho geralmente está vinculado à escalabilidade - ou seja, aumentando a capacidade de trabalho do seu sistema, enquanto ainda apresenta um bom desempenho. Tecnicamente, a escalabilidade está facilitando a mudança de seu sistema de uma maneira específica, assim como um tipo de modificabilidade.
+---
+layout: false
+class: inverse, middle
+
+8.1. Cenário geral de desempenho
+Um cenário de desempenho começa com um evento que chega ao sistema. Para responder corretamente ao evento, é necessário consumir recursos (incluindo tempo). Enquanto isso está acontecendo, o sistema pode atender simultaneamente a outros eventos.
+---
+layout: false
+class: inverse, middle
+
+Concorrência
+A simultaneidade é um dos conceitos mais importantes que um arquiteto deve entender e um dos menos ensinados nos cursos de ciência da computação. Simultaneidade refere-se a operações que ocorrem em paralelo. Por exemplo, suponha que exista um encadeamento que execute as instruções
+
+x: = 1;
+
+x ++;
+
+e outro segmento que executa as mesmas instruções. Qual é o valor de x depois que os dois threads executaram essas instruções? Pode ser 2 ou 3.
+---
+layout: false
+class: inverse, middle
+
+A simultaneidade ocorre sempre que seu sistema cria um novo encadeamento, porque os encadeamentos, por definição, são sequências de controle independentes. A multitarefa em seu sistema é suportada por threads independentes. Vários usuários são suportados simultaneamente no seu sistema através do uso de threads. A simultaneidade também ocorre sempre que seu sistema está executando em mais de um processador, se os processadores são empacotados separadamente ou como processadores com vários núcleos. Além disso, você deve considerar a simultaneidade quando algoritmos paralelos, infra-estruturas paralelas, como bancos de dados de redução de mapa ou NoSQL são usadas pelo seu sistema, ou você utiliza um dentre vários algoritmos de planejamento simultâneo. Em outras palavras, a simultaneidade é uma ferramenta disponível para você de várias maneiras.
+---
+layout: false
+class: inverse, middle
+
+A simultaneidade, quando você tem várias CPUs ou espera estados que podem explorá-la, é uma coisa boa. Permitir que operações ocorram em paralelo melhora o desempenho, porque os atrasos introduzidos em um encadeamento permitem que o processador progrida em outro encadeamento. Mas, devido ao fenômeno de intercalação descrito acima (referido como condição de corrida), a simultaneidade também deve ser cuidadosamente gerenciada pelo arquiteto.
+---
+layout: false
+class: inverse, middle
+
+Como o exemplo mostra, as condições de corrida podem ocorrer quando há dois encadeamentos de controle e há um estado compartilhado. O gerenciamento de simultaneidade se resume frequentemente ao gerenciamento de como o estado é compartilhado. Uma técnica para evitar condições de corrida é usar bloqueios para reforçar o acesso seqüencial ao estado. Outra técnica é particionar o estado com base no thread que executa uma parte do código. Ou seja, se houver duas instâncias de x em nosso exemplo, x não será compartilhado pelos dois threads e não haverá uma condição de corrida.
+---
+layout: false
+class: inverse, middle
+
+As condições de corrida são um dos tipos mais difíceis de se descobrir; a ocorrência do bug é esporádica e depende de (possivelmente minutos) diferenças de tempo. Certa vez, tive uma condição de corrida em um sistema operacional que não conseguia rastrear. Coloquei um teste no código para que na próxima vez que a condição de corrida ocorresse, um processo de depuração fosse acionado. Demorou mais de um ano para que o bug ocorresse, para que a causa pudesse ser determinada.
+---
+layout: false
+class: inverse, middle
+
+Dica: Não deixe que as dificuldades associadas à simultaneidade o faça desistir de utilizar esta técnica muito importante. Basta usá-lo com o conhecimento de que você deve identificar cuidadosamente seções críticas em seu código e garantir que as condições de corrida não ocorram nessas seções.
+
+Eventos podem chegar em padrões previsíveis ou distribuições matemáticas, ou ser imprevisíveis. Um padrão de chegada para eventos é caracterizado como periódico, estocástico ou esporádico:
+
+• Eventos periódicos chegam previsivelmente a intervalos regulares. Por exemplo, um evento pode chegar a cada 10 milissegundos. A chegada periódica de eventos é vista com mais frequência em sistemas em tempo real.
+---
+layout: false
+class: inverse, middle
+
+• Chegada estocástica significa que os eventos chegam de acordo com alguma distribuição probabilística.
+
+• Eventos esporádicos chegam de acordo com um padrão que não é periódico nem estocástico. Mesmo estes podem ser caracterizados, no entanto, em certas circunstâncias. Por exemplo, podemos saber que no máximo 600 eventos ocorrerão em um minuto ou que haverá pelo menos 200 milissegundos entre a chegada de dois eventos. (Isso pode descrever um sistema no qual os eventos correspondem a toques no teclado de um usuário humano.) Essas são caracterizações úteis, mesmo que não saibamos quando um único evento chegará.
+---
+layout: false
+class: inverse, middle
+
+A resposta do sistema a um estímulo pode ser medida pelo seguinte:
+
+• Latência. O tempo entre a chegada do estímulo e a resposta do sistema a ele.
+
+• Prazos no processamento. No controlador do motor, por exemplo, o combustível deve incendiar quando o cilindro estiver em uma posição específica, introduzindo assim um prazo de processamento.
+
+• A taxa de transferência do sistema, geralmente fornecida como o número de transações que o sistema pode processar em uma unidade de tempo.
+---
+layout: false
+class: inverse, middle
+
+• O jitter da resposta - a variação permitida na latência.
+
+• O número de eventos não processados porque o sistema estava muito ocupado para responder.
+
+A partir dessas considerações, agora podemos descrever as partes individuais de um cenário geral de desempenho:
+
+• Fonte de estímulo. Os estímulos chegam de fontes externas (possivelmente múltiplas) ou internas.
+
+• estímulo. Os estímulos são as chegadas do evento. O padrão de chegada pode ser periódico, estocástico ou esporádico, caracterizado por parâmetros numéricos.
+---
+layout: false
+class: inverse, middle
+
+• Artefato.O artefato é o sistema ou um ou mais de seus componentes.
+
+• meio ambiente. O sistema pode estar em vários modos operacionais, como normal, emergência, carga de pico ou sobrecarga.
+
+• Resposta.O sistema deve processar os eventos que chegam. Isso pode causar uma alteração no ambiente do sistema (por exemplo, do normal para o modo de sobrecarga).
+---
+layout: false
+class: inverse, middle
+
+• medir a resposta. As medidas de resposta são o tempo necessário para processar os eventos que chegam (latência ou prazo), a variação nesse tempo (tremulação), o número de eventos que podem ser processados dentro de um intervalo de tempo específico (taxa de transferência) ou uma caracterização de os eventos que não podem ser processados (taxa de erros).
+---
+layout: false
+class: inverse, middle
+
+O cenário geral para desempenho está resumido na Tabela 8.1.
+---
+layout: false
+class: inverse, middle, center
+![Figura 81](image01.png)
+
+Quadro 8.1 Cenário geral de desempenho
+---
+layout: false
+class: inverse, middle, center
+![Figura 82](image02.png)
+
+A Figura 8.1 fornece um exemplo de cenário concreto de desempenho: Os usuários iniciam transações em operações normais. O sistema processa as transações com uma latência média de dois segundos.
+
+
+Figura 8.1. Exemplo de cenário de desempenho concreto
+---
+layout: false
+class: inverse, middle
+8.2. Táticas para desempenho
+O objetivo das táticas de desempenho é gerar uma resposta a um evento que chega ao sistema com alguma restrição baseada no tempo. O evento pode ser único ou um fluxo e é o gatilho para executar a computação. As táticas de desempenho controlam o tempo dentro do qual uma resposta é gerada, conforme ilustrado na Figura 8.2.
+---
+layout: false
+class: inverse, middle, center
+![Figura 83](image03.png)
+
+
+Figura 8.2. O objetivo das táticas de desempenho
+---
+layout: false
+class: inverse, middle
+A qualquer momento durante o período após a chegada de um evento, mas antes que a resposta do sistema seja concluída, o sistema está trabalhando para responder a esse evento ou o processamento é bloqueado por algum motivo. Isso leva aos dois colaboradores básicos do tempo de resposta: tempo de processamento (quando o sistema está trabalhando para responder) e tempo bloqueado (quando o sistema não pode responder).
+---
+layout: false
+class: inverse, middle
+
+• tempo de processamento. O processamento consome recursos, o que leva tempo. Os eventos são tratados pela execução de um ou mais componentes, cujo tempo gasto é um recurso. Os recursos de hardware incluem CPU, armazenamento de dados, largura de banda de comunicação de rede e memória. Os recursos de software incluem entidades definidas pelo sistema em design. Por exemplo, os buffers devem ser gerenciados e o acesso às seções críticas deve ser sequencial.
+---
+layout: false
+class: inverse, middle
+
+Por exemplo, suponha que uma mensagem seja gerada por um componente. Pode ser colocado na rede, após o que chega a outro componente. É então colocado em um buffer; transformado de alguma maneira; processado de acordo com algum algoritmo; transformado para saída; colocado em um buffer de saída; e enviado adiante para outro componente, outro sistema ou algum ator. Cada uma dessas etapas consome recursos e tempo e contribui para a latência geral do processamento desse evento.
+---
+layout: false
+class: inverse, middle
+
+Recursos diferentes se comportam de maneira diferente à medida que sua utilização se aproxima de sua capacidade - isto é, à medida que se tornam saturados. Por exemplo, à medida que uma CPU fica mais carregada, o desempenho geralmente diminui de maneira bastante constante. Por outro lado, quando você começa a ficar sem memória, em algum momento a troca de página se torna esmagadora e o desempenho falha repentinamente.
+
+• tempo bloqueado. Um cálculo pode ser bloqueado devido à contenção de algum recurso necessário, porque o recurso não está disponível ou porque o cálculo depende do resultado de outros cálculos que ainda não estão disponíveis:
+
+---
+layout: false
+class: inverse, middle
+• Contenção de recursos. Muitos recursos podem ser usados apenas por um único cliente por vez. Isso significa que outros clientes devem esperar pelo acesso a esses recursos. A Figura 8.2 mostra os eventos que chegam ao sistema. Esses eventos podem estar em um único fluxo ou em vários fluxos. Vários fluxos disputando o mesmo recurso ou eventos diferentes no mesmo fluxo disputando o mesmo recurso contribuem para a latência. Quanto maior a disputa por um recurso, maior a probabilidade de latência ser introduzida.
+---
+layout: false
+class: inverse, middle
+
+• Disponibilidade de recursos. Mesmo na ausência de contenção, o cálculo não pode continuar se um recurso estiver indisponível. A indisponibilidade pode ser causada pelo recurso estar offline ou por falha do componente ou por algum outro motivo. Em qualquer caso, você deve identificar locais onde a indisponibilidade de recursos pode causar uma contribuição significativa à latência geral. Algumas de nossas táticas destinam-se a lidar com essa situação.
+---
+layout: false
+class: inverse, middle
+
+• Dependência de outra computação. Um cálculo pode ter que esperar porque deve sincronizar com os resultados de outro cálculo ou porque está aguardando os resultados de um cálculo iniciado. Se um componente chamar outro componente e precisar aguardar a resposta, o tempo poderá ser significativo se o componente chamado estiver na outra extremidade de uma rede (em vez de estar localizado no mesmo processador).
+
+Com esse pano de fundo, voltamos para nossas categorias táticas. Podemos reduzir a demanda por recursos ou tornar os recursos que lidamos com a demanda de maneira mais eficaz:
+---
+layout: false
+class: inverse, middle
+
+• Controlar a demanda por recursos. Essa tática opera no lado da demanda para produzir uma demanda menor dos recursos que terão para atender os eventos.
+
+• Gerenciar recursos. Essa tática opera no lado da resposta para fazer com que os recursos disponíveis funcionem com mais eficiência no tratamento das demandas impostas a eles.
+---
+layout: false
+class: inverse, middle
+
+Controlar a demanda de recursos
+Uma maneira de aumentar o desempenho é gerenciar cuidadosamente a demanda por recursos. Isso pode ser feito reduzindo o número de eventos processados, aplicando uma taxa de amostragem ou limitando a taxa na qual o sistema responde a eventos. Além disso, existem várias técnicas para garantir que os recursos que você possui sejam aplicados criteriosamente:
+
+---
+layout: false
+class: inverse, middle
+
+• Gerenciar a taxa de amostragem. Se for possível reduzir a frequência de amostragem na qual um fluxo de dados ambientais é capturado, a demanda pode ser reduzida, geralmente com alguma perda de fidelidade. Isso é comum em sistemas de processamento de sinais em que, por exemplo, diferentes codecs podem ser escolhidos com diferentes taxas de amostragem e formatos de dados. Essa escolha de design é feita para manter níveis previsíveis de latência; você deve decidir se é preferível ter uma fidelidade menor, mas um fluxo consistente de dados, em vez de perder pacotes de dados.
+---
+layout: false
+class: inverse, middle
+
+• Limitar a resposta do evento. Quando eventos discretos chegam ao sistema (ou elemento) muito rapidamente para serem processados, os eventos devem ser enfileirados até que possam ser processados. Como esses eventos são discretos, normalmente não é desejável reduzi-los. Nesse caso, você pode optar por processar eventos apenas até uma taxa máxima definida, garantindo assim um processamento mais previsível quando os eventos forem realmente processados. Essa tática pode ser desencadeada por um tamanho de fila ou medida de utilização do processador que exceda algum nível de aviso. Se você adotar essa tática e for inaceitável perder eventos, deverá garantir que suas filas sejam grandes o suficiente para lidar com o pior caso. Se, por outro lado, você optar por descartar eventos, precisará escolher uma política para lidar com esta situação: Você registra os eventos descartados ou simplesmente os ignora? Você notifica outros sistemas, usuários ou administradores?
+
+---
+layout: false
+class: inverse, middle
+• Priorizar Eventos.Se nem todos os eventos forem igualmente importantes, você poderá impor um esquema de prioridade que classifique os eventos de acordo com a importância de atendê-los. Se não houver recursos suficientes disponíveis para atendê-los quando surgirem, os eventos de baixa prioridade podem ser ignorados. Ignorar eventos consome recursos mínimos (incluindo tempo) e, portanto, aumenta o desempenho em comparação com um sistema que atende todos os eventos o tempo todo. Por exemplo, um sistema de gerenciamento predial pode disparar uma variedade de alarmes. Os alarmes com risco de vida, como um alarme de incêndio, devem receber prioridade mais alta do que os alarmes informativos, como uma sala, com muito frio.
+---
+layout: false
+class: inverse, middle
+
+• Reduza a sobrecarga. O uso de intermediários (tão importante para a modificabilidade, como vimos no Capítulo 7) aumenta os recursos consumidos no processamento de um fluxo de eventos e, portanto, removê-los melhora a latência. Essa é uma troca clássica de modificação / desempenho. A separação de preocupações, outro ponto crucial da modificabilidade, também pode aumentar a sobrecarga de processamento necessária para atender a um evento se levar a que um evento seja atendido por uma cadeia de componentes em vez de um único componente. Os custos de comutação de contexto e comunicação entre componentes aumentam, especialmente quando os componentes estão em nós diferentes em uma rede. Uma estratégia para reduzir a sobrecarga computacional é co-localizar recursos.
+---
+layout: false
+class: inverse, middle
+
+A co-localização pode significar a hospedagem de componentes cooperantes no mesmo processador para evitar o atraso na comunicação da rede; pode significar colocar os recursos no mesmo componente de software de tempo de execução para evitar até o custo de uma chamada de sub-rotina. Um caso especial de redução da sobrecarga computacional é executar uma limpeza periódica dos recursos que se tornaram ineficientes. Por exemplo, tabelas de hash e mapas de memória virtual podem exigir recálculo e reinicialização. Outra estratégia comum é executar servidores de thread único (por simplicidade e evitar contenção) e dividir a carga de trabalho entre eles.
+---
+layout: false
+class: inverse, middle
+
+• Tempos de execução limitados. Coloque um limite de quanto tempo de execução é usado para responder a um evento. Para algoritmos iterativos e dependentes de dados, limitar o número de iterações é um método para limitar os tempos de execução. O custo geralmente é um cálculo menos preciso. Se você adotar essa tática, precisará avaliar seu efeito na precisão e verificar se o resultado é "bom o suficiente". Essa tática de gerenciamento de recursos é frequentemente combinada com a tática de gerenciamento de taxa de amostragem.
+
+• Aumentar a eficiência dos recursos. Melhorar os algoritmos usados em áreas críticas diminuirá a latência.
+---
+layout: false
+class: inverse, middle
+
+Gerenciar recursos
+
+Mesmo que a demanda por recursos não seja controlável, o gerenciamento desses recursos pode ser. Às vezes, um recurso pode ser negociado por outro. Por exemplo, os dados intermediários podem ser mantidos em um cache ou podem ser regenerados dependendo da disponibilidade de recursos de tempo e espaço. Essa tática geralmente é aplicada ao processador, mas também é eficaz quando aplicada a outros recursos, como um disco. Aqui estão algumas táticas de gerenciamento de recursos:
+---
+layout: false
+class: inverse, middle
+
+• Aumente os recursos. Processadores mais rápidos, processadores adicionais, memória adicional e redes mais rápidas têm o potencial de reduzir a latência. O custo é geralmente uma consideração na escolha dos recursos, mas aumentar os recursos é definitivamente uma tática para reduzir a latência e, em muitos casos, é a maneira mais barata de obter melhorias imediatas.
+---
+layout: false
+class: inverse, middle
+
+• Introduzir simultaneidade. Se os pedidos puderem ser processados em paralelo, o tempo bloqueado poderá ser reduzido. A simultaneidade pode ser introduzida processando diferentes fluxos de eventos em diferentes segmentos ou criando segmentos adicionais para processar diferentes conjuntos de atividades. Após a introdução da concorrência, as políticas de agendamento podem ser usadas para atingir as metas que você deseja. Políticas de agendamento diferentes podem maximizar a justiça (todas as solicitações têm o mesmo tempo), o rendimento (o menor tempo para terminar primeiro) ou outras metas. (Consulte a barra lateral.)
+---
+layout: false
+class: inverse, middle
+• Mantenha várias cópias dos cálculos. Vários servidores em um padrão cliente-servidor são réplicas de computação. O objetivo das réplicas é reduzir a contenção que ocorreria se todos os cálculos ocorressem em um único servidor. Um balanceador de carga é um software que atribui novo trabalho a um dos servidores duplicados disponíveis; os critérios para atribuição variam, mas podem ser tão simples quanto round-robin ou atribuir a próxima solicitação ao servidor menos ocupado.
+---
+layout: false
+class: inverse, middle
+
+• Mantenha várias cópias de dados. O armazenamento em cache é uma tática que envolve manter cópias de dados (possivelmente um subconjunto do outro) no armazenamento com diferentes velocidades de acesso. As diferentes velocidades de acesso podem ser inerentes (memória versus armazenamento secundário) ou podem ser devidas à necessidade de comunicação em rede. A replicação de dados envolve manter cópias separadas dos dados para reduzir a contenção de vários acessos simultâneos.
+---
+layout: false
+class: inverse, middle
+
+Como os dados que estão sendo armazenados em cache ou replicados geralmente são uma cópia dos dados existentes, manter as cópias consistentes e sincronizadas se torna uma responsabilidade que o sistema deve assumir. Outra responsabilidade é escolher os dados a serem armazenados em cache. Alguns caches operam apenas mantendo cópias do que foi solicitado recentemente, mas também é possível prever solicitações futuras dos usuários com base em padrões de comportamento e iniciar os cálculos ou pré-tentativas necessárias para atender a essas solicitações antes que o usuário as faça.
+---
+layout: false
+class: inverse, middle
+
+• Tamanhos de fila encadernados. Isso controla o número máximo de chegadas na fila e, consequentemente, os recursos usados para processar as chegadas. Se você adotar essa tática, precisará adotar uma política para o que acontece quando as filas excederem e decidir se não é aceitável responder a eventos perdidos. Essa tática é frequentemente combinada com a tática de resposta ao evento limite.
+---
+layout: false
+class: inverse, middle
+
+• Agende recursos. Sempre que houver contenção para um recurso, ele deve ser agendado. Processadores são agendados, buffers são agendados e redes são agendadas. Seu objetivo é entender as características do uso de cada recurso e escolher a estratégia de agendamento compatível com ele.
+---
+layout: false
+class: inverse, middle, center
+![Figura 84](image04.png)
+
+As táticas para desempenho estão resumidas na Figura 8.3.
+
+
+Figura 8.3. Táticas de desempenho
+---
+layout: false
+class: inverse, middle
+
+Políticas de agendamento
+
+Uma política de agendamento conceitualmente tem duas partes: atribuição de prioridade e envio. Todas as políticas de agendamento atribuem prioridades. Em alguns casos, a atribuição é tão simples como primeiro a entrar / primeiro a sair (ou FIFO). Em outros casos, ele pode estar vinculado ao prazo final da solicitação ou à sua importância semântica. Os critérios concorrentes para a programação incluem o uso ideal de recursos, solicitam importância, minimizam o número de recursos utilizados, minimizam a latência, maximizam o rendimento, impedem a fome para garantir a equidade e assim por diante. Você precisa estar ciente desses critérios possivelmente conflitantes e do efeito que a tática escolhida tem para atendê-los.
+---
+layout: false
+class: inverse, middle
+
+Um fluxo de eventos de alta prioridade pode ser despachado apenas se o recurso ao qual está sendo designado estiver disponível. Às vezes, isso depende da antecipação do usuário atual do recurso. As possíveis opções de preempção são as seguintes: podem ocorrer a qualquer momento, podem ocorrer apenas em pontos de preempção específicos e os processos de execução não podem ser antecipados. Algumas políticas comuns de agendamento são as seguintes:
+
+---
+layout: false
+class: inverse, middle
+• Primeiro a entrar / primeiro a sair. As filas FIFO tratam todos os pedidos de recursos como iguais e os satisfazem por sua vez. Uma possibilidade com uma fila FIFO é que uma solicitação fique presa atrás de outra que leva muito tempo para gerar uma resposta. Desde que todas as solicitações sejam realmente iguais, isso não é um problema, mas se algumas são de maior prioridade que outras, isso é problemático.
+---
+layout: false
+class: inverse, middle
+
+• Agendamento de prioridade fixa. O agendamento de prioridade fixa atribui a cada fonte de recursos solicita uma prioridade específica e atribui os recursos nessa ordem de prioridade. Essa estratégia garante um melhor serviço para solicitações de prioridade mais alta. Mas ele admite a possibilidade de uma solicitação de prioridade mais baixa, mas importante, que leva um tempo arbitrariamente longo para ser atendida, porque está atrasada em uma série de solicitações de prioridade mais alta. Três estratégias comuns de priorização são:
+
+---
+layout: false
+class: inverse, middle
+• Importância semântica. Cada fluxo recebe uma prioridade estaticamente, de acordo com alguma característica do domínio da tarefa que o gera.
+
+• Prazo monotônico. Prazo monotônico. O prazo monotônico é uma atribuição estática de prioridade que atribui maior prioridade aos fluxos com prazos mais curtos. Essa política de agendamento é usada quando fluxos de prioridades diferentes, com prazos em tempo real, devem ser agendados.
+
+---
+layout: false
+class: inverse, middle
+• Taxa monotônica. A taxa monotônica é uma atribuição estática de prioridade para fluxos periódicos que atribui maior prioridade aos fluxos com períodos mais curtos. Essa política de agendamento é um caso especial de prazo monotônico, mas é mais conhecido e tem mais probabilidade de ser suportado pelo sistema operacional.
+
+• Agendamento dinâmico de prioridades. As estratégias incluem:
+
+---
+layout: false
+class: inverse, middle
+• Round-robin. Round-robin é uma estratégia de agendamento que ordena as solicitações e, em todas as possibilidades de atribuição, atribui o recurso à próxima solicitação nessa ordem. Uma forma especial de round-robin é um executivo cíclico, em que as possibilidades de atribuição estão em intervalos de tempo fixos.
+
+• Prazo mais cedo - primeiro. Prazo mais cedo primeiro. O prazo mais cedo primeiro atribui prioridades com base nas solicitações pendentes com o prazo mais próximo.
+
+---
+layout: false
+class: inverse, middle
+• Menos frouxo primeiro. Essa estratégia atribui a maior prioridade ao trabalho com o menor "tempo livre", que é a diferença entre o tempo de execução restante e o tempo até o prazo final do trabalho.
+
+Para um único processador e processos que são preemptivos (ou seja, é possível suspender o processamento de uma tarefa para atender a uma tarefa cujo prazo está se aproximando), as estratégias de agendamento com prazo mais curto e com menos folga são ideais. Ou seja, se o conjunto de processos puder ser agendado para que todos os prazos sejam cumpridos, essas estratégias poderão agendá-lo com êxito.
+---
+layout: false
+class: inverse, middle
+
+• Programação estática. Um planejamento executivo cíclico é uma estratégia de planejamento em que os pontos de preempção e a sequência de designação ao recurso são determinados offline. A sobrecarga de tempo de execução de um agendador é assim evitada.
+---
+layout: false
+class: inverse, middle
+
+Táticas de desempenho
+As táticas são princípios genéricos de design. Para exercitar esse ponto, pense no design dos sistemas de estradas e rodovias onde você mora. Os engenheiros de tráfego empregam vários truques de design para otimizar o desempenho desses sistemas complexos, nos quais o desempenho tem várias medidas, como taxa de transferência (quantos carros por hora chegam dos subúrbios ao estádio de futebol), latência média dos casos (quanto tempo leva, em média, para ir da sua casa até o centro) e a pior latência (quanto tempo leva para um veículo de emergência chegar ao hospital). Quais são esses truques? Nada menos que nossos bons e velhos amigos, táticas.
+---
+layout: false
+class: inverse, middle
+
+Vamos considerar alguns exemplos:
+
+• Gerenciar taxa de eventos. As luzes nas rampas de entrada da rodovia permitem que os carros entrem na rodovia apenas em intervalos definidos, e os carros devem esperar (fila) na rampa pela sua vez.
+
+• Priorizar Eventos. Ambulâncias e polícia, com suas luzes e sirenes acesas, têm maior prioridade que os cidadãos comuns; algumas rodovias têm faixas de veículos de alta ocupação (HOV), priorizando veículos com dois ou mais ocupantes.
+---
+layout: false
+class: inverse, middle
+
+• Mantenha várias cópias. Adicione faixas de tráfego às estradas existentes ou construa rotas paralelas.
+
+Além disso, existem alguns truques que os usuários do sistema podem empregar:
+
+---
+layout: false
+class: inverse, middle
+• Aumentar recursos. Compre uma Ferrari, por exemplo. Todas as outras coisas são iguais, o carro mais rápido com um motorista competente em uma estrada aberta o levará ao seu destino mais rapidamente.
+
+• Aumente a eficiência. Encontre uma nova rota mais rápida e / ou mais curta que a sua rota atual.
+
+• Reduzir a sobrecarga computacional. Você pode chegar mais perto do carro à sua frente ou carregar mais pessoas no mesmo veículo (ou seja, carpooling).
+---
+layout: false
+class: inverse, middle
+
+Qual é o objetivo dessa discussão? Os engenheiros vêm analisando e otimizando sistemas há séculos, tentando melhorar seu desempenho, e estão empregando as mesmas estratégias de design para fazê-lo. Portanto, você deve sentir algum conforto ao saber que, ao tentar melhorar o desempenho do seu sistema baseado em computador, está aplicando táticas que foram completamente "testadas na estrada".
+---
+layout: false
+class: inverse, middle
+
+8.4 Resumo
+
+O desempenho é sobre o gerenciamento de recursos do sistema em face de tipos específicos de demanda para obter um comportamento de tempo aceitável. O desempenho pode ser medido em termos de taxa de transferência e latência para sistemas de tempo real interativos e incorporados, embora a taxa de transferência geralmente seja mais importante em sistemas interativos e a latência seja mais importante em sistemas embarcados.
+---
+layout: false
+class: inverse, middle
+
+O desempenho pode ser aprimorado reduzindo a demanda ou gerenciando os recursos de maneira mais apropriada. Reduzir a demanda terá o efeito colateral de reduzir a fidelidade ou recusar-se a atender a alguns pedidos. O gerenciamento de recursos de maneira mais apropriada pode ser feito por meio de agendamento, replicação ou apenas aumento dos recursos disponíveis.
+
+---
+layout: false
+class: inverse, middle
+8.5 Para leituras adicionais
+O desempenho possui um rico corpo de literatura. Aqui estão alguns livros que recomendamos:
+
+• Desempenho e escalabilidade de software: uma abordagem quantitativa [Liu 09]. Este livro aborda o desempenho voltado para aplicativos corporativos, com ênfase na teoria e na medição de filas.
+
+• Soluções de desempenho: um guia prático para criar software escalável e responsivo [Smith 01]. Este livro aborda o design com o desempenho em mente, com ênfase na criação (e preenchimento de dados reais) de modelos preditivos práticos de desempenho.
+---
+layout: false
+class: inverse, middle
+
+• Padrões de projeto em tempo real: arquitetura escalável robusta para sistemas em tempo real [Douglass 99].
+
+• Sistemas em tempo real [Liu 00].
+
+• Arquitetura de software orientada a padrões, volume 3: padrões para gerenciamento de recursos [Kircher 03].
+
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
