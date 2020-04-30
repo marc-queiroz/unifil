@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content {
+        font-size: 2.5em;
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 12
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+Segurança
+Por Jungwoo Ryoo e Phil Laplante:
+"Sua identidade pessoal não vale mais do que costumava ser - pelo menos para ladrões dispostos a roubá-la. De acordo com especialistas que monitoram esses mercados, o valor dos dados roubados do cartão de crédito pode variar de US $ 3 a US $ 40 centavos. Isso diminuiu dez vezes em relação a uma década atrás - embora o custo para um indivíduo com um cartão de crédito roubado possa subir para centenas de dólares."
+
+—Forbes.com (Taylor Buley. “Hackonomics”, Forbes.com, 27 de outubro de 2008, www.forbes.com/2008/10/25/credit-card-theft-tech-security-cz_tb1024theft.html)
+---
+layout: false
+class: inverse, middle
+A segurança é uma medir a capacidade do sistema de proteger dados e informações contra acesso não autorizado e ainda fornecer acesso a pessoas e sistemas autorizados. Uma ação tomada contra um sistema de computador com a intenção de causar dano é chamada de ataque e pode assumir várias formas. Pode ser uma tentativa não autorizada de acessar dados ou serviços ou modificar dados, ou pode ter a intenção de negar serviços a usuários legítimos.
+---
+layout: false
+class: inverse, middle
+
+A abordagem mais simples para caracterizar a segurança tem três características: confidencialidade, integridade e disponibilidade (CIA):
+
+1. Confidencialidade é a propriedade em que os dados ou serviços estão protegidos contra acesso não autorizado. Por exemplo, um hacker não pode acessar suas declarações de imposto de renda em um computador do governo.
+
+2) Integridade é a propriedade de que dados ou serviços não estão sujeitos a manipulação não autorizada. Por exemplo, sua nota não foi alterada desde que seu instrutor a atribuiu.
+---
+layout: false
+class: inverse, middle
+
+3) Disponibilidade é a propriedade que o sistema estará disponível para uso legítimo. Por exemplo, um ataque de negação de serviço não impedirá que você encomende livros em uma livraria online.
+
+Outras características usadas para apoiar a CIA são estas:
+
+4. A autenticação verifica as identidades das partes em uma transação e verifica se elas são realmente quem elas afirmam ser. Por exemplo, quando você recebe um email supostamente proveniente de um banco, a autenticação garante que ele realmente vem do banco.
+---
+layout: false
+class: inverse, middle
+
+5) A não rejeição garante que o remetente de uma mensagem não pode mais tarde negar ter enviado a mensagem e que o destinatário não pode negar ter recebido a mensagem. Por exemplo, você não pode negar o pedido de algo na Internet ou o comerciante não pode se recusar a receber seu pedido.
+
+6 A autorização concede ao usuário os privilégios para executar uma tarefa. Por exemplo, um sistema bancário on-line autoriza um usuário legítimo a acessar sua conta.
+---
+layout: false
+class: inverse, middle
+
+Usaremos essas características em nossos cenários gerais para segurança. As abordagens para alcançar a segurança podem ser caracterizadas como aquelas que detectam ataques, aquelas que resistem a ataques, aquelas que reagem a ataques e aquelas que se recuperam de ataques bem-sucedidos. Os objetos que estão sendo protegidos contra ataques são dados em repouso, dados em trânsito e processos computacionais.
+---
+layout: false
+class: inverse, middle
+
+9.1 Cenário geral de segurança
+Uma técnica usada no domínio de segurança é a modelagem de ameaças. Uma "árvore de ataque", semelhante a uma árvore de falhas discutida no atributo de qualidade disponibilidade, é usada pelos engenheiros de segurança para determinar possíveis ameaças. A raiz é um ataque bem-sucedido e os nós são possíveis causas diretas desse ataque bem-sucedido. Nós filhos decompõem as causas diretas e assim por diante. Um ataque é uma tentativa de quebrar a CIA, e as folhas das árvores de ataque seriam o estímulo no cenário. A resposta ao ataque é preservar a CIA ou dissuadir os agressores através do monitoramento de suas atividades. A partir dessas considerações, agora podemos descrever as partes individuais de um cenário geral de segurança. Eles estão resumidos na Tabela 9.1, e um exemplo de cenário de segurança é dado na Figura 9.1.
+---
+layout: false
+class: inverse, middle, center
+![Figura 91](image01.png)
+
+Quadro 9.1 Cenário geral de segurança
+---
+layout: false
+class: inverse, middle, center
+![Figura 91](image02.png)
+
+Quadro 9.1 Cenário geral de segurança
+
+---
+layout: false
+class: inverse, middle, center
+![Figura 91](image03.png)
+
+Figura 9.1. Exemplo de cenário de segurança concreto
+---
+layout: false
+class: inverse, middle
+• Fonte de estimulo. A origem do ataque pode ser um sistema humano ou outro. Pode ter sido identificado anteriormente (correta ou incorretamente) ou pode ser atualmente desconhecido. Um atacante humano pode ser de fora da organização ou de dentro da organização.
+
+• estímulo. O estímulo é um ataque. Caracterizamos isso como uma tentativa não autorizada de exibir dados, alterar ou excluir dados, acessar serviços do sistema, alterar o comportamento do sistema ou reduzir a disponibilidade.
+---
+layout: false
+class: inverse, middle
+
+• Artefato.O alvo do ataque pode ser os serviços do sistema, os dados nele ou os dados produzidos ou consumidos pelo sistema. Alguns ataques são feitos em componentes específicos do sistema conhecidos por serem vulneráveis.
+
+• meio ambiente. O ataque pode ocorrer quando o sistema está online ou offline, conectado ou desconectado de uma rede, atrás de um firewall ou aberto a uma rede, totalmente operacional, parcialmente operacional ou não operacional.
+---
+layout: false
+class: inverse, middle
+
+• Resposta. O sistema deve garantir que as transações sejam realizadas de maneira que dados ou serviços sejam protegidos contra acesso não autorizado; dados ou serviços não estão sendo manipulados sem autorização; as partes de uma transação são identificadas com segurança; as partes na transação não podem repudiar seus envolvimentos; e os dados, recursos e serviços do sistema estarão disponíveis para uso legítimo.
+
+O sistema também deve rastrear atividades dentro dele, registrando acesso ou modificação; tentativas de acessar dados, recursos ou serviços; e notificar entidades apropriadas (pessoas ou sistemas) quando um ataque aparente está ocorrendo.
+---
+layout: false
+class: inverse, middle
+
+• medir aresposta.As medidas da resposta de um sistema incluem o quanto de um sistema é comprometido quando um
+determinado componente ou valor de dados é comprometido, quanto tempo passou antes que um ataque foi detectado, quantos ataques foram resistidos, quanto tempo levou para se recuperar de um ataque bem-sucedido, e quantos dados estavam vulneráveis a um ataque específico.
+
+A Tabela 9.1 enumera os elementos do cenário geral, que caracterizam a segurança, e a Figura 9.1 mostra um exemplo de cenário concreto: Um funcionário insatisfeito de um local remoto tenta modificar a tabela de taxas de pagamento durante operações normais. O sistema mantém uma trilha de auditoria e os dados corretos são restaurados em um dia.
+---
+layout: false
+class: inverse, middle
+
+9.2 Táticas para segurança
+
+Um método para pensar em como obter segurança em um sistema é pensar em segurança física. Instalações seguras têm acesso limitado (por exemplo, usando pontos de verificação de segurança), meios de detectar invasores (por exemplo, exigindo que visitantes legítimos usem crachás), mecanismos de dissuasão, como guardas armados, mecanismos de reação, como trancar automaticamente as portas e possui mecanismos de recuperação, como backup externo. Isso leva às nossas quatro categorias de táticas: detectar, resistir, reagir e recuperar. A Figura 9.2 mostra essas categorias como o objetivo das táticas de segurança.
+---
+layout: false
+class: inverse, middle, center
+![Figura 81](image04.png)
+
+
+Figura 9.2. O objetivo das táticas de segurança
+---
+layout: false
+class: inverse, middle
+Detectar ataques
+
+A categoria de detectar ataques consiste em quatro táticas: detectar invasões, detectar negação de serviço, verificar a integridade da mensagem e detectar atraso na mensagem.
+
+• Detectar intrusão é a comparação do tráfego de rede ou padrões de solicitação de serviço em um sistema com um conjunto de assinaturas ou padrões conhecidos de comportamento malicioso armazenados em um banco de dados. As assinaturas podem ser baseadas em protocolo, sinalizadores TCP, tamanhos de carga útil, aplicativos, endereço de origem ou destino ou número da porta.
+---
+layout: false
+class: inverse, middle
+
+• Detectar negação de serviço é a comparação do padrão ou assinatura do tráfego de rede que entra no sistema com perfis históricos de ataques conhecidos de negação de serviço.
+
+• Verifique a integridade da mensagem. Essa tática emprega técnicas como somas de verificação ou valores de hash para verificar a integridade de mensagens, arquivos de recursos, arquivos de implantação e arquivos de configuração. Uma soma de verificação é um mecanismo de validação em que o sistema mantém informações redundantes para arquivos e mensagens de configuração e usa essas informações redundantes para verificar o arquivo ou a mensagem de configuração quando é usado. Um valor de hash é uma sequência única gerada por uma função de hash cuja entrada pode ser arquivos ou mensagens de configuração. Mesmo uma pequena alteração nos arquivos ou mensagens originais resulta em uma alteração significativa no valor do hash.
+---
+layout: false
+class: inverse, middle
+
+• Detectar atraso na mensagem tem como objetivo detectar possíveis ataques man-in-the-middle, em que uma parte mal-intencionada está interceptando (e possivelmente modificando) mensagens. Ao verificar o tempo que leva para entregar uma mensagem, é possível detectar comportamentos suspeitos de tempo, onde o tempo que leva para entregar uma mensagem é altamente variável.
+---
+layout: false
+class: inverse, middle
+
+Resistir a ataques
+Há vários meios conhecidos de resistir a um ataque:
+
+• Identifique atores. Identificar “atores” é realmente identificar a fonte de qualquer entrada externa no sistema. Os usuários geralmente são identificados por meio de IDs de usuário. Outros sistemas podem ser "identificados" por meio de códigos de acesso, endereços IP, protocolos, portas e assim por diante.
+---
+layout: false
+class: inverse, middle
+
+• Atores autenticação.Autenticação significa garantir que um ator (um usuário ou um computador remoto) seja realmente quem ou o que pretende ser. Senhas, senhas únicas, certificados digitais e identificação biométrica fornecem um meio de autenticação.
+
+• Autorizar atores. Autorização significa garantir que um ator autenticado tenha o direito de acessar e modificar dados ou serviços. Esse mecanismo geralmente é ativado, fornecendo alguns mecanismos de controle de acesso em um sistema. O controle de acesso pode ser por um ator ou por uma classe de ator. Classes de atores podem ser definidas por grupos de atores, papéis de atores ou listas de indivíduos.
+---
+layout: false
+class: inverse, middle
+
+• Acesso Limite. Limitar o acesso envolve controlar o que e quem pode acessar quais partes de um sistema. Isso pode incluir a limitação do acesso a recursos como processadores, memória e conexões de rede, que podem ser alcançados usando o gerenciamento de processos, a proteção de memória, o bloqueio de um host, o fechamento de uma porta ou a rejeição de um protocolo. Por exemplo, um firewall é um ponto de acesso único à intranet de uma organização. Uma zona desmilitarizada (DMZ) é uma sub-rede entre a Internet e uma intranet, protegida por dois firewalls: um voltado para a Internet e outro para a intranet. Uma DMZ é usada quando uma organização deseja permitir que usuários externos acessem serviços que devem estar disponíveis publicamente fora da intranet. Dessa forma, o número de portas abertas no firewall interno pode ser minimizado. Essa tática também limita o acesso dos atores (identificando, autenticando e autorizando).
+---
+layout: false
+class: inverse, middle
+
+• Exposição Limite. Limitar a exposição refere-se à redução final e indireta da probabilidade de um ataque bem-sucedido ou à restrição da quantidade de dano potencial. Isso pode ser conseguido ocultando fatos sobre um sistema a ser protegido (“segurança pela obscuridade”) ou dividindo e distribuindo recursos críticos para que a exploração de uma única fraqueza não possa comprometer completamente nenhum recurso (“não coloque todos os seus ovos em uma única cesta"). Por exemplo, uma decisão de projeto para ocultar quantos pontos de entrada um sistema possui é uma maneira de limitar a exposição. A decisão de distribuir servidores entre vários data centers geograficamente dispersos também é uma maneira de limitar a exposição.
+---
+layout: false
+class: inverse, middle
+
+• Criptografar dados. Os dados devem ser protegidos contra acesso não autorizado. A confidencialidade geralmente é alcançada através da aplicação de alguma forma de criptografia nos dados e na comunicação. A criptografia fornece proteção extra aos dados mantidos persistentemente além dos disponíveis na autorização. Os links de comunicação, por outro lado, podem não ter controles de autorização. Nesses casos, a criptografia é a única proteção para transmitir dados através de links de comunicação acessíveis ao público. O link pode ser implementado por uma rede virtual privada (VPN) ou por um SSL (Secure Sockets Layer) para um link baseado na Web. A criptografia pode ser simétrica (ambas as partes usam a mesma chave) ou assimétrica (chaves públicas e privadas).
+---
+layout: false
+class: inverse, middle
+
+• entidades separadas. A separação de diferentes entidades no sistema pode ser feita através da separação física em diferentes servidores conectados a redes diferentes; o uso de máquinas virtuais, por não ter conexão entre diferentes partes de um sistema. Por fim, dados confidenciais são frequentemente separados de dados não sensíveis para reduzir as possibilidades de ataque daqueles que têm acesso a dados não sensíveis.
+
+• Altere as configurações padrão. Muitos sistemas têm configurações padrão atribuídas quando o sistema é entregue. Forçar o usuário a alterar essas configurações impedirá que os invasores obtenham acesso ao sistema por meio de configurações geralmente disponíveis ao público.
+---
+layout: false
+class: inverse, middle
+
+Reagir a ataques
+
+Várias táticas destinam-se a responder a um ataque em potencial:
+
+• Revogar o acesso. Se o sistema ou o administrador do sistema acreditar que um ataque está em andamento, o acesso poderá ser severamente limitado a recursos confidenciais, mesmo para usuários e usos normalmente legítimos. Por exemplo, se sua área de trabalho tiver sido comprometida por um vírus, seu acesso a determinados recursos poderá ser limitado até que o vírus seja removido do seu sistema.
+---
+layout: false
+class: inverse, middle
+
+• Bloquear o computador. Tentativas repetidas de falha no login podem indicar um possível ataque. Muitos sistemas limitam o acesso de um computador específico se houver tentativas repetidas de acessar uma conta desse computador. Usuários legítimos podem cometer erros ao tentar fazer login. Portanto, o acesso limitado pode ser apenas por um determinado período de tempo.
+
+• Informar os atores. Ataques contínuos podem exigir ação de operadores, outras pessoas ou sistemas cooperantes. Esse pessoal ou sistema - o conjunto de atores relevantes - deve ser notificado quando o sistema detectar um ataque.
+---
+layout: false
+class: inverse, middle
+
+Recuperação de ataques
+Depois que um sistema detectou e tentou resistir a um ataque, ele precisa se recuperar. Parte da recuperação é a restauração de serviços. Por exemplo, servidores ou conexões de rede adicionais podem ser mantidos em reserva para esse fim. Como um ataque bem-sucedido pode ser considerado um tipo de falha, o conjunto de táticas de disponibilidade que tratam da recuperação de uma falha também pode ser utilizado para esse aspecto da segurança.
+---
+layout: false
+class: inverse, middle
+
+Além das táticas de disponibilidade que permitem a restauração de serviços, precisamos manter uma trilha de auditoria. Auditamos - ou seja, mantemos um registro das ações do usuário e do sistema e seus efeitos - para ajudar a rastrear as ações e identificar um invasor. Podemos analisar as trilhas de auditoria para tentar processar os invasores ou criar melhores defesas no futuro.
+
+O conjunto de táticas de segurança é mostrado na Figura 9.3.
+---
+layout: false
+class: inverse, middle, center
+![Figura 81](image05.png)
+
+Figura 9.3. Táticas de segurança
+---
+layout: false
+class: inverse, middle
+9.3. Uma lista de verificação de design para segurança
+
+A Tabela 9.2 é uma lista de verificação para apoiar o processo de design e análise de segurança.
+---
+layout: false
+class: inverse, middle, center
+![Figura 81](image06.png)
+
+Tabela 9.2 Lista de verificação para dar suporte ao processo de design e análise de segurança
+---
+layout: false
+class: inverse, middle, center
+![Figura 81](image07.png)
+
+Tabela 9.2 Lista de verificação para dar suporte ao processo de design e análise de segurança
+---
+layout: false
+class: inverse, middle, center
+![Figura 81](image08.png)
+
+Tabela 9.2 Lista de verificação para dar suporte ao processo de design e análise de segurança
+---
+layout: false
+class: inverse, middle
+
+9.4. Resumo
+
+Os ataques contra um sistema podem ser caracterizados como ataques contra a confidencialidade, integridade ou disponibilidade de um sistema ou de seus dados. Confidencialidade significa manter os dados afastados daqueles que não devem ter acesso e conceder acesso aos que deveriam. Integridade significa que não há modificações não autorizadas ou exclusão de dados, e disponibilidade significa que o sistema está acessível àqueles que têm direito a usá-lo.
+---
+layout: false
+class: inverse, middle
+
+A ênfase de distinguir várias classes de atores na caracterização leva a muitas das táticas usadas para obter segurança. Identificar, autenticar e autorizar atores são táticas destinadas a determinar quais usuários ou sistemas têm direito a que tipo de acesso a um sistema.
+
+É assumido que nenhuma tática de segurança é infalível e que os sistemas serão comprometidos. Portanto, existem táticas para detectar um ataque, limitar a propagação de qualquer ataque e reagir e recuperar-se de um ataque.
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
