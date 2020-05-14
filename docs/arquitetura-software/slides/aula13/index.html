@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content {
+        font-size: 2.5em;
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 13
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+Testabilidade
+
+As estimativas da indústria indicam que entre 30 e 50% (ou, em alguns casos, até mais) do custo de desenvolvimento de sistemas bem projetados é assumido por testes. Se o arquiteto de software puder reduzir esse custo, o retorno será grande.
+---
+layout: false
+class: inverse, middle
+
+A testabilidade de software refere-se à facilidade com que o software pode ser feito para demonstrar suas falhas através de testes (geralmente baseados em execução). Especificamente, testabilidade refere-se à probabilidade, assumindo que o software tenha pelo menos uma falha, que falhará na próxima execução do teste. Intuitivamente, um sistema é testável se "desiste" de suas falhas facilmente. Se houver uma falha em um sistema, queremos que ela falhe durante o teste o mais rápido possível. Obviamente, calcular essa probabilidade não é fácil e, como você verá quando discutirmos medidas de resposta para testabilidade, outras medidas serão usadas.
+---
+layout: false
+class: inverse, middle
+
+A Figura 10.1 mostra um modelo de teste no qual um programa processa entrada e produz saída. Um oráculo é um agente (humano ou mecânico) que decide se a saída está correta ou não, comparando a saída com a especificação do programa. A saída não é apenas o valor produzido funcionalmente, mas também pode incluir medidas derivadas de atributos de qualidade, como o tempo que levou para produzir a saída. A Figura 10.1 também mostra que o estado interno do programa também pode ser mostrado ao oráculo, e um oráculo pode decidir se isso está correto ou não - ou seja, pode detectar se o programa entrou em um estado incorreto e fazer um julgamento quanto ao correção do programa.
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.1](image01.png)
+
+
+Figura 10.1. Um modelo de teste
+Definir e examinar o estado interno de um programa é um aspecto do teste que será destacado em nossas táticas de testabilidade.
+---
+layout: false
+class: inverse, middle
+
+Para que um sistema seja testável adequadamente, deve ser possível controlar as entradas de cada componente (e possivelmente manipular seu estado interno) e, em seguida, observar suas saídas (e possivelmente seu estado interno, após ou no caminho para calcular as saídas). Freqüentemente, esse controle e observação são feitos através do uso de um equipamento de teste, que é um software especializado (ou, em alguns casos, hardware), projetado para exercitar o software em teste.
+---
+layout: false
+class: inverse, middle
+
+Os chicotes de teste vêm de várias formas, como um recurso de gravação e reprodução de dados enviados por várias interfaces ou um simulador para um ambiente externo no qual um software incorporado é testado ou mesmo durante a produção. O equipamento de teste pode fornecer assistência na execução dos procedimentos de teste e no registro da saída. Um equipamento de teste pode ser uma parte substancial do software por si só, com sua própria arquitetura, partes interessadas e requisitos de atributos de qualidade.
+---
+layout: false
+class: inverse, middle
+
+O teste é realizado por vários desenvolvedores, usuários ou pessoal de garantia de qualidade. Partes do sistema ou de todo o sistema podem ser testadas. As medidas de resposta para testabilidade lidam com a eficácia dos testes na descoberta de falhas e quanto tempo leva para executar os testes em algum nível de cobertura desejado. Os casos de teste podem ser escritos pelos desenvolvedores, pelo grupo de testes ou pelo cliente. Os casos de teste podem ser uma parte do teste de aceitação ou podem impulsionar o desenvolvimento, como fazem em certos tipos de metodologias Agile.
+
+Teste de código é um caso especial de validação, que garante que um artefato projetado atenda às necessidades de seus stakeholders ou seja adequado para uso.
+---
+layout: false
+class: inverse, middle
+
+10.1 Cenário geral de testabilidade
+
+Agora podemos descrever o cenário geral de testabilidade.
+---
+layout: false
+class: inverse, middle
+
+• Fonte de estímulo. O teste é realizado por testadores de unidade, testadores de integração ou testadores de sistema (no lado da organização em desenvolvimento) ou testadores de aceitação e usuários finais (no lado do cliente). A fonte pode ser humana ou um testador automatizado.
+
+• estímulo. Um conjunto de testes é executado devido à conclusão de um incremento de codificação, como uma camada ou serviço de classe, à integração completa de um subsistema, à implementação completa de todo o sistema ou à entrega do sistema ao cliente.
+---
+layout: false
+class: inverse, middle
+
+• Artefato.Uma unidade de código (correspondente a um módulo na arquitetura), um subsistema ou todo o sistema é o artefato que está sendo testado.
+
+• meio ambiente. O teste pode ocorrer no tempo de desenvolvimento, no tempo de compilação, no tempo de implantação ou enquanto o sistema está em execução (talvez em uso rotineiro). O ambiente também pode incluir o equipamento de teste ou ambientes de teste em uso.
+---
+layout: false
+class: inverse, middle
+
+• Resposta.O sistema pode ser controlado para realizar os testes desejados e os resultados do teste podem ser observados.
+
+• medir aresposta.As medidas de resposta visam representar a facilidade com que um sistema em teste “desiste” de suas falhas. As medidas podem incluir o esforço envolvido em encontrar uma falha ou uma classe específica de falhas, o esforço necessário para testar uma determinada porcentagem de declarações, o comprimento da cadeia de testes mais longa (uma medida da dificuldade de executar os testes), medidas de esforço para executar os testes, medidas de esforço para realmente encontrar falhas, estimativas da probabilidade de encontrar falhas adicionais e o período de tempo ou quantidade de esforço para preparar o ambiente de teste.
+---
+layout: false
+class: inverse, middle
+
+Talvez uma medida seja a facilidade com que o sistema pode ser levado a um estado específico. Além disso, podem ser usadas medidas de redução do risco de erros remanescentes no sistema. Nem todas as falhas são iguais em termos de possível impacto. As medidas de redução de risco tentam classificar a gravidade das falhas encontradas (ou a serem encontradas).
+
+A Figura 10.2 mostra um cenário concreto para testabilidade. O testador de unidade conclui uma unidade de código durante o desenvolvimento e executa uma sequência de testes cujos resultados são capturados e que oferecem uma cobertura de caminho de 85% dentro de três horas após o teste.
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.2](image02.png)
+
+Figura 10.2. Exemplo de cenário concreto de testabilidade
+
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.3](image03.png)
+
+Quadro 10.1 Cenário Geral de Testabilidade enumera os elementos do cenário geral que caracterizam a testabilidade.
+
+---
+layout: false
+class: inverse, middle
+
+10.2. Táticas
+
+de testabilidade O objetivo das táticas de testabilidade é permitir testes mais fáceis quando um incremento do desenvolvimento de software é concluído. A Figura 10.3 mostra o uso de táticas para testabilidade. As técnicas arquitetônicas para aprimorar a testabilidade do software não receberam tanta atenção quanto as disciplinas mais maduras dos atributos de qualidade, como modificabilidade, desempenho e disponibilidade, mas, como dissemos antes, qualquer coisa que o arquiteto possa fazer para reduzir o alto custo dos testes trará uma significativa benefício.
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.4](image04.png)
+
+
+Figura 10.3. O objetivo das táticas de testabilidade
+---
+layout: false
+class: inverse, middle
+
+Existem duas categorias de táticas para testabilidade. A primeira categoria trata da adição de controlabilidade e observabilidade ao sistema. O segundo trata da limitação da complexidade no design do sistema.
+---
+layout: false
+class: inverse, middle
+
+Controlar e observar o estado do sistema
+
+O controle e a observação são tão centrais para a testabilidade que alguns autores até definem a testabilidade nesses termos. Os dois vão de mãos dadas; não faz sentido controlar algo se você não pode observar o que acontece quando o faz. A forma mais simples de controle e observação é fornecer um componente de software com um conjunto de entradas, deixá-lo fazer seu trabalho e observar suas saídas. No entanto, a categoria de táticas de testabilidade para controle e observação do estado do sistema fornece informações sobre o software que vai além de suas entradas e saídas.
+---
+layout: false
+class: inverse, middle
+
+Essas táticas fazem com que um componente mantenha algum tipo de informação de estado, permita que os testadores atribuam um valor a essas informações de estado e / ou torne essas informações acessíveis aos testadores sob demanda. As informações de estado podem ser um estado operacional, o valor de alguma variável-chave, carga de desempenho, etapas intermediárias do processo ou qualquer outra coisa útil para recriar o comportamento do componente. As táticas específicas incluem o seguinte:
+---
+layout: false
+class: inverse, middle
+
+
+• Interfaces especializadas. Ter interfaces de teste especializadas permite controlar ou capturar valores variáveis de um componente através de um equipamento de teste ou através da execução normal. Exemplos de rotinas de teste especializadas incluem:
+
+• Um set and get, método para variáveis, modos ou atributos importantes (métodos que de outra forma não poderiam estar disponíveis, exceto para fins de teste)
+---
+layout: false
+class: inverse, middle
+
+• Um relatório, método de que retorna o estado completo do objeto
+
+• Uma redefinição, método para definir o estado interno (por exemplo, todos os atributos de uma classe) para um estado interno especificado
+---
+layout: false
+class: inverse, middle
+
+• Um método para ativar a saída detalhada, vários níveis de log de eventos, instrumentação de desempenho ou monitoramento de recursos
+
+Interfaces e métodos de teste especializados claramente identificados ou mantidos separados dos métodos e interfaces de acesso para a funcionalidade necessária, para que possam ser removidos, se necessário. (No entanto, em sistemas críticos para o desempenho e alguns críticos para a segurança, é problemático colocar um código diferente do que foi testado. Se você remover o código de teste, como você saberá que o código que você coloca tem o mesmo comportamento, particularmente o mesmo comportamento de tempo, como o código que você testou? No entanto, para outros tipos de sistemas, essa estratégia é eficaz.)
+---
+layout: false
+class: inverse, middle
+
+• Gravação / reprodução. O estado que causou uma falha geralmente é difícil de recriar. Gravar o estado ao cruzar uma interface permite que esse estado seja usado para "reproduzir o sistema" e recriar a falha. Gravação / reprodução refere-se a capturar informações cruzando uma interface e usá-la como entrada para testes adicionais.
+---
+layout: false
+class: inverse, middle
+
+• Localize o armazenamento do estado. Para iniciar um sistema, subsistema ou módulo em um estado arbitrário para um teste, é mais conveniente se esse estado estiver armazenado em um único local. Por outro lado, se o estado é enterrado ou distribuído, isso se torna difícil, se não impossível. O estado pode ter granulação fina, nível de bits ou granulação grossa para representar abstrações amplas ou modos operacionais gerais. A escolha da granularidade depende de como os estados serão usados nos testes. Uma maneira conveniente de "externalizar" o armazenamento de estado (ou seja, para poder ser manipulado através dos recursos da interface) é usar uma máquina de estado (ou objeto de máquina de estado) como o mecanismo para rastrear e relatar o estado atual.
+---
+layout: false
+class: inverse, middle
+
+• Fontes de dados abstratas. Semelhante ao controle do estado de um programa, o controle fácil dos dados de entrada facilita o teste. Abstrair as interfaces permite substituir os dados de teste com mais facilidade. Por exemplo, se você tiver um banco de dados de transações de clientes, poderá projetar sua arquitetura para facilitar o apontamento do sistema de teste para outros bancos de dados de teste ou, possivelmente, para arquivos de dados de teste, sem precisar alterar o código funcional.
+---
+layout: false
+class: inverse, middle
+
+• caixa de areia. "Sandboxing" refere-se a isolar uma instância do sistema do mundo real para permitir experimentações sem restrições pela preocupação de ter que desfazer as consequências da experiência. O teste é auxiliado pela capacidade de operar o sistema de forma que não tenha conseqüências permanentes ou para que quaisquer consequências possam ser revertidas. Isso pode ser usado para análise, treinamento e simulação de cenários. (A estrutura Spring, que é bastante popular na comunidade Java, vem com um conjunto de utilitários de teste que suportam isso. Os testes são executados como uma "transação", revertida no final.)
+---
+layout: false
+class: inverse, middle
+
+Uma forma comum de sandbox é virtualizar recursos. Testar um sistema geralmente envolve a interação com recursos cujo comportamento está fora do controle do sistema. Usando uma sandbox, você pode criar uma versão do recurso cujo comportamento está sob seu controle. Por exemplo, o comportamento do relógio do sistema normalmente não está sob nosso controle - é incrementado um segundo a cada segundo - o que significa que, se queremos fazer o sistema pensar que é meia-noite do dia em que todas as estruturas de dados devem transbordar, precisamos uma maneira de fazer isso, porque esperar é uma má escolha.
+---
+layout: false
+class: inverse, middle
+
+Por ter a capacidade de abstrair a hora do sistema a partir da hora do relógio, podemos permitir que o sistema (ou componentes) funcione mais rápido que o tempo do relógio de parede e permitir que o sistema (ou componentes) seja testado em limites de tempo críticos (como no próximo turno, ativar ou desativar o horário de verão). Virtualizações semelhantes podem ser feitas para outros recursos, como memória, bateria, rede e assim por diante. Stubs, zombarias e injeção de dependência são formas simples, mas eficazes de virtualização.
+---
+layout: false
+class: inverse, middle
+
+• afirmações executáveis. Usando essa tática, as asserções são (geralmente) codificadas manualmente e colocadas nos locais desejados para indicar quando e onde um programa está em um estado defeituoso. As asserções geralmente são projetadas para verificar se os valores dos dados atendem às restrições especificadas. As asserções são definidas em termos de declarações de dados específicas e devem ser colocadas onde os valores dos dados são referenciados ou modificados. As asserções podem ser expressas como pré e pós-condições para cada método e também como invariantes em nível de classe.
+---
+layout: false
+class: inverse, middle
+
+(continuação de afirmações executáveis) Isso resulta em crescente observabilidade, quando uma asserção é sinalizada como tendo falhado. Asserções inseridas sistematicamente onde os valores dos dados mudam podem ser vistas como uma maneira manual de produzir um tipo "estendido". Essencialmente, o usuário está anotando um tipo com código de verificação adicional. Sempre que um objeto desse tipo é modificado, o código de verificação é executado automaticamente e os avisos são gerados se alguma condição for violada. Na medida em que as asserções cobrem os casos de teste, elas efetivamente incorporam o oráculo de teste no código - assumindo que as asserções estejam corretas e codificadas corretamente.
+---
+layout: false
+class: inverse, middle
+
+Todas essas táticas acrescentam capacidade ou abstração ao software que (se não estivéssemos interessados em testar), não estaria lá. Eles podem ser vistos como substituindo o software básico e simples por um software mais elaborado, com sinos e assobios para testes. Existem várias técnicas para efetuar essa substituição. Essas não são táticas de testabilidade, por si só, mas técnicas para substituir um componente por uma versão diferente de si mesmo. Eles incluem o seguinte:
+---
+layout: false
+class: inverse, middle
+
+• Substituição de componente, que simplesmente troca a implementação de um componente por uma implementação diferente que (no caso da testabilidade) possui recursos que facilitam o teste. A substituição de componentes geralmente é realizada nos scripts de construção de um sistema.
+
+• Macros de pré-processador que, quando ativadas, expandem para código de relatório de estado ou ativam instruções de análise que retornam ou exibem informações ou retornam controle a um console de teste.
+---
+layout: false
+class: inverse, middle
+
+• Aspectos (em programas orientados a aspectos) que lidam com a preocupação transversal de como o estado é relatado.
+---
+layout: false
+class: inverse, middle
+
+Limite de complexidade
+
+O software complexo é mais difícil de testar. Isso ocorre porque, pela definição de complexidade, seu espaço de estado operacional é muito grande e (todos os demais são iguais) é mais difícil recriar um estado exato em um espaço de estado grande do que em um espaço de estado pequeno. Como o teste não consiste apenas em fazer com que o software falhe, mas em encontrar a falha que causou a falha para que ela possa ser removida, geralmente estamos preocupados em tornar o comportamento repetitivo. Essa categoria possui três táticas:
+---
+layout: false
+class: inverse, middle
+
+• Limitar a complexidade estrutural. Essa tática inclui evitar ou resolver dependências cíclicas entre componentes, isolar e encapsular dependências no ambiente externo e reduzir dependências entre componentes em geral (por exemplo, reduzir o número de acessos externos aos dados públicos de um módulo). Em sistemas orientados a objetos, você pode simplificar a hierarquia de herança: Limite o número de classes da qual uma classe é derivada ou o número de classes derivadas de uma classe.
+---
+layout: false
+class: inverse, middle
+
+Limite a profundidade da árvore de herança e o número de filhos de uma classe. Limite o polimorfismo e chamadas dinâmicas. Uma métrica estrutural que se mostrou empiricamente correlacionada à testabilidade é chamada de resposta de uma classe. A resposta da classe C é uma contagem do número de métodos de C mais o número de métodos de outras classes invocadas pelos métodos de C. Manter essa métrica baixa pode aumentar a testabilidade.
+---
+layout: false
+class: inverse, middle
+
+Ter alta coesão, acoplamento flexível e separação de preocupações - todas as táticas de modificabilidade também podem ajudar na testabilidade. Eles são uma forma de limitar a complexidade dos elementos arquitetônicos, atribuindo a cada elemento uma tarefa focada com interação limitada com outros elementos. A separação de preocupações pode ajudar a obter controlabilidade e observabilidade (além de reduzir o tamanho do espaço de estado geral do programa).
+---
+layout: false
+class: inverse, middle
+
+A controlabilidade é fundamental para tornar os testes tratáveis, como observou Robert Binder: “Um componente que pode agir independentemente dos outros é mais facilmente controlável. . . . Com alto acoplamento entre as classes, normalmente é mais difícil controlar a classe em teste, reduzindo assim a testabilidade. . . . Se os recursos da interface do usuário estiverem entrelaçados com funções básicas, será mais difícil testar cada função ”[Binder 94].
+---
+layout: false
+class: inverse, middle
+
+Além disso, os sistemas que exigem consistência completa dos dados em todos os momentos costumam ser mais complexos do que aqueles que não precisam. Se seus requisitos o permitirem, considere criar seu sistema sob o modelo de "eventual consistência", onde mais cedo ou mais tarde (mas talvez não agora) seus dados atingirão um estado consistente. Isso geralmente torna o design do sistema mais simples e, portanto, mais fácil de testar.
+---
+layout: false
+class: inverse, middle
+
+Finalmente, alguns estilos de arquitetura se prestam à testabilidade. Em um estilo em camadas, você pode testar primeiro as camadas inferiores e, em seguida, testar as camadas superiores com confiança nas camadas inferiores.
+
+• Limite o não determinismo. A contrapartida de limitar a complexidade estrutural é limitar a complexidade comportamental e, quando se trata de testar, o não determinismo é uma forma muito perniciosa de comportamento complexo. Sistemas não determinísticos são mais difíceis de testar do que sistemas determinísticos. Essa tática envolve encontrar todas as fontes de não-determinismo, como o paralelismo irrestrito, e eliminá-las o máximo possível. Algumas fontes de não-determinismo são inevitáveis - por exemplo, em sistemas multithread que respondem a eventos imprevisíveis - mas, para esses sistemas, outras táticas (como gravação / reprodução) estão disponíveis.
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.5](image05.png)
+
+
+A Figura 10.4 Táticas de testabilidade fornece um resumo das táticas usadas para testabilidade.
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.4](image04.png)
+
+10.3. Uma lista de verificação de projeto para testabilidade
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.6](image06.png)
+
+Tabela 10.2. Lista de verificação para dar suporte ao processo de design e análise para teste
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.7](image07.png)
+
+Tabela 10.2. Lista de verificação para dar suporte ao processo de design e análise para teste
+---
+layout: false
+class: inverse, middle, center
+![Figura 10.8](image08.png)
+
+Tabela 10.2. Lista de verificação para dar suporte ao processo de design e análise para teste
+---
+layout: false
+class: inverse, middle
+
+agora que sua arquitetura está definida para ajudá-lo a testar. . .
+
+Por Nick Rozanski, co-autor (com Eoin Woods) de arquitetura de sistemas software: trabalhando com partes interessadas usando pontos de vista e perspectivas
+---
+layout: false
+class: inverse, middle
+
+Além de arquitetar seu sistema para torná-lo passível de teste, você também É preciso superar dois desafios mais específicos e assustadores ao testar sistemas muito grandes ou complexos, como dados de teste e automação de teste.
+---
+layout: false
+class: inverse, middle
+
+Dados de teste
+
+Seu primeiro desafio é como criargrandes, consistentes e úteis conjuntos de dados de teste. Esse é um problema significativo na minha experiência, principalmente para testes de integração (ou seja, testar vários componentes para confirmar se eles funcionam corretamente juntos) e testes de desempenho (confirmando que o sistema atende aos requisitos de taxa de transferência, latência e tempo de resposta) . Para testes de unidade e, geralmente, para testes de aceitação do usuário, os dados do teste geralmente são criados manualmente.
+---
+layout: false
+class: inverse, middle
+
+Por exemplo, você pode precisar de 50 produtos, 100 clientes e 500 pedidos em seu banco de dados de teste, para poder testar as etapas funcionais envolvidas na criação, alteração ou exclusão de pedidos. Esses dados devem ser suficientemente variados para que o teste valha a pena, devem estar em conformidade com todas as regras de integridade referencial e outras restrições do seu modelo de dados, e você deve poder calcular e especificar os resultados esperados dos testes.
+---
+layout: false
+class: inverse, middle
+
+Eu já vi - e me envolvi em duas maneiras de fazer isso: você escreve um sistema para gerar seus dados de teste ou captura um conjunto de dados representativo do ambiente de produção e o anonimamente, conforme necessário. (O anonimato dos dados de teste envolve a remoção de qualquer informação confidencial, como dados pessoais de pessoas ou organizações, detalhes financeiros etc.).
+---
+layout: false
+class: inverse, middle
+
+A criação de seus próprios dados de teste é o ideal, porque você sabe quais dados está usando e pode garantir que eles cubram todos os seus casos extremos, mas é muito esforço. A captura de dados do ambiente ativo é mais fácil, supondo que já exista um sistema, mas você não sabe quais dados e, portanto, qual cobertura obterá e poderá ter que tomar cuidado extra para se adequar à privacidade e legislação de proteção de dados.
+---
+layout: false
+class: inverse, middle
+
+Isso pode ter um impacto na arquitetura do sistema de várias maneiras e deve ser levado em consideração desde o início pelo arquiteto. Por exemplo, o sistema pode precisar capturar transações ativas ou tirar "instantâneos" de dados ativos, que podem ser usados para gerar dados de teste. Além disso, o sistema de geração de dados de teste pode precisar de uma arquitetura própria.
+---
+layout: false
+class: inverse, middle
+
+Automação de teste
+
+Seu segundo desafio é em torno da automação de teste. Na prática, não é possível testar grandes sistemas manualmente, devido ao número de testes, sua complexidade e a quantidade de verificação de resultados necessária. No mundo ideal, você cria uma estrutura de automação de teste para fazer isso automaticamente, que é alimentada com dados de teste e definida em execução todas as noites, ou mesmo executada toda vez que você faz o check-in de alguma coisa (o modelo de integração contínua).
+---
+layout: false
+class: inverse, middle
+
+Essa é uma área que recebe pouca atenção em muitos projetos grandes de desenvolvimento de software. Geralmente não é orçamentado no plano do projeto, com uma suposição não escrita de que o esforço necessário para construí-lo pode ser de alguma forma "absorvido" pelos custos de desenvolvimento. Uma estrutura de automação de teste pode ser uma coisa significativamente complexa por si só (o que levanta a questão de como você a testa!). Ele deve ter um escopo e planejar como qualquer outro projeto entregue.
+---
+layout: false
+class: inverse, middle
+
+Deve-se considerar devidamente como a estrutura invocará funções no sistema em teste, particularmente para testar interfaces de usuário, o que é quase sem exceção um pesadelo. (A execução de um teste de interface do usuário depende muito do layout das janelas, da ordem dos campos e assim por diante, que geralmente muda muito em sistemas fortemente focados no usuário. Às vezes é possível executar controles de janela programaticamente, mas em no pior caso, pode ser necessário gravar e reproduzir pressionamentos de tecla ou movimentos do mouse.)
+---
+layout: false
+class: inverse, middle
+
+Atualmente, existem muitas ferramentas para ajudar nisso, como o Quick Test Pro, o TestComplete ou o Selenium para testes e o CruiseControl, Hudson e o TeamCity para integração contínua. Uma lista abrangente na Web pode ser encontrada aqui: [en.wikipedia.org/wiki/Test_automation](en.wikipedia.org/wiki/Test_automation).
+---
+layout: false
+class: inverse, middle
+
+
+10.4 Resumo
+
+Assegurar que um sistema seja facilmente testável tem recompensas tanto em termos de custo dos testes quanto da confiabilidade do sistema. Um veículo frequentemente usado para executar os testes é o equipamento de teste. Os equipamentos de teste são sistemas de software que encapsulam recursos de teste, como casos de teste e infraestrutura de teste, para que seja fácil reaplicar testes em iterações e seja fácil aplicar a infraestrutura de teste a novos incrementos do sistema. Outro veículo é a criação de casos de teste anteriores ao desenvolvimento de um componente, para que os desenvolvedores saibam quais testes seus componentes devem passar.
+---
+layout: false
+class: inverse, middle
+
+Controlar e observar o estado do sistema é uma classe importante de táticas de testabilidade. Proporcionar a capacidade de executar injeção de falhas, registrar o estado do sistema em partes principais do sistema, isolar o sistema do ambiente e abstrair vários recursos são táticas diferentes para apoiar o controle e a observação de um sistema e de seus componentes.
+---
+layout: false
+class: inverse, middle
+
+É difícil testar sistemas complexos por causa do grande espaço de estado em que seus cálculos ocorrem e por causa do maior número de interconexões entre os elementos do sistema. Consequentemente, manter o sistema simples é outra classe de táticas que suporta testabilidade.
+
+
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
