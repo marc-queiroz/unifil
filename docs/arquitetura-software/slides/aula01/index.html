@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 3em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 03
+## Prof. Marc Queiroz
+???
+A estrutura do módulo mostra quais módulos usam outros módulos, está fortemente ligada à facilidade com que um sistema pode ser estendido ou contratado.
+
+A estrutura de concorrência, que incorpora o paralelismo dentro do sistema, está fortemente ligada à facilidade com que um sistema pode ser liberado de impasses e gargalos de desempenho.
+
+A estrutura de implantação está fortemente ligada à execução dos objetivos de desempenho, disponibilidade e segurança.
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis
+## Decomposição
+As unidades são módulos que são relacionados entre si pela relação é um submódulo, mostrando como os módulos são decompostos em módulos menores recursivamente até que os módulos sejam pequenos o suficiente para serem facilmente compreendidos.
+???
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis
+## Módulo "usa" Módulo
+Nesta estrutura importante, porém negligenciada, as unidades aqui também são módulos, talvez classes. As unidades são relacionadas pela relação de usos, uma forma especializada de dependência.
+???
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis
+## Estrutura de camada
+Os módulos nesta estrutura são chamados de camadas. Uma camada é uma "máquina virtual" abstrata que fornece um conjunto coeso de serviços por meio de uma interface gerenciada. É permitido às camadas usar outras camadas de maneira estritamente gerenciada; em sistemas estritamente estratificados, uma camada só pode usar a camada imediatamente abaixo.
+???
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis
+## Estrutura de classe (ou generalização)
+As unidades de módulo nesta estrutura são chamadas de classes. A relação é herdada ou é uma instância de. Essa visualização lida com coleções de comportamento ou capacidade semelhante (por exemplo, as classes das quais outras classes herdam) e diferenças parametrizadas.
+???
+---
+layout: false
+class: inverse, middle
+## Alguns Componentes e Conectores úteis
+As estruturas de componentes e conectores mostram uma visualização em tempo de execução do sistema. Nessas estruturas, os módulos descritos anteriormente foram todos compilados em formas executáveis. Todas as estruturas de componentes e conectores são, portanto, ortogonais às estruturas baseadas em módulos e lidam com os aspectos dinâmicos de um sistema em execução.
+---
+layout: false
+class: inverse, middle
+## Alguns Componentes e Conectores úteis
+
+Estrutura de concorrência. Essa estrutura de componente e conector permite que o arquiteto determine oportunidades de paralelismo e os locais onde a contenção de recursos pode ocorrer.
+???
+As unidades são componentes e os conectores são seus mecanismos de comunicação. Os componentes são organizados em encadeamentos lógicos; um encadeamento lógico é uma sequência de cálculos que podem ser alocados para um encadeamento físico separado posteriormente no processo de design. A estrutura de simultaneidade é usada no início do processo de design para identificar os requisitos para gerenciar os problemas associados à execução simultânea.
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis de alocação
+
+ As estruturas de alocação definem como os elementos de C&C ou estruturas de módulos são mapeados para coisas que não são software: normalmente hardware, equipes e sistemas de arquivos.
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis de alocação
+
+Estrutura de implantação. A estrutura de implantação mostra como o software é atribuído aos elementos de processamento e comunicação de hardware. Os elementos são elementos de software (geralmente um processo da visualização C&C), entidades de hardware (processadores) e vias de comunicação.
+???
+As relações são alocadas para, mostrando em quais unidades físicas os elementos de software residem e migram para se a alocação for dinâmica. Essa estrutura pode ser usada para lidar com o desempenho, integridade de dados, segurança e disponibilidade. É de particular interesse em sistemas distribuídos e paralelos.
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis de alocação
+Estrutura de implementação. Essa estrutura mostra como os elementos de software (normalmente módulos) são mapeados para a (s) estrutura (s) de arquivo nos ambientes de desenvolvimento, integração ou controle de configuração do sistema.
+???
+Isso é crítico para o gerenciamento de atividades de desenvolvimento e processos de construção. (Na prática, uma captura de tela da sua ferramenta de ambiente de desenvolvimento, que gerencia o ambiente de implementação, geralmente faz um diagrama muito útil e suficiente da sua exibição de implementação.)
+---
+layout: false
+class: inverse, middle
+## Algumas estruturas úteis de alocação
+
+Estrutura de atribuição de trabalho. Essa estrutura atribui a responsabilidade de implementar e integrar os módulos às equipes que os executarão. Ter uma estrutura de atribuição de trabalho como parte da arquitetura deixa claro que a decisão sobre quem faz o trabalho tem implicações arquitetônicas e de gerenciamento.
+???
+O arquiteto saberá os requisitos de conhecimento de cada equipe. Além disso, em grandes projetos de desenvolvimento distribuído com várias fontes, a estrutura de atribuição de trabalho é o meio de chamar unidades de comunalidade funcional e atribuí-las a uma única equipe, em vez de implementá-las por todos que precisam. Essa estrutura também determinará as principais vias de comunicação entre as equipes: teleconferências regulares, wikis, listas de e-mail e assim por diante.
+---
+layout: false
+class: inverse, middle
+## Padrões de arquitetura
+Elementos da arquitetura são compostos de maneiras que resolvem problemas específicos. As composições foram consideradas úteis ao longo do tempo e em muitos domínios diferentes e, portanto, foram documentadas e disseminadas. Essas composições de elementos arquitetônicos, chamados padrões arquiteturais, fornecem estratégias empacotadas para resolver alguns dos problemas enfrentados por um sistema.
+---
+layout: false
+class: inverse, middle
+## Exemplo de módulos, Padrão de camadas
+Quando a relação de uso entre os elementos de software é estritamente unidirecional, surge um sistema de camadas. Uma camada é um conjunto coerente de funcionalidades relacionadas. Em uma estrutura estritamente em camadas, uma camada pode usar apenas os serviços da camada imediatamente abaixo dela. Muitas variações desse padrão, diminuindo a restrição estrutural, ocorrem na prática.
+???
+As camadas geralmente são projetadas como abstrações (máquinas virtuais) que ocultam os detalhes da implementação abaixo das camadas acima, gerando portabilidade.
+---
+layout: false
+class: inverse, middle
+## Os padrões comuns de tipo de componente e conector são os seguintes:
+
+Padrão de dados compartilhados (ou repositório). Esse padrão inclui componentes e conectores que criam, armazenam e acessam dados persistentes. O repositório geralmente assume a forma de um banco de dados (comercial). Os conectores são protocolos para gerenciar os dados, como SQL. Padrão cliente-servidor. Os componentes são os clientes e os servidores, e os conectores são protocolos e mensagens que eles compartilham entre si para realizar o trabalho do sistema.
+---
+layout: false
+class: inverse, middle
+## Os padrões comuns de alocação incluem o seguinte:
+
+Padrão de multicamadas, que descreve como distribuir e alocar os componentes de um sistema em subconjuntos distintos de hardware e software, conectados por algum meio de comunicação. Esse padrão especializa a estrutura de implantação genérica (alocação de software para hardware).
+???
+Centro e plataforma de competência, padrões que especializam a estrutura de atribuição de trabalho de um sistema de software. No centro de competência, o trabalho é alocado aos sites, dependendo do conhecimento técnico ou de domínio localizado em um site. Por exemplo, o design da interface do usuário é feito em um local onde estão localizados os especialistas em engenharia de usabilidade. Na plataforma, um site é encarregado de desenvolver ativos principais reutilizáveis de uma linha de produtos de software e outros sites desenvolvem aplicativos que usam os principais recursos.
+---
+layout: false
+class: inverse, middle
+# O que faz uma boa arquitetura?
+---
+layout: false
+class: inverse, middle
+# Sobre o processo:
+1 - A arquitetura deve ser o produto de um único arquiteto ou de um pequeno grupo de arquitetos com um líder técnico identificado. Essa abordagem fornece à arquitetura sua integridade conceitual e consistência técnica. Esta recomendação vale para projetos ágeis e de código aberto, bem como para projetos "tradicionais". Deve haver uma forte conexão entre o arquiteto e a equipe de desenvolvimento, para evitar projetos que são impraticáveis.
+---
+layout: false
+class: inverse, middle
+
+2 - O arquiteto (ou equipe de arquitetura) deve, continuamente, basear a arquitetura em uma lista priorizada de requisitos de atributos de qualidade bem especificados. Isso informará as compensações que sempre ocorrem. A funcionalidade importa menos.
+---
+layout: false
+class: inverse, middle
+
+3 - A arquitetura deve ser documentada usando visualizações. As opiniões devem abordar as preocupações das partes interessadas mais importantes em apoio ao cronograma do projeto. Isso pode significar uma documentação mínima a princípio, elaborada posteriormente. As preocupações geralmente estão relacionadas à construção, análise e manutenção do sistema, bem como à educação de novas partes interessadas sobre o sistema.
+---
+layout: false
+class: inverse, middle
+
+4 - A arquitetura deve ser avaliada por sua capacidade de fornecer os importantes atributos de qualidade do sistema. Isso deve ocorrer no início do ciclo de vida, quando ele retornar o maior benefício e repetido conforme apropriado, para garantir que as mudanças na arquitetura (ou no ambiente a que se destina) não tornem o design obsoleto.
+---
+layout: false
+class: inverse, middle
+
+5 - A arquitetura deve prestar-se à implementação incremental, para evitar a necessidade de integrar tudo de uma só vez (o que quase nunca funciona), além de descobrir problemas antecipadamente. Uma maneira de fazer isso é criar um sistema "esquelético" no qual os caminhos de comunicação são exercidos, mas que a princípio tem funcionalidade mínima. Esse sistema esquelético pode ser usado para "crescer" o sistema gradualmente, refatorando conforme necessário.
+
+---
+layout: false
+class: inverse, middle
+
+# Sobre a estrutura
+
+1 - A arquitetura deve apresentar módulos bem definidos, cujas responsabilidades funcionais são atribuídas aos princípios de ocultação de informações e separação de preocupações. Os módulos de ocultação de informações devem encapsular as coisas que provavelmente mudarão, isolando o software dos efeitos dessas alterações. 
+???
+Cada módulo deve ter uma interface bem definida que encapsule ou "oculte" os aspectos alteráveis outro software que utiliza suas instalações. Essas interfaces devem permitir que suas respectivas equipes de desenvolvimento trabalhem amplamente independentemente uma da outra.
+
+---
+layout: false
+class: inverse, middle
+
+2 - A menos que seus requisitos sejam sem precedentes - possível, mas improvável, seus atributos de qualidade devem ser alcançados usando padrões e táticas arquiteturais conhecidas e específicas de cada atributo.
+---
+layout: false
+class: inverse, middle
+
+3 - A arquitetura nunca deve depender de uma versão específica de um produto ou ferramenta comercial. Se necessário, deve ser estruturado para que a mudança para uma versão diferente seja direta e barata.
+---
+layout: false
+class: inverse, middle
+
+4 - Os módulos que produzem dados devem ser separados dos módulos que consomem dados. Isso tende a aumentar a modificabilidade porque as alterações são frequentemente limitadas ao lado da produção ou do consumo de dados. Se novos dados forem adicionados, os dois lados terão que mudar, mas a separação permitirá uma atualização em etapas (incremental).
+---
+layout: false
+class: inverse, middle
+
+5 - Não espere uma correspondência individual entre módulos e componentes. Por exemplo, em sistemas com simultaneidade, pode haver várias instâncias de um componente em execução em paralelo, em que cada componente é criado a partir do mesmo módulo. Para sistemas com vários threads de simultaneidade, cada thread pode usar serviços de vários componentes, cada um dos quais foi criado a partir de um módulo diferente.
+---
+layout: false
+class: inverse, middle
+
+6 - Todo processo deve ser escrito para que sua atribuição a um processador específico possa ser facilmente alterada, talvez até em tempo de execução.
+---
+layout: false
+class: inverse, middle
+
+7 - A arquitetura deve apresentar um pequeno número de maneiras para os componentes interagirem. Ou seja, o sistema deve fazer as mesmas coisas da mesma maneira. Isso ajudará na compreensão, reduzirá o tempo de desenvolvimento, aumentará a confiabilidade e aumentará a modificabilidade.
+---
+layout: false
+class: inverse, middle
+
+8 - A arquitetura deve conter um conjunto específico (e pequeno) de áreas de contenção de recursos, cuja resolução é claramente especificada e mantida. Por exemplo, se a utilização da rede for uma área de preocupação, o arquiteto deve produzir (e aplicar) para cada equipe de desenvolvimento diretrizes que resultem em um tráfego mínimo da rede. Se o desempenho for uma preocupação, o arquiteto deve produzir (e aplicar) orçamentos de tempo para os principais encadeamentos.--
+---
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
