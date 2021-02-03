@@ -1,25 +1,25 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Contratos Inteligentes no Blockchain"
 date:   2019-07-01 10:35:49 -0300
-categories: jekyll update
+categories: blockchain tutorial UniFil férias 2019 
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+## Bem-vindos ao curso de férias da UniFil 2019.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+Para ter acesso ao nosso material, clique em [Slides][presentation].
 
-Jekyll also offers powerful support for code snippets:
+Esse curso é voltado para todos os desenvolvedores de software que gostariam de entender um pouco sobre o ciclo de desenvolvimento de dApps. Em resumo, dApps são aplicativos descentralizados que rodam sua lógica no Blockchain da rede Ethereum. Para permitir o uso de dApps a partir de qualquer browser é necessário a ajuda de uma API que permita a conexão com a rede do Ethereum.
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+Para utilizarmos os browsers modernos, fazemos o uso de uma API javascript [web3.js][web3]. Que é injetada nos sites através do plugin Metamask, ou importados manualmente.
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+Do ponto de vista do usuário o dApp pode passar despercebido, a não ser pelo fato de que realizar transações através do aplicativo exigem uma carteira digital que tenha saldos em *ether*, moeda digital da rede ethereum. Um exemplo é o famoso jogo digital [CryptoKitties][cryptokitties].
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+Todo o nosso material está disponível em código aberto no github. Os links estão disponíveis nos [Slides][presentation].
+
+Ainda tem dúvidas, gostaria de saber mais? Não deixe de entrar em contato!
+
+Obrigado.
+
+[presentation]: /unifil/ferias-2019/index.html
+[cryptokitties]: https://www.cryptokitties.co/
+[web3]: https://github.com/ethereum/web3.js/

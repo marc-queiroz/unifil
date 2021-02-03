@@ -22,8 +22,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   about Regular Expressions and Blockchain.
 baseurl: "/unifil" # the subpath of your site, e.g. /blog
 url: "marc-queiroz.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+twitter_username: marc_antonio
+github_username:  marc-queiroz
 
 # Build settings
 markdown: kramdown
@@ -39,6 +39,7 @@ sass:
   sass_dir: _sass
 plainwhite:
   name: Marc Queiroz
+  portfolio_image: "assets/portfolio.png"
   tagline: Professor and <br/> 
            Software Developer
   date_format: "%b %-d, %Y"
