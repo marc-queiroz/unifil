@@ -442,6 +442,52 @@ class: inverse, middle
 • A estrutura do sistema pode mudar à medida que é executado e, em caso afirmativo, como?
 
 Por extensão, as visualizações de componente e conector são crucialmente importantes para fazer perguntas sobre as propriedades de tempo de execução do sistema, como desempenho, cenários, status e saldo atual. Um relacionamento pode ditar que um cliente pode ter uma ou mais contas e uma conta está associada a um ou dois clientes.
+
+---
+layout: false
+class: inverse, middle
+
+3 . As estruturas de alocação incorporam decisões sobre como o sistema se relaciona com as estruturas que não são de software em seu ambiente (como CPUs, sistemas de arquivos, redes, equipes de desenvolvimento, etc.). Essas estruturas mostram a relação entre os elementos do software e os elementos em um ou mais ambientes externos nos quais o software é criado e executado. As visualizações de alocação nos ajudam a responder a perguntas como estas:
+
+• Em qual processador cada elemento de software é executado?
+
+---
+layout: false
+class: inverse, middle
+
+• Em quais diretórios ou arquivos cada elemento é armazenado durante o desenvolvimento, teste e construção do sistema?
+
+• Qual é a atribuição de cada elemento de software às equipes de desenvolvimento?
+
+---
+layout: false
+class: inverse, middle
+
+## As estruturas fornecem insight 
+
+As estruturas desempenham um papel muito importante em nossa perspectiva sobre a arquitetura de software devido ao poder analítico e de engenharia que possuem. Cada estrutura fornece uma perspectiva de raciocínio sobre alguns dos atributos de qualidade relevantes. Por exemplo:
+
+---
+layout: false
+class: inverse, middle
+
+• A estrutura de “usos” do módulo, que incorpora quais módulos usam quais outros módulos, está fortemente ligada à facilidade com que um sistema pode ser expandido ou contraído.
+
+• A estrutura de simultaneidade, que incorpora paralelismo dentro do sistema, está fortemente ligada à facilidade com a qual um sistema pode ser feito sem deadlock e gargalos de desempenho.
+
+• A estrutura de implantação está fortemente ligada ao cumprimento das metas de desempenho, disponibilidade e segurança.
+
+---
+layout: false
+class: inverse, middle
+
+E assim por diante. Cada estrutura fornece ao arquiteto uma visão diferente do projeto (ou seja, cada estrutura pode ser analisada por sua capacidade de fornecer um atributo de qualidade). Cada estrutura apresenta ao arquiteto um ponto de alavancagem de engenharia: ao projetar as estruturas de forma adequada, os atributos de qualidade desejados emergem.
+
+---
+layout: false
+class: inverse, middle
+Por exemplo, um engenheiro de software que deseja fazer uma mudança na estrutura de simultaneidade de um sistema precisa consultar as visualizações de simultaneidade e implantação, porque os mecanismos afetados geralmente envolvem processos e threads, e a distribuição física pode envolver mecanismos de controle diferentes dos que seriam usados se os processos foram colocados em uma única máquina. Se os mecanismos de controle precisarem ser alterados, a decomposição do módulo precisará ser consultada para determinar a extensão das alterações.
+
 ---
 layout: false
 class: inverse, middle
