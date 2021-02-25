@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 3em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software - Aula 02
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+## 2 . Por que a arquitetura de software é importante?
+
+Arquitetura de software é o conjunto de decisões de design que, se tomadas incorretamente, podem fazer com que seu projeto seja cancelado.
+
+—Eoin Woods
+---
+layout: false
+class: inverse, middle
+
+Se arquitetura é a resposta, qual foi a pergunta?
+
+Embora em uma aula futura abordaremos a importância comercial da arquitetura para uma empresa, esta aula se concentra em por que a arquitetura é importante de uma perspectiva técnica. Examinaremos uma dúzia de razões mais importantes para um padeiro.
+---
+layout: false
+class: inverse, middle
+
+1 . Uma arquitetura inibirá ou habilitará os atributos de qualidade de direção de um sistema.
+
+2 . As decisões tomadas em uma arquitetura permitem que você reflita e gerencie as mudanças à medida que o sistema evolui.
+
+3 . A análise de uma arquitetura permite a previsão antecipada das qualidades de um sistema.
+
+4 . Uma arquitetura documentada melhora a comunicação entre as partes interessadas.
+
+5 . A arquitetura é portadora das primeiras e, portanto, as mais fundamentais e as decisões de design mais difíceis de mudar.
+---
+layout: false
+class: inverse, middle
+
+6 . Uma arquitetura define um conjunto de restrições na implementação subsequente.
+
+7 . A arquitetura dita a estrutura de uma organização ou vice-versa.
+
+8 . Uma arquitetura pode fornecer a base para a prototipagem evolutiva.
+
+9 . Uma arquitetura é o artefato principal que permite ao arquiteto e ao gerente de projeto pensar sobre o custo e o cronograma.
+---
+layout: false
+class: inverse, middle
+
+10 . Uma arquitetura pode ser criada como um modelo transferível e reutilizável que forma o coração de uma linha de produtos.
+
+11 . O desenvolvimento baseado em arquitetura concentra a atenção na montagem de componentes, em vez de simplesmente em sua criação.
+
+12 . Ao restringir as alternativas de design, a arquitetura canaliza a criatividade dos desenvolvedores, reduzindo a complexidade do design e do sistema.
+---
+layout: false
+class: inverse, middle
+
+13 . Uma arquitetura pode ser a base para o treinamento de um novo membro da equipe.
+---
+layout: false
+class: inverse, middle
+
+## 2 .1. Inibindo ou Habilitando os Atributos de Qualidade de um Sistema
+
+Se um sistema será capaz de exibir seus atributos de qualidade desejados (ou exigidos) é substancialmente determinado por sua arquitetura.
+
+Esta é uma mensagem tão importante que dedicamos toda a Parte 2 deste livro para expor essa mensagem em detalhes. Até então, mantenha estes exemplos em mente como ponto de partida:
+---
+layout: false
+class: inverse, middle
+
+• Se o seu sistema requer alto desempenho, então você precisa prestar atenção ao gerenciamento do comportamento baseado no tempo dos elementos, seu uso de recursos compartilhados e a frequência e volume de inter comunicação do elemento.
+
+• Se a modificabilidade for importante, então você precisa prestar muita atenção na atribuição de responsabilidades aos elementos, de modo que a maioria das mudanças no sistema afetem um pequeno número desses elementos. (O ideal é que cada mudança afetará apenas um único elemento.)
+---
+layout: false
+class: inverse, middle
+
+• Se o seu sistema deve ser altamente seguro, você precisa gerenciar e proteger a comunicação entre os elementos e controlar quais elementos têm permissão para acessar quais informações; você também pode precisar introduzir elementos especializados (como um mecanismo de autorização) na arquitetura.
+---
+layout: false
+class: inverse, middle
+
+• Se você acredita que a escalabilidade será importante para o sucesso do seu sistema, você precisa localizar cuidadosamente o uso de recursos para facilitar a introdução de substituições de maior capacidade e deve evitar a codificação permanente em suposições ou limites de recursos.
+---
+layout: false
+class: inverse, middle
+
+• Se seus projetos precisam da capacidade de fornecer subconjuntos incrementais do sistema, você deve gerenciar cuidadosamente o uso de intercomponentes.
+
+• Se você deseja que os elementos do seu sistema sejam reutilizáveis em outros sistemas, você precisa restringir o acoplamento entre os elementos, de modo que quando você extrair um elemento, ele não saia com muitos anexos ao seu ambiente atual para ser útil .
+---
+layout: false
+class: inverse, middle
+
+As estratégias para esses e outros atributos de qualidade são supremamente arquitetônicas. Mas uma arquitetura por si só não pode garantir a funcionalidade ou qualidade exigida de um sistema. O projeto downstream ou as decisões de implementação ruins sempre podem prejudicar um projeto arquitetônico adequado. Como gostamos de dizer (principalmente em tom de brincadeira): A arquitetura dá e a implementação tira. As decisões em todos os estágios do ciclo de vida - do projeto arquitetônico à codificação e implementação - afetam a qualidade do sistema. Portanto, a qualidade não é totalmente função de um projeto arquitetônico.
+---
+layout: false
+class: inverse, middle
+
+Uma boa arquitetura é necessária, mas não suficiente, para garantir a qualidade. A obtenção de atributos de qualidade deve ser considerada durante todo o projeto, implementação e implantação. Nenhum atributo de qualidade é totalmente dependente do design, nem totalmente dependente da implementação ou implantação. Resultados satisfatórios são uma questão de obter o quadro geral (arquitetura), bem como os detalhes (implementação) corretos.
+---
+layout: false
+class: inverse, middle
+
+Por exemplo, a modificabilidade é determinada por como a funcionalidade é dividida e acoplada (arquitetural) e por técnicas de codificação dentro de um módulo (não arquitetural). Assim, um sistema é tipicamente modificável se as mudanças envolverem o menor número possível de elementos distintos. Apesar de ter a arquitetura ideal, no entanto, é sempre possível tornar um sistema difícil de modificar escrevendo um código obscuro e confuso.
+---
+layout: false
+class: inverse, middle
+
+## 2 .2. Reflexão sobre e gerenciando a mudança
+
+Modificabilidade - a facilidade com que mudanças podem ser feitas em um sistema - é um atributo de qualidade (e, portanto, coberto pelos argumentos na seção anterior), mas é uma qualidade tão importante que lhe atribuímos seu próprio lugar na Lista de Treze. A comunidade de desenvolvimento de software está começando a entender o fato de que cerca de 80 por cento do custo total de um sistema de software típico ocorre após a implantação inicial. Um corolário dessa estatística é que a maioria dos sistemas em que as pessoas trabalham está nessa fase.
+
+---
+layout: false
+class: inverse, middle
+Muitos programadores e designers de software nunca trabalham em novos desenvolvimentos; eles funcionam sob as restrições da arquitetura existente e do corpo de código existente. Praticamente todos os sistemas de software mudam ao longo de sua vida útil para acomodar novos recursos, para se adaptar a novos ambientes, para corrigir bugs e assim por diante. Mas essas mudanças costumam ser muito difíceis.
+---
+layout: false
+class: inverse, middle
+
+Todas as partições de arquitetura possíveis mudam em três categorias: local, não local e arquitetônico.
+
+• Uma mudança local pode ser realizada modificando um único elemento. Por exemplo, adicionar uma nova regra de negócios a um módulo de lógica de precificação.
+---
+layout: false
+class: inverse, middle
+
+• Uma mudança não local requer modificações de vários elementos, mas deixa a abordagem arquitetônica subjacente intacta. Por exemplo, adicionar uma nova regra de negócios a um módulo de lógica de preços, adicionar novos campos ao banco de dados que essa nova regra de negócios exige e revelar os resultados da regra na interface do usuário.
+---
+layout: false
+class: inverse, middle
+
+• Uma mudança arquitetônica afeta as maneiras fundamentais pelas quais os elementos interagem entre si e provavelmente exigirá mudanças em todo o sistema. Por exemplo, mudar um sistema de cliente-servidor para ponto a ponto.
+
+Obviamente, as mudanças locais são as mais desejáveis e, portanto, uma eficaz arquiteturaé aquela em que as mudanças mais comuns são locais e, portanto, fáceis de fazer.
+---
+layout: false
+class: inverse, middle
+
+Decidir quando as mudanças são essenciais, determinar quais caminhos de mudança têm o menor risco, avaliar as consequências das mudanças propostas e arbitrar as sequências e prioridades para as mudanças solicitadas, todos requerem uma visão ampla dos relacionamentos, desempenho e comportamento dos elementos do software do sistema. Essas atividades estão na descrição do trabalho de um arquiteto. Refletir sobre a arquitetura e analisá-la pode fornecer o insight necessário para tomar decisões sobre as mudanças previstas.
+---
+layout: false
+class: inverse, middle
+
+## 2 .3. Predição das qualidades do sistema
+
+Este ponto segue os dois anteriores. A arquitetura não apenas imbui sistemas com qualidades, mas o faz de maneira previsível.
+---
+layout: false
+class: inverse, middle
+
+Se não fosse possível dizer que as decisões arquitetônicas apropriadas foram tomadas (ou seja, se o sistema exibirá seus atributos de qualidade exigidos) sem esperar até que o sistema seja desenvolvido e implantado, então escolher uma arquitetura seria uma tarefa impossível - fazer arquitetura aleatoriamente as seleções teriam um desempenho tão bom quanto qualquer outro método. Felizmente, é possível fazer previsões de qualidade sobre um sistema com base apenas na avaliação de sua arquitetura.
+
+
+---
+layout: false
+class: inverse, middle
+Se sabemos que certos tipos de decisões arquitetônicas levam a certos atributos de qualidade em um sistema, então podemos tomar essas decisões e, com razão, esperar sermos recompensados com os atributos de qualidade associados. Depois do fato, quando examinamos uma arquitetura, podemos verificar se essas decisões foram tomadas e prever com segurança que a arquitetura exibirá as qualidades associadas.
+---
+layout: false
+class: inverse, middle
+
+Isso não é diferente de qualquer disciplina de engenharia madura, onde a análise de projeto é uma parte padrão do processo de desenvolvimento. Quanto mais cedo você encontrar um problema em seu projeto, mais barato, mais fácil e menos problemático será para consertá-lo.
+---
+layout: false
+class: inverse, middle
+
+Mesmo se você não fizer a modelagem analítica quantitativa às vezes necessária para garantir que uma arquitetura entregará seus benefícios prescritos, este princípio de avaliação de decisões com base em suas implicações de atributos de qualidade é inestimável para pelo menos detectar possíveis pontos problemáticos antecipadamente.
+---
+layout: false
+class: inverse, middle
+
+## 2 .4. Aprimorando a comunicação entre as partes interessadas
+
+A arquitetura de software representa uma abstração comum de um sistema que a maioria, senão todos, as partes interessadas do sistema podem usar como base para criar entendimento mútuo, negociação, formação de consenso e comunicação entre si.
+
+---
+layout: false
+class: inverse, middle
+A arquitetura - ou pelo menos partes dela - é suficientemente abstrata para que a maioria das pessoas não técnicas possa entendê-la adequadamente, particularmente com algum treinamento do arquiteto, e ainda assim essa abstração pode ser refinada em especificações técnicas suficientemente ricas para orientar a implementação, integração, teste, e implantação.
+---
+layout: false
+class: inverse, middle
+
+Cada parte interessada em um sistema de software - cliente, usuário, gerente de projeto, codificador, testador e assim por diante - está preocupado com as diferentes características do sistema que são afetadas por sua arquitetura. 
+---
+layout: false
+class: inverse, middle
+
+## 2 .5. Carregando as primeiras decisões de design
+
+A arquitetura de software é uma manifestação das primeiras decisões de design sobre um sistema, e essas ligações iniciais têm um peso enorme em relação ao desenvolvimento restante do sistema, sua implantação e sua vida útil de manutenção. É também o primeiro ponto em que essas importantes decisões de design que afetam o sistema podem ser examinadas.
+---
+layout: false
+class: inverse, middle
+Qualquer projeto, em qualquer disciplina, pode ser visto como um conjunto de decisões. Ao pintar um quadro, o artista decide o material da tela, a mídia para registrar - tinta a óleo, aquarela, giz de cera - antes mesmo de o quadro começar. Assim que a imagem é iniciada, outras decisões são tomadas imediatamente: Onde está a primeira linha? Qual é a sua espessura? Qual é a sua forma? Todas essas decisões iniciais de design têm forte influência na aparência final da imagem. Cada decisão restringe as muitas decisões que se seguem. Cada decisão, isoladamente, pode parecer inocente, mas as primeiras em particular têm peso desproporcional simplesmente porque influenciam e restringem muito do que se segue.
+---
+layout: false
+class: inverse, middle
+
+O mesmo ocorre com o design de arquitetura. Um projeto de arquitetura também pode ser visto como um conjunto de decisões. As primeiras decisões de design restringem as decisões que se seguem, e mudar essas decisões tem enormes ramificações. Alterar essas decisões iniciais causará um efeito cascata, em termos de decisões adicionais que agora devem ser alteradas. Sim, às vezes a arquitetura deve ser refatorada ou redesenhada, mas essa não é uma tarefa que empreendemos levianamente (porque a “ondulação” pode se transformar em um tsunami).
+---
+layout: false
+class: inverse, middle
+
+Quais são essas decisões iniciais de design incorporadas pela arquitetura de software? Considere:
+
+• O sistema funcionará em um processador ou será distribuído por vários processadores?
+
+• O software será dividido em camadas? Em caso afirmativo, quantas camadas haverá? O que cada um fará?
+
+• Os componentes se comunicarão de forma síncrona ou assíncrona? Eles interagirão transferindo controle ou dados ou ambos?
+---
+layout: false
+class: inverse, middle
+
+• O sistema dependerá de recursos específicos do sistema operacional ou hardware?
+
+• As informações que fluem pelo sistema serão criptografadas ou não?
+
+• Qual sistema operacional usaremos?
+
+• Qual protocolo de comunicação vamos escolher?
+---
+layout: false
+class: inverse, middle
+
+Imagine o pesadelo de ter que mudar qualquer uma dessas ou uma miríade de outras decisões relacionadas. Decisões como essas começam a dar corpo a algumas das estruturas da arquitetura e suas interações. 
+---
+layout: false
+class: inverse, middle
+
+## 2 .6. Definindo restrições em uma implementação
+
+Uma implementação exibe uma arquitetura se ela estiver em conformidade com as decisões de design prescritas pela arquitetura. Isso significa que a implementação deve ser implementada como o conjunto de elementos prescritos, esses elementos devem interagir uns com os outros da maneira prescrita e cada elemento deve cumprir sua responsabilidade para com os outros elementos conforme ditado pela arquitetura. Cada uma dessas prescrições é uma restrição para o implementador.
+---
+layout: false
+class: inverse, middle
+
+Os construtores de elementos devem ser fluentes nas especificações de seus elementos individuais, mas podem não estar cientes das compensações arquitetônicas - a arquitetura (ou arquiteto) simplesmente os restringe de forma a atender às compensações. Um exemplo clássico desse fenômeno é quando um arquiteto atribui um orçamento de desempenho às peças de software envolvidas em alguma peça maior de funcionalidade. Se cada unidade de software permanecer dentro de seu orçamento, a transação geral atenderá aos requisitos de desempenho.
+
+---
+layout: false
+class: inverse, middle
+Os implementadores de cada uma das peças constituintes podem não saber o orçamento geral, apenas o seu próprio.
+---
+layout: false
+class: inverse, middle
+
+Por outro lado, os arquitetos não precisam ser especialistas em todos os aspectos do projeto de algoritmo ou nos meandros da linguagem de programação - embora certamente devam saber o suficiente para não projetar algo que é difícil de construir - mas são eles os responsáveis por estabelecer, analisar e aplicar as compensações arquitetônicas.
+---
+layout: false
+class: inverse, middle
+
+## 2 .7. Influenciando a estrutura organizacional
+
+A arquitetura não apenas prescreve a estrutura do sistema que está sendo desenvolvido, mas essa estrutura fica gravada na estrutura do projeto de desenvolvimento (e às vezes na estrutura de toda a organização). O método normal para dividir o trabalho em um grande projeto é atribuir a grupos diferentes partes diferentes do sistema a serem construídas. Isso é chamado de estrutura analítica de um sistema. 
+---
+layout: false
+class: inverse, middle
+
+Como a arquitetura inclui a decomposição mais ampla do sistema, ela é normalmente usada como base para a estrutura analítica do projeto. A estrutura analítica do trabalho, por sua vez, dita unidades de planejamento, programação e orçamento; canais de comunicação entre equipes; controle de configuração e organização do sistema de arquivos; integração e planos e procedimentos de teste; e até mesmo detalhes do projeto, como a forma como a intranet do projeto é organizada e quem fica com quem no piquenique da empresa.
+---
+layout: false
+class: inverse, middle
+
+As equipes se comunicam entre si em termos de especificações de interface para os elementos principais. A atividade de manutenção, quando lançada, também refletirá a estrutura do software, com equipes formadas para manter elementos estruturais específicos da arquitetura: o banco de dados, as regras de negócios, a interface do usuário, os drivers de dispositivo e assim por diante.
+---
+layout: false
+class: inverse, middle
+
+Um efeito colateral do estabelecimento da estrutura analítica do trabalho é congelar alguns aspectos da arquitetura do software. Um grupo responsável por um dos subsistemas resistirá em ter suas responsabilidades distribuídas por outros grupos. Se essas responsabilidades foram formalizadas em uma relação contratual, a mudança de responsabilidades pode se tornar cara ou até litigiosa.
+---
+layout: false
+class: inverse, middle
+
+Assim, uma vez que a arquitetura tenha sido acordada, torna-se muito caro - por motivos gerenciais e comerciais - modificá-la significativamente. Este é um argumento (entre muitos) para realizar uma análise extensiva antes de se decidir pela arquitetura de software para um grande sistema - porque muito depende disso.
+---
+layout: false
+class: inverse, middle
+
+## 2 .8. Habilitando a Prototipagem Evolutiva
+
+Uma vez que uma arquitetura tenha sido definida, ela pode ser analisada e prototipada como um sistema esquelético. Um sistema esquelético é aquele em que pelo menos parte da infraestrutura - como os elementos são inicializados, comunicados, compartilham dados, recursos de acesso, erros de relatório, atividade de log e assim por diante - é construída antes que grande parte da funcionalidade do sistema tenha sido criada. 
+---
+layout: false
+class: inverse, middle
+
+Por exemplo, sistemas construídos como arquiteturas de plug-in são sistemas esqueléticos: os plug-ins fornecem o real funcionalidade. Essa abordagem auxilia o processo de desenvolvimento porque o sistema é executável no início do ciclo de vida do produto. A fidelidade do sistema aumenta à medida que os stubs são instanciados ou as partes do protótipo são substituídas por versões completas dessas partes do software. 
+---
+layout: false
+class: inverse, middle
+
+Em alguns casos, as partes do protótipo podem ser versões de baixa fidelidade da funcionalidade final ou podem ser substitutos que consomem e produzem dados nas taxas apropriadas, mas fazem pouco mais. Entre outras coisas, essa abordagem permite que problemas de desempenho em potencial sejam identificados no início do ciclo de vida do produto.
+---
+layout: false
+class: inverse, middle
+
+Esses benefícios reduzem o risco potencial do projeto. Além disso, se a arquitetura fizer parte de uma família de sistemas relacionados, o custo de criar uma estrutura para prototipagem pode ser distribuído ao longo do desenvolvimento de muitos sistemas.
+---
+layout: false
+class: inverse, middle
+
+## 2 .9. Melhorando as estimativas de custo e cronograma 
+
+As estimativas de custo e cronograma são ferramentas importantes para o gerente de projetos adquirir os recursos necessários e monitorar o andamento do projeto, para saber se e quando um projeto está com problemas. Uma das funções de um arquiteto é ajudar o gerente de projeto a criar estimativas de custo e cronograma no início do ciclo de vida do projeto. 
+
+---
+layout: false
+class: inverse, middle
+Embora as estimativas de cima para baixo sejam úteis para definir metas e repartir orçamentos, as estimativas de custo baseadas em um entendimento de baixo para cima das partes do sistema são normalmente mais precisas do que aquelas baseadas puramente no conhecimento do sistema de cima para baixo.
+---
+layout: false
+class: inverse, middle
+
+Como dissemos, a estrutura organizacional e de divisão de trabalho de um projeto quase sempre é baseada em sua arquitetura. Cada equipe ou indivíduo responsável por um item de trabalho será capaz de fazer estimativas mais precisas para sua peça do que um gerente de projeto e se sentirá mais responsável por fazer as estimativas se tornarem realidade. Mas as melhores estimativas de custo e cronograma normalmente emergirão de um consenso entre as estimativas de cima para baixo (criadas pelo arquiteto e gerente de projeto) e as estimativas de baixo para cima (criadas pelos desenvolvedores).
+
+---
+layout: false
+class: inverse, middle
+A discussão e negociação que resulta desse processo cria uma estimativa muito mais precisa do que qualquer uma das abordagens por si só.
+
+Ajuda se os requisitos de um sistema foram revisados e validados. Quanto mais conhecimento prévio você tiver sobre o escopo, mais precisas serão as estimativas de custo e cronograma.
+---
+layout: false
+class: inverse, middle
+
+# 2 .10. Fornecendo um modelo transferível e reutilizável
+---
+layout: false
+class: inverse, middle
+
+Quanto mais cedo no ciclo de vida a reutilização for aplicada, maior será o benefício que pode ser alcançado. Embora a reutilização de código forneça um benefício, a reutilização de arquiteturas fornece uma grande vantagem para sistemas com requisitos semelhantes. Não apenas o código pode ser reutilizado, mas também os requisitos que levaram à arquitetura em primeiro lugar, bem como a experiência e a infraestrutura adquiridas na construção da arquitetura reutilizada. Quando as decisões de arquitetura podem ser reutilizadas em vários sistemas, todas as consequências das decisões antecipadas que acabamos de descrever também são transferidas.
+---
+layout: false
+class: inverse, middle
+
+Uma linha ou família de produtos de software é um conjunto de sistemas de software que são todos construídos usando o mesmo conjunto de ativos reutilizáveis. O principal desses ativos é a arquitetura projetada para atender às necessidades de toda a família. Os arquitetos de linha de produto escolhem uma arquitetura (ou uma família de arquiteturas intimamente relacionadas) que atenderá a todos os membros previstos da linha de produtos. A arquitetura define o que é fixo para todos os membros da linha de produtos e o que é variável.
+
+---
+layout: false
+class: inverse, middle
+As linhas de produtos de software representam uma abordagem poderosa para o desenvolvimento de vários sistemas que está mostrando recompensas de ordem de magnitude no tempo de colocação no mercado, custo, produtividade e qualidade do produto. O poder da arquitetura está no cerne do paradigma. Semelhante a outros investimentos de capital, a arquitetura de uma linha de produtos torna-se o principal ativo de uma organização em desenvolvimento. 
+---
+layout: false
+class: inverse, middle
+
+## 2 .11. Permitindo a incorporação de componentes desenvolvidos de forma independente
+
+Considerando que os paradigmas de software anteriores se concentraram na programação como a atividade principal, com o progresso medido em linhas de código, o desenvolvimento baseado em arquitetura frequentemente se concentra na composição ou montagem de elementos que provavelmente foram desenvolvidos separadamente, mesmo de forma independente, de um para o outro. Essa composição é possível porque a arquitetura define os elementos que podem ser incorporados ao sistema.
+---
+layout: false
+class: inverse, middle
+
+A arquitetura restringe possíveis substituições (ou acréscimos) de acordo com como eles interagem com seu ambiente, como eles recebem e renunciam ao controle, quais dados eles consomem e produzem, como eles acessam os dados e quais protocolos eles usam para comunicação e compartilhamento de recursos.
+---
+layout: false
+class: inverse, middle
+
+Em 1793, a produção em massa de mosquetes de Eli Whitney, baseada no princípio das peças intercambiáveis, assinalou o alvorecer da era industrial. Antes que as medições físicas fossem confiáveis, fabricar peças intercambiáveis era uma idéia assustadora. Hoje, em software, até que as abstrações possam ser delimitadas com segurança, a noção de intercambialidade estrutural é igualmente assustadora e significativa.
+---
+layout: false
+class: inverse, middle
+
+Componentes de prateleira comerciais, software de código aberto, aplicativos publicamente disponíveis e serviços de rede são todos exemplos modernos de software da ideia básica de Whitney. As peças do mosquete de Whitney tinham “interfaces” (relacionadas ao ajuste e durabilidade), assim como os componentes de software intercambiáveis de hoje.
+---
+layout: false
+class: inverse, middle
+
+Para software, a recompensa pode ser:
+
+• Tempo reduzido para o mercado (deve ser mais fácil usar a solução pronta de outra pessoa do que construir a sua própria)
+
+• Maior confiabilidade (o software amplamente usado deve ter seus bugs resolvidos já)
+
+• Custo mais baixo (o fornecedor do software pode amortizar o custo de desenvolvimento em sua base de clientes)
+---
+layout: false
+class: inverse, middle
+
+• Flexibilidade (se o componente que você deseja comprar não tiver um propósito muito especial, é provável que esteja disponível em várias fontes, aumentando assim sua alavancagem de compra)
+---
+layout: false
+class: inverse, middle
+
+## 2 .12. Restringindo o vocabulário de alternativas de design
+
+À medida que padrões arquitetônicos úteis são coletados, fica claro que, embora os elementos de software possam ser combinados de maneiras mais ou menos infinitas, há algo a ser ganho ao nos restringirmos voluntariamente a um número relativamente pequeno de escolhas de elementos e suas interações. Ao fazer isso, minimizamos a complexidade do design do sistema que estamos construindo.
+---
+layout: false
+class: inverse, middle
+
+Um engenheiro de software não é um artista, cuja criatividade e liberdade são fundamentais. Engenharia é disciplina, e disciplina vem em parte restringindo o vocabulário de alternativas para soluções comprovadas. As vantagens dessa abordagem incluem reutilização aprimorada, designs mais regulares e mais simples que são mais facilmente compreendidos e comunicados, análise mais capaz, menor tempo de seleção e maior interoperabilidade. Os padrões arquitetônicos guiam o arquiteto e focalizam o arquiteto nos atributos de qualidade de interesse, em grande parte restringindo o vocabulário de alternativas de projeto a um número relativamente pequeno.
+---
+layout: false
+class: inverse, middle
+
+As propriedades do design de software decorrem da escolha de um padrão arquitetônico. Esses padrões que são mais desejáveis para um problema específico devem melhorar a implementação da solução de design resultante, talvez tornando mais fácil arbitrar restrições de design conflitantes, aumentando o insight em contextos de design mal compreendidos ou ajudando a revelar inconsistências nos requisitos. 
+---
+layout: false
+class: inverse, middle
+
+## 2 .13. Fornecendo uma base para o treinamento
+
+A arquitetura, incluindo uma descrição de como os elementos interagem entre si para realizar o comportamento necessário, pode servir como a primeira introdução ao sistema para novos membros do projeto. Isso reforça o nosso ponto de que um dos usos importantes da arquitetura de software é apoiar e estimular a comunicação entre os diversos stakeholders. A arquitetura é um ponto de referência comum.
+---
+layout: false
+class: inverse, middle
+
+As visualizações de módulo são excelentes para mostrar a alguém a estrutura de um projeto: quem faz o quê, quais equipes são atribuídas a quais partes do sistema e assim por diante. As visualizações de componentes e conectores são excelentes para explicar como o sistema deve funcionar e realizar seu trabalho.
+---
+layout: false
+class: inverse, middle
+
+## 2 .14. Resumo 
+
+A arquitetura de software é importante por uma ampla variedade de razões técnicas e não técnicas. Nossa lista inclui o seguinte:
+
+1 . Uma arquitetura inibirá ou habilitará os atributos de qualidade de direção de um sistema.
+
+2 . As decisões tomadas em uma arquitetura permitem que você reflita e gerencie as mudanças à medida que o sistema evolui.
+---
+layout: false
+class: inverse, middle
+
+3 . A análise de uma arquitetura permite a previsão antecipada das qualidades de um sistema.
+---
+layout: false
+class: inverse, middle
+
+4 . Uma arquitetura documentada melhora a comunicação entre as partes interessadas.
+
+5 . A arquitetura é portadora das primeiras e, portanto, as mais fundamentais e as decisões de design mais difíceis de mudar.
+
+6 . Uma arquitetura define um conjunto de restrições na implementação subsequente.
+
+7 . A arquitetura dita a estrutura de uma organização ou vice-versa.
+---
+layout: false
+class: inverse, middle
+
+8 . Uma arquitetura pode fornecer a base para a prototipagem evolutiva.
+
+9 . Uma arquitetura é o artefato principal que permite ao arquiteto e ao gerente de projeto reflita sobre o custo e o cronograma.
+
+10 . Uma arquitetura pode ser criada como um modelo transferível e reutilizável que forma o coração de uma linha de produtos.
+
+---
+layout: false
+class: inverse, middle
+11 . O desenvolvimento baseado em arquitetura concentra a atenção na montagem de componentes, em vez de simplesmente em sua criação.
+
+12 . Uma arquitetura canaliza a criatividade dos desenvolvedores, reduzindo a complexidade do design e do sistema.
+
+13 . Uma arquitetura pode ser a base para o treinamento de um novo membro da equipe.
+
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+
+
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

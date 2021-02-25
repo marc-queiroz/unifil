@@ -35,7 +35,7 @@ Para ter acesso a aula 13, clique em [Slides][aula13].
 Para ter acesso a aula 14, clique em [Slides][aula14].
 
 [aula01]: /unifil/arquitetura-software/slides/aula01/index.html
-[aula02]: /unifil/arquitetura-software/slides/aula02.html
+[aula02]: /unifil/arquitetura-software/slides/aula02/index.html
 [aula03]: /unifil/arquitetura-software/slides/aula03/index.html
 [aula04]: /unifil/arquitetura-software/slides/aula04/index.html
 [aula05]: /unifil/arquitetura-software/slides/aula05/index.html
