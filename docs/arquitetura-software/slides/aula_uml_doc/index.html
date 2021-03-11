@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arquitetura de Software</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Yanone Kaffeesatz';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 1.6em; }
+      .remark-slide-content h2 { font-size: 1.1em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .remark-slide-content { 
+        font-size: 3em; 
+        padding-top: 0.2em;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      /* .inverse h1, .inverse h2 {*/
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+        font-size: 2em;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Arquitetura de Software
+# Documentação UML
+## Prof. Marc Queiroz
+---
+layout: false
+class: inverse, middle
+
+Os arquitetos de software ajudam a criar um sistema fácil de manter, reusar e adaptar.
+
+Para desenvolvermos a arquitetura de software, arquitetos precisam levar em conta os **stakeholders** do sistema. 
+---
+layout: false
+class: inverse, middle
+## Stakeholders
+**Stakeholders** são pessoas que tem interesse no software sendo desenvolvido.
+???
+---
+layout: false
+class: inverse, middle
+## Desenvolvedores de Software
+A arquitetura de software ajuda os desenvolvedores a criar e evoluir software, fornecendo forte orientação e organização sobre o que precisa ser feito.
+???
+---
+layout: false
+class: inverse, middle
+## Gerentes de Projetos
+A arquitetura de software fornece informações úteis aos gerentes de projeto para ajudá-los a identificar possíveis riscos e gerenciar o projeto com sucesso. A arquitetura de software ajuda os gerentes de projeto a entender as dependências das tarefas e os impactos das mudanças e a coordenar as atribuições de trabalho.
+???
+---
+layout: false
+class: inverse, middle
+## Clientes
+Os clientes tomam decisões importantes sobre o sistema, como seu financiamento. A arquitetura de software estabelece uma base para a comunicação com os clientes, para que eles entendam o que estão pagando e que suas necessidades sejam atendidas.
+???
+---
+layout: false
+class: inverse, middle
+## Usuários Finais
+Os usuários podem não se importar com a forma como o software é realmente projetado, mas se preocupam com o fato de "funcionar bem" para eles.
+---
+layout: false
+class: inverse, middle
+## Modelo de visualização 4+1 de Philippe Kruchten
+Várias perspectivas são necessárias para capturar o comportamento completo e o desenvolvimento de um sistema de software. Existem várias considerações importantes.
+???
+---
+layout: false
+class: inverse, middle
+Uma consideração é a funcionalidade do software. A funcionalidade envolve o que um sistema faz para satisfazer o objetivo que o cliente deseja.
+
+O foco nessa funcionalidade e nos objetos necessários leva a uma perspectiva
+chamada **visão lógica**.
+---
+layout: false
+class: inverse, middle
+Outra consideração é o quão bem o software é executado, usando características como a eficiência do sistema ou a interação de subprocessos. Essas características afetam o desempenho e a escalabilidade do sistema. O foco nos processos implementados pelos objetos na visão lógica leva a uma perspectiva chamada **visão de processo**.
+---
+layout: false
+class: inverse, middle
+O software também pode envolver a visão de desenvolvimento. Essa perspectiva se concentra em considerações de implementação, como a estrutura hierárquica do software. As linguagens de programação do sistema influenciarão fortemente essa estrutura e, portanto, impõem restrições ao desenvolvimento.
+---
+layout: false
+class: inverse, middle
+Outra perspectiva do software pode ser vista através da **visão física**. O software terá componentes físicos que interagem e precisam ser implantados. A interação entre esses diferentes elementos e sua implantação afetará o funcionamento do sistema.
+---
+layout: false
+class: inverse, middle
+Todas as **quatro** visualizações compartilham o objetivo ou os recursos desejados do software, conforme definido pelo cliente. Os cenários descrevem casos de uso ou tarefas exigidos pelos usuários finais, que fornecem contexto para ajudar a detalhar as quatro visualizações.
+---
+layout: false
+class: inverse, middle
+Juntas, visualizações lógicas, de processos, desenvolvimento e físicas, juntamente com cenários, formam o Modelo de visualização 4 + 1 de Philippe Kruchten. Esse modelo é uma maneira de entender as principais considerações ou perspectivas importantes que precisam ser abordadas na arquitetura de software.
+---
+layout: false
+class: inverse, middle
+## Visualização Lógica
+A **visão lógica**, que se concentra nos requisitos funcionais de um sistema, geralmente envolve os objetos do sistema. A partir desses objetos, um diagrama de classes UML pode ser criado para ilustrar a visualização lógica.
+---
+layout: false
+class: inverse, middle
+
+Um diagrama de classes estabelece o vocabulário do problema e do sistema resultante. Ao definir todas as classes, seus atributos e comportamentos, fica fácil entender as principais abstrações e terminologias. Os diagramas de classes também são úteis para especificar esquemas de banco de dados. O diagrama de classes facilita a visualização de como as classes interagem e como os dados devem se relacionar em um banco de dados.
+???
+VOCÊ SABIA?
+Alguns dos diagramas UML mais eficazes relacionados à visualização lógica de um sistema são o diagrama de classes e o diagrama de estados. O diagrama de classes e o diagrama de estados se concentram nas classes e nos objetos de um sistema.
+---
+layout: false
+class: inverse, middle
+
+## Visualização de processo
+
+A **visão do processo** se concentra em alcançar requisitos não funcionais. Esses são os requisitos que especificam as qualidades desejadas para o sistema, que incluem atributos de qualidade como desempenho e disponibilidade. A visualização do processo também apresenta processos que correspondem aos objetos na visualização lógica.
+???
+VOCÊ SABIA?
+Alguns dos diagramas UML mais eficazes relacionados à visualização do processo de um sistema são o diagrama de atividades e o diagrama de sequência. O diagrama de atividades pode ilustrar os processos ou atividades de um sistema. O diagrama de sequência mostra como os objetos interagem entre si, o que envolve como os métodos são executados e em que ordem.
+---
+layout: false
+class: inverse, middle
+
+## Visão de desenvolvimento
+A **visão de desenvolvimento** descreve a estrutura hierárquica do software. Ele também considera elementos como linguagem de programação, bibliotecas e conjuntos de ferramentas.
+???
+Está preocupado com os detalhes do desenvolvimento de software e o que está envolvido para dar suporte a isso. Isso se estende aos detalhes de gerenciamento, como agendamento, orçamentos e atribuições de trabalho. Essencialmente, a visão de desenvolvimento abrange a estrutura hierárquica de software e o gerenciamento de projetos.
+---
+layout: false
+class: inverse, middle
+
+## Visão Física
+A **visualização física** manipula como os elementos nas visualizações lógicas, de processo e de desenvolvimento devem ser mapeados para diferentes nós ou hardware para executar o sistema.
+---
+layout: false
+class: inverse, middle
+
+## Cenários
+Os **cenários** se alinham aos casos de uso ou tarefas do usuário de um sistema e mostram como as outras quatro visualizações funcionam juntas. Para cada cenário, há um script que descreve a sequência de interações entre objetos e processos. 
+???
+Isso envolve os principais objetos definidos na visão lógica, os processos descritos na visão de processo, a hierarquia identificada na visão de desenvolvimento e os diferentes nós especificados na visão física. 
+---
+layout: false
+class: inverse, middle
+Os cenários relacionam esses elementos para fornecer uma imagem completa. Nenhuma das visualizações é totalmente independente uma da outra, com elementos de algumas visualizações conectados a outros. O modelo de visualização 4 + 1 pode ser moldado para atender a muitas situações e entender a arquitetura de um sistema de software. Ser capaz de ver um problema complexo em muitas perspectivas diferentes ajuda a tornar seu software mais versátil.
+
+---
+layout: false
+class: inverse, middle
+# Diagramas UML
+- Diagrama de Componentes
+- Diagrama de Pacotes
+- Diagrama de Implantação
+- Diagrama de Atividade
+---
+layout: false
+class: inverse, middle
+## Diagramas de componentes
+
+Os diagramas de componentes UML estão relacionados aos componentes de um sistema. Componentes são unidades independentes e encapsuladas dentro de um sistema. Cada componente fornece uma interface para outros componentes interagirem com ele. Os diagramas de componentes são usados para visualizar como as peças de um sistema interagem e quais relacionamentos eles têm entre elas.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes são diferentes da maioria dos outros diagramas, pois mostram estrutura de alto nível e não detalhes como atributos e métodos. Eles são puramente focados em componentes e suas interações entre si.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes são uma visão estática do sistema de software e representam o design do sistema em um ponto específico de seu desenvolvimento e evolução. A base dos diagramas de componentes enfoca os componentes e seus relacionamentos. Cada componente em um diagrama tem um relacionamento muito específico com os outros componentes através da interface que ele fornece.
+
+---
+layout:false
+class: middle, center
+![Interface de bola Figura Providade.](image01.png)
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes possuem conectores esféricos, que representam uma interface fornecida. Uma interface fornecida mostra que um componente oferece uma interface para outras pessoas interagirem com ele. A interface fornecida significa que os componentes cliente e consumidor têm uma maneira de se comunicar com esse componente.
+
+---
+layout:false
+class: middle, center
+![Figura - Soquete - Interface Necessária.](image02.png)
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de componentes também possuem conectores de soquete que exibem uma interface necessária. A interface necessária é essencial para o diagrama de componentes, para mostrar que um componente espera uma determinada interface. Essa interface necessária deve ser satisfeita ou fornecida por algum outro componente.
+
+---
+layout:false
+class: middle, center
+![Figura. Interface requerida. Interface fornecida por bola.](image03.png)
+---
+layout: false
+class: inverse, middle
+
+Finalmente, os diagramas de componentes podem ilustrar um relacionamento de montagem. Um relacionamento de montagem ocorre quando a interface fornecida por um componente corresponde à interface necessária de outro componente. A interface fornecida é representada por uma bola e a interface necessária é representada por um soquete.
+---
+layout: false
+class: inverse, middle
+
+Para criar um diagrama de componentes, primeiro, você deve identificar os principais objetos usados no sistema. Em seguida, as bibliotecas relevantes para o sistema precisam ser identificadas. Finalmente, o relacionamento entre esses componentes precisaria ser identificado.
+
+---
+layout:false
+class: middle, center
+![Figura Diagrama de componentes para um sistema de videogames.](image04.png)
+---
+layout: false
+class: inverse, middle
+
+Quando as bibliotecas relevantes são identificadas, isso se estende às dependências de implementação de terceiros, que também devem ser integradas ao diagrama, quando relevante. Abaixo está um exemplo de um diagrama de componentes para um sistema de videogame.
+
+Os diagramas de componentes são especialmente úteis no início do processo de design, devido à sua ênfase de alto nível. Eles podem ser desenhados em diferentes níveis e permitem que você se concentre não apenas nos sistemas, mas também nos subsistemas.
+---
+layout: false
+class: inverse, middle
+
+## Diagramas de Pacotes
+
+As classes no software orientado a objetos estão relacionadas de alguma maneira.
+---
+layout: false
+class: inverse, middle
+
+Um pacote agrupa elementos de software relacionados. Os elementos podem ser relacionados com base em dados, classes ou tarefas do usuário. Um pacote também pode definir um "espaço para nome" para os elementos que ele contém, ou seja, um pacote é nomeado e pode organizar os elementos nomeados do software em um escopo separado. Um elemento pode ser identificado exclusivamente no sistema por um "nome qualificado" totalmente baseado em seu próprio nome e no nome do pacote em que o elemento está.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de pacotes mostram os pacotes e as dependências entre eles. Esses diagramas podem organizar um sistema completo em pacotes de elementos empacotáveis relacionados, que podem incluir dados, classes ou mesmo outros pacotes. Os diagramas de pacotes ajudam a fornecer agrupamentos de alto nível de um sistema, para que seja fácil ver como um pacote contém elementos relacionados e como pacotes diferentes dependem um do outro.
+
+No proximo slide está um exemplo de um diagrama de pacotes para um videogame:
+
+---
+layout:false
+class: middle, center
+![Figura Diagrama de pacote para um videogame.](image05.png)
+---
+layout: false
+class: inverse, middle
+
+Os pacotes são representados por pastas com guias. Se não houver elementos a serem mostrados no pacote, o nome do pacote entrará no centro da pasta. Se forem necessários detalhes, há duas maneiras de isso ser expresso.
+
+Os elementos podem ser aninhados dentro da pasta, como abaixo:
+
+---
+layout:false
+class: middle, center
+![](image06.png)
+---
+layout: false
+class: inverse, middle
+
+Como alternativa, esta notação pode ser usada:
+
+---
+layout:false
+class: middle, center
+![](image07.png)
+---
+layout: false
+class: inverse, middle
+
+Aqui, um pacote de player contém a interface de movimento, mas é desenhada abaixo da pasta no diagrama. Esse relacionamento é uma composição, em que o pacote inteiro tem um elemento como parte. Elementos contidos também podem ser listados em um pacote por seus nomes. Esses nomes podem ser parcialmente qualificados, mas devem ser exclusivos dentro do pacote.
+
+---
+layout:false
+class: middle, center
+![](image08.png)
+---
+layout: false
+class: inverse, middle
+
+Observe no exemplo acima que sinais de mais (+) e de menos (-) foram usados para indicar se os elementos são públicos ou privados. Os elementos públicos podem ser acessados fora do pacote por seus nomes totalmente qualificados. Os relacionamentos são indicados por meio de setas de linhas pontilhadas.
+---
+layout: false
+class: inverse, middle
+
+Um pacote pode importar um elemento de outro pacote, como no exemplo abaixo, onde o pacote Level está importando o Local do pacote Player. Isso coloca o nome Location no namespace Level, especialmente para uso conveniente por elementos no Level. Como a tag de importação é pública, o nome fica visível para importação adicional através do pacote Level. Se uma tag fosse privada, o nome seria visível apenas por elementos dentro do namespace Level e não mais além.
+
+---
+layout:false
+class: middle, center
+![](image09.png)
+---
+layout: false
+class: inverse, middle
+
+Um pacote pode importar todo o conteúdo de outros pacotes, como no exemplo abaixo, onde o pacote da Interface do Usuário está fazendo uma importação pública do pacote Player, conforme indicado pela tag import, essencialmente fazendo importações públicas dos nomes visíveis dos elementos em Jogador. O pacote da interface do usuário está fazendo uma importação privada do pacote Buttons, conforme indicado pela tag de acesso, essencialmente fazendo importações privadas dos nomes visíveis dos elementos nos Buttons. Esses nomes não são divulgados fora do namespace da interface do usuário.
+
+---
+layout:false
+class: middle, center
+![](image10.png)
+---
+layout: false
+class: inverse, middle
+
+Os pacotes também podem ser mesclados, como no diagrama abaixo. A mesclagem geralmente ocorre quando dois pacotes ou conceitos precisam se unir em um. Este é um uso de generalização que permite que diferentes definições sejam fornecidas para o mesmo conceito.
+
+---
+layout:false
+class: middle, center
+![](image11.png)
+---
+layout: false
+class: inverse, middle
+
+O primeiro diagrama mostrado no início desta seção mostra um diagrama completo de pacotes para um sistema de videogame. Pacotes como jogador, nível, pontuação e análises sobre os hábitos do jogador estão incluídos. Esses pacotes interagem principalmente entre si, o que significa que eles podem se importar publicamente. Observe que o pacote analítico, no entanto, requer alguma comunicação com um servidor online para armazenar dados. Este pacote está disponível por importação privada.
+---
+layout: false
+class: inverse, middle
+
+O relacionamento de bônus também é especial porque possui um relacionamento de uso com um nível normal. A relação de usos implica que o nível de bônus requer um nível normal para sua implementação completa. Se não houver definição para o nível, não poderá haver uma definição para o nível de bônus.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de pacotes podem ser criados em qualquer estágio do desenvolvimento. Eles também podem se adaptar e mudar com a versão mais recente do software que está sendo trabalhada. Os diagramas de pacote são particularmente úteis para designers técnicos, pois permitem ver as dependências e as relações entre grupos de elementos relacionados.
+---
+layout: false
+class: inverse, middle
+
+## Diagrama de implantação
+
+Os diagramas de implantação UML são usados ​​para visualizar os detalhes de implantação de um sistema de software. Os diagramas incluem mais do que apenas código, mas também bibliotecas separadas, um instalador, arquivos de configuração e muitas outras partes. Para que o software esteja pronto para execução, é necessário entender todos os arquivos e executáveis ​​envolvidos e os ambientes em que eles residem.
+---
+layout: false
+class: inverse, middle
+
+O ambiente de implantação, ou destino de implantação, pode ser muito específico e envolver dispositivos de hardware específicos. Também pode ser muito geral e envolver sistemas operacionais suportados. Os detalhes em um diagrama de implantação são alterados de acordo. Por exemplo, software desenvolvido para Linux, MacOS ou Windows pode ter diferenças entre si.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de implantação lidam com artefatos. Os artefatos são um resultado físico do processo de desenvolvimento. Os artefatos de um videogame podem incluir itens como um executável para executar o jogo, um instalador para instalar o jogo, bibliotecas de áudio para som e ativos de multimídia. Estes são criados como resultados da produção do sistema e são as peças finais a serem montadas.
+---
+layout: false
+class: inverse, middle
+
+## Existem dois tipos diferentes de diagramas de implantação:
+
+- diagramas em nível de especificação
+- diagramas de nível de instância
+---
+layout: false
+class: inverse, middle
+
+Um diagrama no nível da especificação fornece uma visão geral dos artefatos e destinos de implementação, sem fazer referência a detalhes específicos, como nomes de máquinas. Ele se concentra em uma visão geral da sua implantação, e não nas especificidades.
+---
+layout: false
+class: inverse, middle
+
+Um diagrama no nível da instância é uma abordagem mais específica que mapeia artefatos específicos para destinos de implementação específicos. Eles podem identificar máquinas e dispositivos de hardware específicos. Essa abordagem geralmente é usada para destacar as diferenças nas implantações entre compilações de desenvolvimento, preparo e lançamento.
+---
+layout: false
+class: inverse, middle
+
+Ao criar diagramas de implantação, é importante usar a notação correta para os vários elementos. Um dos aspectos mais importantes do diagrama de implantação é o nó. Nós são destinos de implementação que contêm artefatos disponíveis para execução. Em um diagrama de implantação, eles se parecem com caixas 3D.
+---
+layout: false
+class: inverse, middle
+
+Os dispositivos de hardware também são exibidos como caixas 3D, apenas eles têm uma etiqueta de "dispositivo" para diferenciá-los.
+
+Os relacionamentos podem ser representados de algumas maneiras diferentes nos diagramas de implantação. Uma linha sólida entre dois nós mostra um relacionamento entre os destinos de implementação. A linha mostra que os dois nós têm um caminho de comunicação entre eles. Esse relacionamento normalmente identifica um protocolo de comunicação específico.
+
+---
+layout:false
+class: middle, center
+![](image12.png)
+---
+layout: false
+class: inverse, middle
+
+Se um artefato for desenhado dentro de uma caixa de nó, isso mostra que um artefato é implementado em um nó. Isso também significa que o artefato não pode funcionar sem esse destino de implementação.
+
+---
+layout:false
+class: middle, center
+![](image13.png)
+---
+layout: false
+class: inverse, middle
+
+Manifestação é um relacionamento em que um artefato é uma realização física de um componente de software. Pode ser representado com um indicador de "manifestos", como abaixo.
+
+---
+layout:false
+class: middle, center
+![](image14.png)
+---
+layout: false
+class: inverse, middle
+
+Aqui, o Player.class manifesta o componente Player, que é a unidade encapsulada que contém todas as funcionalidades de um player.
+
+Abaixo está um diagrama de implantação no nível de especificação para um videogame simples. Este diagrama fornece uma idéia geral e concisa de como implantar o aplicativo sem fornecer muitos detalhes.
+
+---
+layout:false
+class: middle, center
+![](image15.png)
+---
+layout: false
+class: inverse, middle
+
+Em um diagrama de implantação, há uma hierarquia distinta de destinos de implantação. Essa hierarquia é muito importante. Você deve começar do nível mais alto de suas informações de implantação, do nome do aplicativo ao dispositivo e sistema operacional. Neste exemplo, o aplicativo, o dispositivo, o sistema operacional e o ambiente de execução estão todos listados. Quando você olha para cada um desses nós, fica claro que ambiente é necessário para executar o aplicativo.
+---
+layout: false
+class: inverse, middle
+
+Observe que apenas os artefatos mais importantes são representados neste diagrama para que sejam mantidos em um nível alto. Lembre-se de que os diagramas de implementação fornecem uma visão geral de alto nível de artefatos, bibliotecas, componentes principais, máquinas e dispositivos que seu aplicativo precisa executar.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de implantação ajudam a fornecer consistência e organização às implantações, o que ajuda a evitar falhas no sistema. Os diagramas também ajudam a acompanhar os arquivos e executáveis ​​necessários para implantar e executar o software. O diagrama pode estar em um nível de instância específico para as máquinas de implementação que você está usando, ou pode ser geral para vários ambientes de execução.
+
+---
+layout: false
+class: inverse, middle
+
+Um diagrama de atividades UML permite a representação do fluxo de controle de uma atividade para outra em um sistema de software. Ele captura o comportamento dinâmico do sistema e permite o mapeamento da ramificação para fluxos alternativos.
+
+Atividades são ações que promovem o fluxo de execução em um sistema. São ações que, quando concluídas, fazem com que outra ação seja executada. Por exemplo, uma ação pode alterar ou criar novos objetos. Essas alterações ou ações podem levar seu aplicativo adiante.
+---
+layout: false
+class: inverse, middle
+
+## Para criar um diagrama de atividades, você deve:
+
+1. Identificar as atividades.
+2. Identificar as respectivas condições das atividades do sistema.
+---
+layout: false
+class: inverse, middle
+
+Depois de determinadas atividades e respectivas condições, o diagrama de atividades pode ser criado. Existem algumas partes principais em um diagrama de atividades.
+
+Há notas de início e de final que parecem círculos rotulados. Esses círculos são onde o diagrama deve começar. Eles mostram a atividade inicial que inicializa o fluxo de controle do aplicativo. O nó final mostra a atividade final do diagrama. As atividades intermediárias têm o formato oval e descrevem todas as atividades que alteram o estado do jogo antes do final do jogo.
+
+---
+layout:false
+class: middle, center
+![](image16.png)
+---
+layout: false
+class: inverse, middle
+
+Além disso, os diagramas de atividades podem incluir nós de decisão. Estes são os diamantes que possuem uma atividade principal e existe a possibilidade de dois resultados alternativos como a próxima atividade. A escolha do resultado depende de como a condição no nó de decisão é avaliada. Um exemplo de nó de decisão pode ser visto abaixo.
+
+---
+layout:false
+class: middle, center
+![](image17.png)
+---
+layout: false
+class: inverse, middle
+
+Todas as atividades essenciais devem ser incluídas em um diagrama, bem como as condições.
+
+Abaixo está um exemplo de um diagrama de atividades que ilustra um videogame.
+
+---
+layout:false
+class: middle, center
+![](image18.png)
+---
+layout: false
+class: inverse, middle
+
+Neste exemplo, o diagrama de atividades começa jogando o jogo. O jogador então joga a atividade de nível. Quando o nível está completo, o jogador encontra a primeira condição. Se a pontuação for alta o suficiente, o jogador poderá passar para o nível de bônus. Se o jogador não puder jogar o nível de bônus, o jogo será encerrado, como indicado por um círculo.
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de atividades permitem o mapeamento de atividades simultâneas que ocorrem em paralelo. Uma bifurcação se move para fluxos paralelos, para que as atividades possam acontecer ao mesmo tempo. Fluxos paralelos podem se unir em um único fluxo. Por exemplo, se um nível terminar em um videogame, o fluxo da trilha sonora terminará ao mesmo tempo que o fluxo de reprodução. Para denotar isso, os diagramas de atividades podem usar uma raia separada para cada fluxo.
+---
+layout: false
+class: inverse, middle
+
+As raias também podem dividir as atividades em diferentes categorias, como onde ocorre ou a função do usuário envolvida. Veja o exemplo abaixo para separar as atividades dos jogadores e as atividades de nível. Neste diagrama, há um rótulo para cada raia. As setas que cruzam cada pista mostram como as diferentes atividades de um sistema interagem entre categorias.
+---
+layout:false
+class: middle, center
+![](image19.png)
+---
+layout: false
+class: inverse, middle
+
+Os diagramas de atividades permitem ver quais atividades e condições devem ser incluídas em um sistema. Além disso, nos diagramas, você vê a ordem em que os recursos são encontrados, além de permitir que fluxos alternativos sejam levados em consideração para o sistema.
+
+---
+layout: false
+class:inverse,center,middle
+
+DÚVIDAS/FIM
+
+contato: marc.queiroz at unifil.br
+    </textarea>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
