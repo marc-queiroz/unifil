@@ -12,6 +12,8 @@ Para ter acesso a aula 02, clique em [Slides][aula02].
 
 Para ter acesso a aula Documentação UML, clique em [Slides][aula_doc_uml].
 
+Para ter acesso a aula 03, clique em [Slides][aula03].
+
 Para ter acesso a aula 07, clique em [Slides][aula07].
 
 Para ter acesso a aula 08, clique em [Slides][aula08].
@@ -31,6 +33,7 @@ Para ter acesso a aula 14, clique em [Slides][aula14].
 [aula01]: /unifil/arquitetura-software/slides/aula01/index.html
 [aula02]: /unifil/arquitetura-software/slides/aula02/index.html
 [aula_doc_uml]: /unifil/arquitetura-software/slides/aula_doc_uml/index.html
+[aula03]: /unifil/arquitetura-software/slides/aula03/index.html
 [aula04]: /unifil/arquitetura-software/slides/aula04/index.html
 [aula05]: /unifil/arquitetura-software/slides/aula05/index.html
 [aula06]: /unifil/arquitetura-software/slides/aula06/index.html
