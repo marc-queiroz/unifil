@@ -14,4 +14,4 @@ Para ter acesso a aula de Spark, clique em [Spark - Jupyter Notebook][spark]
 
 [aula01]: /unifil/big-data/slides/aula01/index.html
 [aula02]: /unifil/big-data/slides/aula02/index.html
-[spark]: /unifil/big-data/slides/Big_Data_Como_instalar_o_PySpark_no_Google_Colab.ipynb
+[spark]: https://github.com/marc-queiroz/unifil/blob/master/docs/big-data/slides/Big_Data_Como_instalar_o_PySpark_no_Google_Colab.ipynb
