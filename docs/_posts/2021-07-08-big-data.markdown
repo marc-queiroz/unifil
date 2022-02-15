@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Disciplina Big Data"
-date:   2021-07-08 19:10:00 -0300
-categories: aula big data data science unifil engenharia software
+title:  "Disciplina Tópicos Avançados em Computação"
+date:   2022-07-08 19:10:00 -0300
+categories: aula unifil sistemas distribuidos engenharia software ciencia computação
 ---
 ## Sejam bem-vindos a disciplina **Big Data**
 
