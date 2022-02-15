@@ -24,6 +24,7 @@ baseurl: "/unifil" # the subpath of your site, e.g. /blog
 url: "marc-queiroz.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: marc_antonio
 github_username:  marc-queiroz
+encoding: UTF-8
 
 # Build settings
 markdown: kramdown
