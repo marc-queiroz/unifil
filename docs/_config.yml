@@ -28,8 +28,8 @@ encoding: UTF-8
 
 # Build settings
 markdown: kramdown
-theme: plainwhite
 remote_theme: samarsault/plainwhite-jekyll
+# theme: plainwhite
 # remote_theme: thelehhman/plainwhite-jekyll
 plugins:
   - jekyll-feed
