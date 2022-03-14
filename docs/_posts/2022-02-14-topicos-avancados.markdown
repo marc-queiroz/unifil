@@ -7,7 +7,11 @@ categories: aula unifil sistemas distribuídos engenharia software ciência comp
 ## Sejam bem-vindos a disciplina **Tópicos Avançados em Computação**
 
 Para ter acesso a aula 01, clique em [Slides][aula01]. 
+
 Para ter acesso a aula 02, clique em [Slides][aula02]. 
+
+Para ter acesso a aula 03, clique em [Slides][aula03]. 
 
 [aula01]: /unifil/topicos-avancados/slides/aula01/index.html
 [aula02]: /unifil/topicos-avancados/slides/aula02/index.html
+[aula03]: /unifil/topicos-avancados/slides/aula03/index.html
